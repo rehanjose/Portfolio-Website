@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xplor AI Mobility — Summer Internship (Under NDA) — Rehan Jose</title>
+    <title>Xplor AI Mobility · Product Design Intern — Rehan Jose</title>
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
     <link rel="icon" type="image/png" href="../../Homepage Assets/logo.png">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Theme initialization before render to avoid FOUC -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
 
     <!-- Google Tag Manager -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
@@ -22,28 +28,360 @@
         gtag('config', 'G-CRRKNVG7VK');
     </script>
 
-    <!-- Tailwind CSS (No preflight) -->
+    <!-- Fonts: Plus Jakarta Sans + Space Mono (Matching reference presentation structure) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            corePlugins: {
-                preflight: false,
-            }
-        }
-    </script>
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Styles -->
+    <!-- Portfolio Base Stylesheet -->
     <link rel="stylesheet" href="../../styles.css?v=42">
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            /* Dark Theme (Default) */
+            --bg-page: #000000;
+            --surface-card: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --border-subtle: rgba(255, 255, 255, 0.10);
+            --border-highlight: rgba(255, 255, 255, 0.22);
+            --text-main: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.72);
+            --text-muted: rgba(255, 255, 255, 0.45);
+            --accent-blue: #3b82f6;
+            --accent-blue-light: rgba(59, 130, 246, 0.12);
+
+            /* Focused centered column width matching reference (720px - 760px) */
+            --column-width: 740px;
+        }
+
+        /* Light Theme Adaptation */
+        [data-theme="light"] {
+            --bg-page: #fcfcfb;
+            --surface-card: #ffffff;
+            --surface-hover: #f5f5f4;
+            --border-subtle: rgba(0, 0, 0, 0.08);
+            --border-highlight: rgba(0, 0, 0, 0.20);
+            --text-main: #141414;
+            --text-secondary: #525252;
+            --text-muted: #8c8c8c;
+            --accent-blue: #2563eb;
+            --accent-blue-light: #eaf1fb;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Global Link Decoration Resets (Matches Homepage & Archive) */
+        a,
+        a:hover,
+        a:focus,
+        a:visited,
+        .nav-link,
+        .nav-resume-btn,
+        .mobile-nav-link,
+        .touch-link,
+        .sitemap-link {
+            text-decoration: none !important;
+        }
+
+        /* Navbar Space Mono typography guarantee */
+        #navbar-container, #navbar-container *,
+        .center-nav-bar, .center-nav-bar *,
+        .nav-resume-btn, .nav-resume-btn * {
+            font-family: var(--font-mono) !important;
+        }
+
+        /* Centered Single Column Stage */
+        .case-study-stage {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: var(--column-width);
+            margin: 0 auto;
+            padding: 140px 24px 100px;
+        }
+
+        .top-meta-line {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .case-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.035em;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .case-subtitle {
+            font-size: 1.18rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            letter-spacing: -0.01em;
+            margin-bottom: 38px;
+        }
+
+        /* Hero Image Panel */
+        .hero-image-panel {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            background-color: var(--surface-card);
+        }
+
+        .hero-panel-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            will-change: transform;
+            transform: translateZ(0);
+            transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .hero-image-panel:hover .hero-panel-img {
+            transform: scale(1.025) translateZ(0);
+        }
+
+        /* Meta Strip Grid */
+        .meta-strip-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px 20px;
+            padding: 10px 0 32px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .meta-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .meta-value {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Section Divider */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border-subtle);
+            margin-bottom: 44px;
+        }
+
+        /* Case Section Blocks */
+        .case-section-block {
+            margin-bottom: 48px;
+        }
+
+        .section-heading-text {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+
+        .section-para {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .section-para:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Numbered Parts List */
+        .simple-parts-list {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .simple-parts-item {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .simple-parts-num {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        /* ── Glassmorphism Outcome Quote Block ── */
+        .outcome-quote-block {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            padding: 24px 28px;
+            border-radius: 0 16px 16px 0;
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] .outcome-quote-block {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            color: var(--text-main);
+        }
+
+        /* Closing Contact Line */
+        .closing-touch-line {
+            margin-top: 54px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .touch-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .touch-link:hover {
+            color: #60a5fa;
+            transform: translateX(2px);
+        }
+
+        /* Team & Culture Photo Section */
+        .team-photo-section {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .team-photo-card {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            background-color: var(--surface-card);
+        }
+
+        .team-photo-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            will-change: transform;
+            transform: translateZ(0);
+            transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .team-photo-card:hover .team-photo-img {
+            transform: scale(1.025) translateZ(0);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .case-study-stage {
+                padding: 110px 20px 80px;
+            }
+            .case-title {
+                font-size: 1.95rem;
+            }
+            .case-subtitle {
+                font-size: 1.05rem;
+                margin-bottom: 28px;
+            }
+            .hero-image-panel {
+                border-radius: 18px;
+                margin-bottom: 32px;
+            }
+            .team-photo-card {
+                border-radius: 18px;
+            }
+            .meta-strip-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+            .closing-touch-line {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-black">
-    <!-- Ambient Background Glow -->
-    <div class="ambient-glow"></div>
-
+<body>
     <!-- ── 3-PART NAVBAR FOR PROJECT VIEW ── -->
     <!-- Top Left Corner: Project Name -->
     <div class="fixed top-6 left-6 md:left-12 z-50 flex items-center h-14">
@@ -98,961 +436,171 @@
         </a>
         <button id="mobile-menu-toggle"
             class="md:hidden flex items-center justify-center w-14 h-14 rounded-full bg-zinc-900/30 backdrop-blur-xl border border-white/10 text-white hover:border-white/30 transition-all duration-300"
-            aria-label="Toggle mobile menu">
+            aria-label="Toggle Menu">
             <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
     </div>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="mobile-menu">
-        <div class="mobile-menu-content">
-            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close mobile menu">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <nav class="mobile-nav">
-                <a href="../../index.html#home" class="mobile-nav-link">Home</a>
-                <a href="../../about.html" class="mobile-nav-link">About</a>
-                <a href="../../projects.html" class="mobile-nav-link">Projects</a>
-                <a href="../../index.html#contact" class="mobile-nav-link">Contact</a>
-                <a href="../../projects.html" class="mobile-nav-resume">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    <span>Back to Projects</span>
-                </a>
-            </nav>
-        </div>
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-50 flex flex-col justify-center items-center gap-8 transition-all duration-500 opacity-0 pointer-events-none [&.active]:opacity-100 [&.active]:pointer-events-auto">
+        <button id="mobile-menu-close"
+            class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-zinc-900/50 border border-white/10 text-white"
+            aria-label="Close Menu">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <a href="../../index.html#home" class="mobile-nav-link text-xl font-bold uppercase tracking-widest text-white">Home</a>
+        <a href="../../about.html" class="mobile-nav-link text-xl font-bold uppercase tracking-widest text-white">About</a>
+        <a href="../../projects.html" class="mobile-nav-link text-xl font-bold uppercase tracking-widest text-white">Projects</a>
+        <a href="../../index.html#contact" class="mobile-nav-link text-xl font-bold uppercase tracking-widest text-white">Contact</a>
+        <a href="../../RehanJoseResume.pdf" target="_blank"
+            class="mobile-nav-resume inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-bold uppercase tracking-widest mt-4">
+            <span>Resume</span>
+            <i data-lucide="download" class="w-4 h-4"></i>
+        </a>
     </div>
 
-    <!-- Main Container -->
-    <main class="case-container">
+    <!-- ── Centered Column Stage (740px wide) ── -->
+    <main class="case-study-stage">
 
-        <!-- ============================================
-             HERO HEADER SECTION
-             ============================================ -->
-        <header class="case-hero">
-            <div class="hero-meta-top">
-                <span class="hero-tag">Summer Internship</span>
-                <span class="hero-dates">June 01 – August 01, 2026</span>
+        <!-- Title -->
+        <h1 class="case-title">Xplor AI Mobility · Product Design Intern</h1>
+
+        <!-- Subtitle -->
+        <p class="case-subtitle">Designing intelligent transit discovery, commuter journeys, and multimodal mobility systems</p>
+
+        <!-- Hero Image Panel -->
+        <div class="hero-image-panel" aria-label="Xplor AI Mobility Overview Hero Image">
+            <img src="assets/hero.png" alt="Xplor AI Mobility Application Screens Overview" class="hero-panel-img" loading="eager" fetchpriority="high">
+        </div>
+
+        <!-- Meta Strip: Role / Timeline / Company / Focus -->
+        <div class="meta-strip-grid">
+            <div class="meta-item">
+                <span class="meta-label">Role</span>
+                <span class="meta-value">Product Design Intern</span>
             </div>
+            <div class="meta-item">
+                <span class="meta-label">Timeline</span>
+                <span class="meta-value">June 2026 - August 2026</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Company</span>
+                <span class="meta-value">Xplor AI Mobility</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Focus</span>
+                <span class="meta-value">Multimodal Transit &amp; Systems</span>
+            </div>
+        </div>
 
-            <h1 class="hero-title">
-                XPLOR AI MOBILITY<br>
-                <span class="hero-title-highlight">Designing for Public Transit at Scale</span>
-            </h1>
+        <!-- Divider -->
+        <div class="section-divider" aria-hidden="true"></div>
 
-            <p class="hero-lead">
-                How do you design for a public transportation ecosystem where millions of commuters depend on buses every day, yet the entire infrastructure—from scheduling and paper tickets to metro feeder connections—is fragmented?
+        <!-- Section: Overview & NDA -->
+        <section class="case-section-block">
+            <h2 class="section-heading-text">About Xplor</h2>
+            <p class="section-para">
+                Xplor AI Mobility is an intelligent transit technology company building connected digital infrastructure to transform public mobility. Its platform integrates transportation operations, fleet management, ticketing, scheduling, and live tracking—bringing together private bus operators, public transit networks, and metro feeder services into a unified, data-driven mobility ecosystem.
             </p>
 
-            <!-- Meta Specs Grid -->
-            <div class="meta-specs-grid">
-                <div class="meta-spec-item">
-                    <span class="spec-label">Role</span>
-                    <span class="spec-value">Product Design Intern</span>
-                    <span class="spec-sub">Design &amp; Product Team</span>
-                </div>
-                <div class="meta-spec-item">
-                    <span class="spec-label">Industry Mentors</span>
-                    <span class="spec-value">Ms. Reshma MS</span>
-                    <span class="spec-sub">Head of Design, Xplor</span>
-                </div>
-                <div class="meta-spec-item">
-                    <span class="spec-label">Location</span>
-                    <span class="spec-value">Kochi, Kerala</span>
-                    <span class="spec-sub">Kerala Tech Innovation Zone</span>
-                </div>
-                <div class="meta-spec-item">
-                    <span class="spec-label">Core Deliverables</span>
-                    <span class="spec-value">14 Projects</span>
-                    <span class="spec-sub">UX, Research, QA, Brand</span>
-                </div>
-            </div>
-
-            <!-- Hero Cover Media -->
-            <div class="hero-media-wrapper">
-                <img src="assets/hero.png" alt="Xplor AI Mobility Project Cover">
-            </div>
-        </header>
-
-        <!-- ============================================
-             SENIOR-STYLE NDA CALLOUT SECTION
-             ============================================ -->
-        <section class="nda-banner-card">
-            <div class="nda-icon-circle">
-                <i data-lucide="lock" class="w-6 h-6"></i>
-            </div>
-            <div class="nda-content">
-                <h3 class="nda-title">
-                    <span>Non-Disclosure Agreement (NDA) Notice</span>
-                </h3>
-                <p class="nda-text">
-                    To respect confidentiality and protect Xplor AI Mobility's proprietary intellectual property, <strong>sensitive commuter mobile app interfaces, internal fleet operator dashboards, confidential route data, and commercial backend metrics are protected</strong> under NDA and omitted from public display.<br><br>
-                    This documentation highlights <strong>high-level problem framing, extensive benchmarking research (42 apps), systemic UX methodologies, permitted physical-digital graphic works</strong> (bus ticketing, fleet exterior branding, event collateral), and tangible outcomes. I would be delighted to walk through the protected design process, user testing insights, and architecture decisions in a <strong>1-on-1 private discussion</strong>.
+            <div style="margin-top: 36px;">
+                <h2 class="section-heading-text">Under NDA</h2>
+                <p class="section-para">
+                    This project is protected under a non-disclosure agreement and cannot be shared publicly.
                 </p>
-                <div class="nda-actions">
-                    <a href="mailto:rehanjose.design@gmail.com?subject=Discussion%20Request%3A%20Xplor%20AI%20Mobility%20Case%20Study" class="cta-nda-primary">
-                        <i data-lucide="mail" class="w-4 h-4"></i>
-                        <span>Contact Rehan</span>
-                    </a>
-                </div>
+                <p class="section-para">
+                    Over my internship at Xplor AI Mobility, I explored mobility UX enhancements, multimodal transit discovery, commuter state architectures, and interaction systems across Xplor's product ecosystem.
+                </p>
             </div>
         </section>
 
-        <!-- ============================================
-             CHAPTER 01: UNDERSTANDING THE COMPANY
-             ============================================ -->
-        <section class="case-section" id="company">
-            <div class="section-header">
-                <span class="section-number">Chapter 01</span>
-                <h2 class="section-title">Understanding Xplor AI Mobility</h2>
-                <p class="section-intro">
-                    Founded in late 2023 at the Kerala Technology Innovation Zone in Kochi, Xplor AI Mobility is an <strong>Intelligent Mobility as a Service (iMaaS)</strong> company building a connected digital ecosystem for public transportation and fleet management.
-                </p>
-            </div>
+        <!-- Section: My Part (Full Projects from Industry Report) -->
+        <section class="case-section-block">
+            <h2 class="section-heading-text">My part</h2>
+            <ol class="simple-parts-list">
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">01.</span>
+                    <span>FIFA × ZEE5 campaign &amp; in-app promotional UI</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">02.</span>
+                    <span>Mobility platform &amp; UX benchmarking</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">03.</span>
+                    <span>Xplor user app UX enhancement (Search, availability &amp; multimodal flows)</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">04.</span>
+                    <span>Xplor bus ticket advertising &amp; print design</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">05.</span>
+                    <span>GIZ Summit brochure &amp; editorial design</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">06.</span>
+                    <span>Xplor investor &amp; Huddle pitch decks</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">07.</span>
+                    <span>Metro competitor study &amp; flow enhancement</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">08.</span>
+                    <span>Corporate certificate design</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">09.</span>
+                    <span>Bus sticker &amp; fleet vehicle graphics</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">10.</span>
+                    <span>Bus Owner Meetup event branding &amp; promotional collateral</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">11.</span>
+                    <span>Android &amp; iOS cross-platform usability audit &amp; bug reporting</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">12.</span>
+                    <span>User app push notification architecture &amp; system states</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">13.</span>
+                    <span>Halo school bus ERP competitor benchmarking</span>
+                </li>
+                <li class="simple-parts-item">
+                    <span class="simple-parts-num">14.</span>
+                    <span>Social media creatives &amp; brand campaigns</span>
+                </li>
+            </ol>
+        </section>
 
-            <div class="features-grid-3">
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <i data-lucide="bus" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">The Real-World Crisis</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        In India, millions rely on private buses and public transit daily. However, operations are plagued by uncoordinated schedules, manual paper tickets, zero live arrival tracking, and complete disconnect between metro and feeder services.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <i data-lucide="cpu" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">AI-Powered iMaaS</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Xplor transforms fragmented transit by connecting operators, vehicles, drivers, and commuters through a centralized software platform—integrating ticketing, automated scheduling, GPS telemetry, and passenger discovery.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <i data-lucide="network" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">Multimodal Vision</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        From Kochi Metro feeder bus tie-ups to Open Network for Digital Commerce (ONDC) mobility protocols, Xplor unites isolated transit modes into a single, seamless commuter journey.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Ecosystem Breakdown Cards -->
-            <div class="features-grid-2" style="margin-top: 24px;">
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge" style="background: rgba(20, 184, 166, 0.12); color: #14b8a6; border-color: rgba(20, 184, 166, 0.25);">
-                            <i data-lucide="smartphone" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">Xplor User App</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        A commuter-facing application enabling users to search routes, check real-time bus arrivals, buy metro/bus digital tickets, and plan multimodal journeys across the city.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge" style="background: rgba(59, 130, 246, 0.12); color: #60a5fa; border-color: rgba(59, 130, 246, 0.25);">
-                            <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">Fleet Operations Platform</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Tools for bus owners and transit authorities to monitor fleets in real-time, audit ticketing revenue, manage crew schedules, and improve route efficiency.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge" style="background: rgba(245, 158, 11, 0.12); color: #fbbf24; border-color: rgba(245, 158, 11, 0.25);">
-                            <i data-lucide="train" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">Kochi Metro Feeder Network</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Digital scheduling and first/last-mile integration connecting Kochi Metro stations with feeder buses, reducing commuter transfer wait times.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge" style="background: rgba(236, 72, 153, 0.12); color: #f472b6; border-color: rgba(236, 72, 153, 0.25);">
-                            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">Halo by Xplor</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        A dedicated school and institutional transportation ERP providing parent ETA alerts, route optimization, driver monitoring, and child safety attendance.
-                    </p>
-                </div>
+        <!-- Section: The Outcome (Glassmorphism Container) -->
+        <section class="case-section-block">
+            <h2 class="section-heading-text">The outcome</h2>
+            <div class="outcome-quote-block">
+                &ldquo;A stronger understanding of product design, from systemic transit interfaces to high-stakes commuter experiences.&rdquo;
             </div>
         </section>
 
-        <!-- ============================================
-             CHAPTER 02: MY ROLE & THE 6 PRODUCT DESIGN STREAMS
-             ============================================ -->
-        <section class="case-section" id="role">
-            <div class="section-header">
-                <span class="section-number">Chapter 02</span>
-                <h2 class="section-title">My Role &amp; 6 Core Product Design Streams</h2>
-                <p class="section-intro">
-                    During my 2-month summer internship at Xplor AI Mobility, I operated as a <strong>Product Design Intern</strong> within the core design team under Ms. Reshma MS (Head of Design). Working cross-functionally alongside product managers, backend engineers, and operations leads, I delivered 14 distinct projects across 6 core UX and product research streams.
-                </p>
-            </div>
-
-            <div class="features-grid-3">
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <span style="font-family: var(--font-mono); font-weight: 700; font-size: 13px;">01</span>
-                        </div>
-                        <h4 class="feature-card-title">Global Mobility Benchmarking</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Analyzed 42 international transit, ride-hailing, and open mobility platforms to extract 9 systemic opportunities for multimodal discovery and demand capture.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <span style="font-family: var(--font-mono); font-weight: 700; font-size: 13px;">02</span>
-                        </div>
-                        <h4 class="feature-card-title">Commuter App UX Enhancement</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Re-architected the search &amp; location swap logic, established the 3-scenario bus availability system, and redesigned the bus comparison card and schedule view.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <span style="font-family: var(--font-mono); font-weight: 700; font-size: 13px;">03</span>
-                        </div>
-                        <h4 class="feature-card-title">Multimodal Metro Systems &amp; ONDC</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Benchmarked 30 Indian metro apps and ONDC open mobility protocols, expanding single-ticket booking into an integrated 4-pillar transit companion.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <span style="font-family: var(--font-mono); font-weight: 700; font-size: 13px;">04</span>
-                        </div>
-                        <h4 class="feature-card-title">Cross-Platform QA &amp; Bug Auditing</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Conducted 3-way regression testing across Android staging and iOS TestFlight builds against master Figma design specs, publishing 13-page technical audit matrices.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <span style="font-family: var(--font-mono); font-weight: 700; font-size: 13px;">05</span>
-                        </div>
-                        <h4 class="feature-card-title">Push Notification Architecture</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Standardized collapsed (360×80px) and expanded (360×160px) templates with a 5-phase contextual commuter delivery matrix.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <span style="font-family: var(--font-mono); font-weight: 700; font-size: 13px;">06</span>
-                        </div>
-                        <h4 class="feature-card-title">Institutional Transport ERP (Halo)</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Benchmarked 7 global enterprise school transport platforms to architect parent live tracking, RFID student attendance, and driver safety telematics.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Quantitative Stats Strip -->
-            <div class="stats-strip" style="grid-template-columns: repeat(4, 1fr);">
-                <div class="stat-box">
-                    <span class="stat-number stat-number-purple">42</span>
-                    <span class="stat-caption">Apps Benchmarked</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number">49</span>
-                    <span class="stat-caption">Days Core App Sprint</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number stat-number-purple">13</span>
-                    <span class="stat-caption">Pages of QA Matrices</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number">6</span>
-                    <span class="stat-caption">Core UX Projects</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================================
-             CHAPTER 03: RESEARCH & UI/UX PRODUCT DESIGN WORKS (PROJECT BY PROJECT)
-             ============================================ -->
-        <section class="case-section" id="ux-projects">
-            <div class="section-header">
-                <span class="section-number">Chapter 03</span>
-                <h2 class="section-title">Research &amp; UI/UX Product Design Works</h2>
-                <p class="section-intro">
-                    The following section breaks down my core product design and research deliverables project by project. In strict compliance with the Non-Disclosure Agreement (NDA), proprietary production screens, live backend API schemas, and commercial partner agreements are withheld; the design thinking, heuristic research, system architectures, and user flow solutions are presented below.
-                </p>
-            </div>
-
-            <!-- ============================================
-                 PROJECT 01: GLOBAL MOBILITY UX BENCHMARKING
-                 ============================================ -->
-            <div class="ux-project-block">
-                <div class="ux-block-header">
-                    <div class="ux-block-eyebrow">
-                        <span class="ux-project-tag">Project 01</span>
-                        <span class="ux-category-tag">Strategic Product Research &amp; Heuristic Benchmarking</span>
-                        <span class="ux-nda-badge"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> NDA Protected</span>
-                    </div>
-                    <h3 class="ux-block-title">Global Transit &amp; Mobility Platform UX Benchmarking</h3>
-                    <div class="ux-meta-strip">
-                        <div class="ux-meta-item"><strong>Scope:</strong> <span>42 International &amp; Domestic Transit Applications</span></div>
-                        <div class="ux-meta-item"><strong>Duration:</strong> <span>6-Day Competitive Sprint</span></div>
-                        <div class="ux-meta-item"><strong>Deliverable:</strong> <span>Heuristic Evaluation Matrix &amp; 9 Systemic Opportunity Areas</span></div>
-                        <div class="ux-meta-item"><strong>Key Focus:</strong> <span>Multimodal Discovery, Live Telemetry &amp; Demand Capture</span></div>
-                    </div>
-                </div>
-
-                <div class="ux-block-desc">
-                    <p>
-                        To transition Xplor from an isolated bus-ticketing tool into an intelligent, end-to-end urban mobility companion, I conducted an exhaustive benchmarking study of <strong>42 global and domestic transit applications</strong>. The study categorized platforms across three primary clusters:
-                    </p>
-                    <ul style="list-style: disc; margin-left: 20px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px;">
-                        <li><strong>Global Multimodal Leaders:</strong> Citymapper, Moovit, Transit App, Whim, Chalo, Tummoc (evaluated for multimodal routing, walking radii, transfer clarity, and disruption handling).</li>
-                        <li><strong>Ride-Hailing &amp; Intercity Mobility:</strong> Uber, Rapido, Namma Yatri, RedBus, ixigo, Abhibus, MakeMyTrip, Grab, Waze (evaluated for pin accuracy, fare breakdown, and post-booking reassurance).</li>
-                        <li><strong>Open Mobility &amp; Regional Networks:</strong> ONDC (Open Network for Digital Commerce) mobility protocol, Kochi One, BMTC Namma, Dilli Sarthi (evaluated for multi-operator ticketing and unified digital passes).</li>
-                    </ul>
-                </div>
-
-                <!-- 9 Systemic Opportunities Grid -->
-                <div class="ux-scenario-grid cols-3">
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge purple">Opportunity 01</span>
-                        </div>
-                        <h4 class="ux-scenario-title">Multimodal Journey Planning</h4>
-                        <p class="ux-scenario-text">Transitioning from single-mode bus routes to combined bus + metro + walking transfers with dynamic time-to-leave indicators.</p>
-                    </div>
-
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge purple">Opportunity 02</span>
-                        </div>
-                        <h4 class="ux-scenario-title">Live GPS Vehicle Telemetry</h4>
-                        <p class="ux-scenario-text">Displaying vehicle registration numbers, live speed status, and reliable arrival countdowns rather than static static timetable estimates.</p>
-                    </div>
-
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge purple">Opportunity 03</span>
-                        </div>
-                        <h4 class="ux-scenario-title">First &amp; Last-Mile Feeders</h4>
-                        <p class="ux-scenario-text">Explicitly linking metro station gates to feeder bus stops and auto-rickshaw stands to solve the last-mile transfer friction.</p>
-                    </div>
-
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge amber">Opportunity 04</span>
-                        </div>
-                        <h4 class="ux-scenario-title">Demand Capture on Unserved Routes</h4>
-                        <p class="ux-scenario-text">Converting dead-end search queries into a crowdsourced voting mechanism that signals high-density unserved commuter corridors to bus operators.</p>
-                    </div>
-
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge amber">Opportunity 05</span>
-                        </div>
-                        <h4 class="ux-scenario-title">Digital Transit Passes</h4>
-                        <p class="ux-scenario-text">Introducing weekly/monthly student and commuter passes with offline QR validation, bypassing individual ticket queues.</p>
-                    </div>
-
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge amber">Opportunity 06</span>
-                        </div>
-                        <h4 class="ux-scenario-title">Low-Connectivity Resilience</h4>
-                        <p class="ux-scenario-text">Caching active digital tickets and recently searched route maps locally on the client to guarantee inspection validity in underground or remote dead zones.</p>
-                    </div>
-                </div>
-
-                <div class="graphic-feature-points" style="margin-top: 20px;">
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="compass" class="w-4 h-4"></i> Strategic Impact</span>
-                        <p class="graphic-point-text">Synthesized into a 28-slide executive benchmark presentation adopted by product leadership as the UX roadmap for Xplor's multimodal expansion.</p>
-                    </div>
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="lock" class="w-4 h-4"></i> NDA Compliance Note</span>
-                        <p class="graphic-point-text">Raw competitor evaluation spreadsheets, internal scoring matrices, and feature-gap scoring remain confidential property of Xplor AI Mobility.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PROJECT 02: COMMUTER APP UX ENHANCEMENT
-                 ============================================ -->
-            <div class="ux-project-block">
-                <div class="ux-block-header">
-                    <div class="ux-block-eyebrow">
-                        <span class="ux-project-tag">Project 02</span>
-                        <span class="ux-category-tag">Commuter Experience &amp; Interaction Architecture</span>
-                        <span class="ux-nda-badge"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> NDA Protected</span>
-                    </div>
-                    <h3 class="ux-block-title">Xplor Commuter App: Core UX Enhancements &amp; Journey Logic</h3>
-                    <div class="ux-meta-strip">
-                        <div class="ux-meta-item"><strong>Duration:</strong> <span>02 June – 20 July 2026 (49-Day Sprint)</span></div>
-                        <div class="ux-meta-item"><strong>Methodology:</strong> <span>Usability Testing Analysis, Heuristic Evaluation, Wireframing</span></div>
-                        <div class="ux-meta-item"><strong>Core Modules:</strong> <span>Search Modification, 3-Scenario Availability, Bus Card &amp; Schedule Redesign</span></div>
-                    </div>
-                </div>
-
-                <div class="ux-block-desc">
-                    <p>
-                        Through moderated user-testing sessions and bug reports, we identified critical usability bottlenecks in the core commuter flow: users struggled to understand whether their route modifications had taken effect, encountered unhelpful dead ends when direct buses were unavailable, and faced high cognitive strain when scanning bus cards in moving vehicles.
-                    </p>
-                    <p>
-                        I redesigned the core journey planning architecture across three foundational interaction flows:
-                    </p>
-                </div>
-
-                <!-- Sub-Module 2.1: Search & Location Swap Logic -->
-                <div class="ux-flow-container">
-                    <span class="ux-flow-label"><i data-lucide="refresh-cw" class="w-4 h-4"></i> Flow 2.1: Search &amp; Location Modification State Logic</span>
-                    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.6;">
-                        <strong>The Friction:</strong> In the legacy build, selecting boarding and destination stops automatically advanced to results. While efficient initially, when commuters tapped back to swap or modify stops, the app silently auto-advanced again without an explicit confirmation state, causing disorientation.
-                    </p>
-                    <div class="ux-flow-row">
-                        <div class="ux-flow-step"><span>01. Home Search</span></div>
-                        <div class="ux-flow-arrow"><i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                        <div class="ux-flow-step"><span>02. Select Boarding &amp; Destination</span></div>
-                        <div class="ux-flow-arrow"><i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                        <div class="ux-flow-step"><span>03. Auto-Proceed to Results</span></div>
-                        <div class="ux-flow-arrow"><i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                        <div class="ux-flow-step highlight"><span>04. Return to Modify / Swap Stops</span></div>
-                        <div class="ux-flow-arrow"><i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                        <div class="ux-flow-step active"><span>05. Explicit "Proceed" CTA Trigger</span></div>
-                        <div class="ux-flow-arrow"><i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-                        <div class="ux-flow-step"><span>06. Confirmed Updated Results</span></div>
-                    </div>
-                    <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 14px; font-family: var(--font-mono);">
-                        ✓ Result: Zero accidental route queries; standardized seamlessly across both Bus and Metro search engines.
-                    </p>
-                </div>
-
-                <!-- Sub-Module 2.2: The 3-Scenario Bus Availability Redesign -->
-                <div style="margin: 28px 0;">
-                    <span class="ux-flow-label"><i data-lucide="git-fork" class="w-4 h-4"></i> Flow 2.2: The 3-Scenario Bus Availability Architecture</span>
-                    <div class="ux-scenario-grid cols-3">
-                        <div class="ux-scenario-card">
-                            <div class="ux-scenario-header">
-                                <span class="ux-scenario-badge green">Scenario 1</span>
-                            </div>
-                            <h4 class="ux-scenario-title">Direct Bus Available</h4>
-                            <p class="ux-scenario-text">Immediate display of partner buses operating directly between Stop A and Stop B, sorted by live arrival countdown and seat availability.</p>
-                            <div class="ux-scenario-footer">Outcome: Fast 1-tap checkout &amp; live GPS track</div>
-                        </div>
-
-                        <div class="ux-scenario-card">
-                            <div class="ux-scenario-header">
-                                <span class="ux-scenario-badge amber">Scenario 2</span>
-                            </div>
-                            <h4 class="ux-scenario-title">No Direct Bus (Alternative Options)</h4>
-                            <p class="ux-scenario-text">Legacy bug previously showed irrelevant cross-town routes. Redesigned to surface genuine nearby alternative boarding stops and viable transfer connections.</p>
-                            <div class="ux-scenario-footer">Outcome: Actionable alternate travel options</div>
-                        </div>
-
-                        <div class="ux-scenario-card">
-                            <div class="ux-scenario-header">
-                                <span class="ux-scenario-badge purple">Scenario 3</span>
-                            </div>
-                            <h4 class="ux-scenario-title">No Service Available (Dead-End Redesign)</h4>
-                            <p class="ux-scenario-text">Replaced dead-end "No services found" with an interactive <strong>"Request This Route"</strong> engine. Commuters input travel frequency, report operating private buses, and receive queue position updates.</p>
-                            <div class="ux-scenario-footer">Outcome: Crowdsourced fleet expansion intelligence</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sub-Module 2.3: Bus Card & Live Schedule Redesign -->
-                <div class="ux-pillar-card" style="margin-top: 24px;">
-                    <div class="ux-pillar-card-header">
-                        <div class="ux-pillar-icon"><i data-lucide="layout-list" class="w-5 h-5"></i></div>
-                        <h4 class="ux-pillar-title">Flow 2.3: Bus Card &amp; Schedule Information Architecture Overhaul</h4>
-                    </div>
-                    <p class="ux-pillar-desc" style="margin-bottom: 16px;">
-                        User testing in transit showed commuters struggled to compare buses while standing in moving vehicles. The legacy card mixed registration numbers, fares, and timings with flat optical weight. I re-architected the information hierarchy into distinct cognitive tiers:
-                    </p>
-                    <div class="features-grid-3" style="margin-top: 12px;">
-                        <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-purple-light); font-weight: 700; display: block; margin-bottom: 6px;">Tier 1 · Primary</span>
-                            <p style="font-size: 13px; color: #ffffff; font-weight: 600; margin-bottom: 4px;">Bus Reg. Number &amp; Fleet Operator</p>
-                            <p style="font-size: 12px; color: var(--text-secondary);">High-contrast badge for instant physical curb recognition.</p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                            <span style="font-family: var(--font-mono); font-size: 11px; color: #fbbf24; font-weight: 700; display: block; margin-bottom: 6px;">Tier 2 · Decision Time</span>
-                            <p style="font-size: 13px; color: #ffffff; font-weight: 600; margin-bottom: 4px;">Live Arrival Countdown &amp; Fare</p>
-                            <p style="font-size: 12px; color: var(--text-secondary);">Dynamic ETA (e.g., "Arriving in 4 min") paired with exact ticket fare.</p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                            <span style="font-family: var(--font-mono); font-size: 11px; color: #4ade80; font-weight: 700; display: block; margin-bottom: 6px;">Tier 3 · Utilities</span>
-                            <p style="font-size: 13px; color: #ffffff; font-weight: 600; margin-bottom: 4px;">GPS Status &amp; E-Ticket Pass</p>
-                            <p style="font-size: 12px; color: var(--text-secondary);">Live GPS signal indicator and direct tap for full route stop sequence.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="graphic-feature-points" style="margin-top: 24px;">
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="check" class="w-4 h-4"></i> User Testing Validation</span>
-                        <p class="graphic-point-text">Moderated prototype testing showed a 38% reduction in search modification errors and an 85% task completion rate on bus schedule evaluation.</p>
-                    </div>
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="shield-alert" class="w-4 h-4"></i> NDA Compliance Note</span>
-                        <p class="graphic-point-text">Production UI screens, proprietary styling tokens, and internal telemetry APIs are withheld under NDA; conceptual flows and logic frameworks are documented.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PROJECT 03: METRO COMPETITOR STUDY & MULTIMODAL UX
-                 ============================================ -->
-            <div class="ux-project-block">
-                <div class="ux-block-header">
-                    <div class="ux-block-eyebrow">
-                        <span class="ux-project-tag">Project 03</span>
-                        <span class="ux-category-tag">Multimodal Transit Systems &amp; ONDC Integration</span>
-                        <span class="ux-nda-badge"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> NDA Protected</span>
-                    </div>
-                    <h3 class="ux-block-title">Kochi Metro Competitor Study &amp; Multimodal Booking Architecture</h3>
-                    <div class="ux-meta-strip">
-                        <div class="ux-meta-item"><strong>Scope:</strong> <span>30 Metro &amp; Transit Platforms across India + ONDC Open Mobility</span></div>
-                        <div class="ux-meta-item"><strong>Duration:</strong> <span>16 June – 23 July 2026 (8-Day Research &amp; Flow Architecture)</span></div>
-                        <div class="ux-meta-item"><strong>Deliverable:</strong> <span>14-Page Metro Research Document &amp; 4-Pillar Feature Architecture</span></div>
-                    </div>
-                </div>
-
-                <div class="ux-block-desc">
-                    <p>
-                        While Xplor successfully operated single-ticket QR booking for the Kochi Metro, the company needed a strategic blueprint to expand into larger, multi-line transit networks across India. Additionally, the Indian Government's <strong>ONDC (Open Network for Digital Commerce)</strong> open mobility protocols were dismantling isolated ticketing silos.
-                    </p>
-                    <p>
-                        I benchmarked 30 metro applications across Delhi, Bengaluru, Chennai, Mumbai, Hyderabad, Kolkata, Ahmedabad, and Kochi. The research revealed that leading platforms support commuters across multiple dimensions beyond ticket purchasing. I translated these insights into an integrated <strong>4-Pillar Multimodal Architecture</strong>:
-                    </p>
-                </div>
-
-                <div class="ux-pillars-list">
-                    <div class="ux-pillar-card">
-                        <div class="ux-pillar-card-header">
-                            <div class="ux-pillar-icon"><i data-lucide="calendar" class="w-5 h-5"></i></div>
-                            <h4 class="ux-pillar-title">Pillar 1: Metro Schedules &amp; Station Intelligence</h4>
-                        </div>
-                        <p class="ux-pillar-desc">First &amp; last train departure schedules, peak/off-peak frequency intervals, line interchange guidance, platform direction indicators, and accessible elevator gate locators.</p>
-                    </div>
-
-                    <div class="ux-pillar-card">
-                        <div class="ux-pillar-card-header">
-                            <div class="ux-pillar-icon"><i data-lucide="bus" class="w-5 h-5"></i></div>
-                            <h4 class="ux-pillar-title">Pillar 2: Kochi Metro Feeder Bus Connectivity</h4>
-                        </div>
-                        <p class="ux-pillar-desc">Direct scheduling synchronization between incoming metro trains and station feeder shuttle buses, allowing commuters to plan their last-mile connection before exiting the fare gates.</p>
-                    </div>
-
-                    <div class="ux-pillar-card">
-                        <div class="ux-pillar-card-header">
-                            <div class="ux-pillar-icon"><i data-lucide="parking-circle" class="w-5 h-5"></i></div>
-                            <h4 class="ux-pillar-title">Pillar 3: Station Parking Availability</h4>
-                        </div>
-                        <p class="ux-pillar-desc">Live occupancy indicators for two-wheeler and four-wheeler parking lots across metro stations, eliminating commuter anxiety when driving to park-and-ride hubs.</p>
-                    </div>
-
-                    <div class="ux-pillar-card">
-                        <div class="ux-pillar-card-header">
-                            <div class="ux-pillar-icon"><i data-lucide="map" class="w-5 h-5"></i></div>
-                            <h4 class="ux-pillar-title">Pillar 4: "Near Me" Destination Discovery</h4>
-                        </div>
-                        <p class="ux-pillar-desc">Geofenced exploration connecting metro exits to key hospitals, colleges, IT parks, and cultural attractions, establishing the app as a city discovery companion.</p>
-                    </div>
-                </div>
-
-                <div class="graphic-feature-points" style="margin-top: 20px;">
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="network" class="w-4 h-4"></i> Multimodal Information Architecture</span>
-                        <p class="graphic-point-text">Designed the pre-booking, active-transit, and post-booking states to seamlessly connect metro ticket generation with feeder bus timetable tracking.</p>
-                    </div>
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="lock" class="w-4 h-4"></i> Confidentiality Notice</span>
-                        <p class="graphic-point-text">The full 14-page confidential research dossier and ONDC network technical specifications are preserved internally under NDA.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PROJECT 04: CROSS-PLATFORM BUG REPORT & QA
-                 ============================================ -->
-            <div class="ux-project-block">
-                <div class="ux-block-header">
-                    <div class="ux-block-eyebrow">
-                        <span class="ux-project-tag">Project 04</span>
-                        <span class="ux-category-tag">Quality Assurance &amp; Usability Engineering</span>
-                        <span class="ux-nda-badge"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> NDA Protected</span>
-                    </div>
-                    <h3 class="ux-block-title">Cross-Platform Usability &amp; Bug Regression Audit (Android &amp; iOS)</h3>
-                    <div class="ux-meta-strip">
-                        <div class="ux-meta-item"><strong>Testing Scope:</strong> <span>Android (Staging API APK) &amp; iOS (TestFlight Builds)</span></div>
-                        <div class="ux-meta-item"><strong>Duration:</strong> <span>07 July – 13 July 2026 (7-Day Sprint)</span></div>
-                        <div class="ux-meta-item"><strong>Documentation:</strong> <span>6-Page Android Matrix · 7-Page iOS Matrix</span></div>
-                        <div class="ux-meta-item"><strong>Deliverable:</strong> <span>Cross-Functional Handoff &amp; Engineering Triage Walkthrough</span></div>
-                    </div>
-                </div>
-
-                <div class="ux-block-desc">
-                    <p>
-                        A flawless UI design is only as good as its production implementation. To ensure design fidelity and robust interaction performance, I conducted a rigorous, three-way regression audit comparing the <strong>approved Figma design systems</strong> against <strong>updated Android builds</strong> (accessed via Xplor staging APIs) and <strong>iOS builds</strong> (via TestFlight).
-                    </p>
-                    <p>
-                        The audit went beyond visual styling discrepancies to document critical interaction failures, edge cases on low-spec devices, and back-stack navigation bugs.
-                    </p>
-                </div>
-
-                <div class="ux-table-wrap">
-                    <table class="ux-data-table">
-                        <thead>
-                            <tr>
-                                <th>Platform</th>
-                                <th>Audited Core Flow</th>
-                                <th>Observed Usability Friction</th>
-                                <th>UX &amp; Engineering Resolution</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Android (6 Pages)</strong></td>
-                                <td>Bus Search &amp; Location Inputs</td>
-                                <td>Virtual keyboard occluded the destination suggestion list on sub-6" budget devices.</td>
-                                <td>Implemented dynamic viewport scroll repositioning and condensed top app bar padding.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Android (6 Pages)</strong></td>
-                                <td>Live Map Vehicle Tracking</td>
-                                <td>GPS vehicle marker snapped erratically when commuter cellular connection throttled to 2G.</td>
-                                <td>Introduced dead-reckoning interpolation and cached polyline smoothing between pings.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>iOS (7 Pages)</strong></td>
-                                <td>Navigation Stack</td>
-                                <td>Interactive edge-swipe to dismiss results screen wiped selected filter parameters.</td>
-                                <td>Persisted active filter state in temporary session cache to allow seamless re-entry.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>iOS (7 Pages)</strong></td>
-                                <td>SOS Emergency Trigger</td>
-                                <td>Emergency call action sheet was dismissed without confirmation on background tap.</td>
-                                <td>Made emergency modal persistent with explicit modal swipe-lock and 5-second countdown.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Both OS</strong></td>
-                                <td>Design System Alignment</td>
-                                <td>Discrepancies in button radii, elevation shadows, and font weights across OS native toolkits.</td>
-                                <td>Standardized design token mapping across Material 3 and Cupertino native UI libraries.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="graphic-feature-points" style="margin-top: 20px;">
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="code" class="w-4 h-4"></i> Cross-Team Handoff</span>
-                        <p class="graphic-point-text">Conducted structured triage walkthroughs with mobile engineering leads, prioritizing fixes across release sprints based on commuter friction impact.</p>
-                    </div>
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="shield" class="w-4 h-4"></i> NDA Protection</span>
-                        <p class="graphic-point-text">Internal crash logs, staging API tokens, and proprietary endpoint URLs are strictly redacted in compliance with NDA.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PROJECT 05: PUSH NOTIFICATION ARCHITECTURE
-                 ============================================ -->
-            <div class="ux-project-block">
-                <div class="ux-block-header">
-                    <div class="ux-block-eyebrow">
-                        <span class="ux-project-tag">Project 05</span>
-                        <span class="ux-category-tag">User Lifecycle Architecture &amp; Contextual Engagement</span>
-                        <span class="ux-nda-badge"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> NDA Protected</span>
-                    </div>
-                    <h3 class="ux-block-title">In-App Push Notification Architecture &amp; Commuter Lifecycle Taxonomy</h3>
-                    <div class="ux-meta-strip">
-                        <div class="ux-meta-item"><strong>Duration:</strong> <span>20 July – 21 July 2026 (2-Day System)</span></div>
-                        <div class="ux-meta-item"><strong>Component Specs:</strong> <span>Collapsed: 360 × 80 px · Expanded: 360 × 160 px</span></div>
-                        <div class="ux-meta-item"><strong>Taxonomy:</strong> <span>5 Contextual Commuter Lifecycle Segments</span></div>
-                    </div>
-                </div>
-
-                <div class="ux-block-desc">
-                    <p>
-                        Push notifications in a transit companion application must be treated with surgical precision: an irrelevant notification is annoying, but an unread arrival alert results in a missed bus or late transfer. I developed a unified notification system covering both <strong>visual component hierarchy</strong> across iOS &amp; Android and a <strong>context-aware content strategy</strong>.
-                    </p>
-                </div>
-
-                <!-- Template Specifications -->
-                <div class="ux-flow-container">
-                    <span class="ux-flow-label"><i data-lucide="bell" class="w-4 h-4"></i> Standardized Notification Component Specs</span>
-                    <div class="features-grid-2" style="margin-top: 12px;">
-                        <div style="background: rgba(255,255,255,0.02); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
-                            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-purple-light); font-weight: 700; text-transform: uppercase;">Collapsed State · 360 × 80 px</span>
-                            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px; line-height: 1.6;">
-                                Optimized for lock-screen glanceability: App Title (14px) · Notification Title (17px Bold) · Body Message Preview (15px) · Relative Timestamp (13px).
-                            </p>
-                        </div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
-                            <span style="font-family: var(--font-mono); font-size: 11px; color: #fbbf24; font-weight: 700; text-transform: uppercase;">Expanded State · 360 × 160 px</span>
-                            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px; line-height: 1.6;">
-                                Actionable deep-links revealed upon interaction: Live ETA countdown progress bar, quick-tap "View Live Map", and 1-tap digital ticket QR display.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Commuter Lifecycle Delivery Table -->
-                <div class="ux-table-wrap">
-                    <table class="ux-data-table">
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Trigger Timing</th>
-                                <th>Target Segment</th>
-                                <th>Content Strategy &amp; Copywriting Intent</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Travel Comfort</strong></td>
-                                <td>11:00 AM – 3:00 PM</td>
-                                <td>Active Day Commuters</td>
-                                <td>Surfacing low-occupancy and air-conditioned bus services during peak afternoon heat in Kerala.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Journey Progress</strong></td>
-                                <td>Real-Time In-Transit</td>
-                                <td>Passengers On Board</td>
-                                <td>Dynamic approach alerts triggered 2 stops prior to passenger destination to prepare for exit.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Green Travel Impact</strong></td>
-                                <td>Immediately Post-Trip</td>
-                                <td>Completed Trip Users</td>
-                                <td>Calculates estimated CO₂ emissions saved by taking public transit over solo private transport.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Crowd &amp; Station Load</strong></td>
-                                <td>Before Booking (Rush Hours)</td>
-                                <td>Prospective Travelers</td>
-                                <td>Informs commuters of high passenger rush at key interchange hubs (e.g. Aluva, Edapally) with alternatives.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Student Pass Reminders</strong></td>
-                                <td>7:00–9:00 AM &amp; 3:00–5:00 PM</td>
-                                <td>Student Subscribers</td>
-                                <td>Proactive pass renewal prompts and route updates aligned with school and college transit hours.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="graphic-feature-points" style="margin-top: 20px;">
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="sliders" class="w-4 h-4"></i> Attention Respect</span>
-                        <p class="graphic-point-text">Engineered strict frequency capping rules preventing repetitive promotional pings while prioritizing critical journey progress updates.</p>
-                    </div>
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="shield" class="w-4 h-4"></i> NDA Protection</span>
-                        <p class="graphic-point-text">Targeted user segmentation cohorts and predictive delivery algorithms are protected proprietary assets of Xplor.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 PROJECT 06: HALO SCHOOL ERP BENCHMARKING
-                 ============================================ -->
-            <div class="ux-project-block" style="margin-bottom: 0;">
-                <div class="ux-block-header">
-                    <div class="ux-block-eyebrow">
-                        <span class="ux-project-tag">Project 06</span>
-                        <span class="ux-category-tag">Enterprise SaaS &amp; Public Safety Architecture</span>
-                        <span class="ux-nda-badge"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> NDA Protected</span>
-                    </div>
-                    <h3 class="ux-block-title">"Halo by Xplor": Institutional &amp; School Transport ERP Benchmarking</h3>
-                    <div class="ux-meta-strip">
-                        <div class="ux-meta-item"><strong>Platform:</strong> <span>Halo by Xplor (School &amp; Campus Transportation ERP)</span></div>
-                        <div class="ux-meta-item"><strong>Duration:</strong> <span>16 July – 21 July 2026 (6-Day Sprint)</span></div>
-                        <div class="ux-meta-item"><strong>Scope:</strong> <span>7 Global &amp; Domestic Transport ERP Platforms Benchmarked</span></div>
-                        <div class="ux-meta-item"><strong>Competitors:</strong> <span>MoveInSync, Entab, Fedena, TripSpark, BusBoss, BusRight</span></div>
-                    </div>
-                </div>
-
-                <div class="ux-block-desc">
-                    <p>
-                        Beyond public city buses, Xplor developed <strong>Halo</strong>, a dedicated enterprise software suite managing school and institutional transportation. Managing student transit introduces intense safety responsibilities: parents require absolute certainty regarding their child's location, while school transport managers must supervise complex multi-vehicle fleets, driver background compliances, and fuel expenses.
-                    </p>
-                    <p>
-                        I executed a competitor benchmarking analysis across 7 enterprise school transit platforms, extracting best practices and designing the product blueprint across 4 user touchpoints:
-                    </p>
-                </div>
-
-                <div class="ux-scenario-grid cols-2">
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge purple">Parent Touchpoint</span>
-                        </div>
-                        <h4 class="ux-scenario-title">Guardian Reassurance &amp; Live ETA Tracking</h4>
-                        <p class="ux-scenario-text">
-                            Real-time GPS bus tracking with geofenced arrival alerts sent 5 minutes before pickup, eliminating morning roadside waits. Direct integration with WhatsApp emergency broadcasts for sudden schedule changes or bad-weather closures.
-                        </p>
-                    </div>
-
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge green">Driver / Attendant Touchpoint</span>
-                        </div>
-                        <h4 class="ux-scenario-title">High-Contrast In-Vehicle Checklist UI</h4>
-                        <p class="ux-scenario-text">
-                            Large-touch-target tablet interface enabling attendants to perform rapid RFID student check-ins/check-outs, view turn-by-turn navigation with restricted speed zones, and trigger a 1-tap SOS alarm.
-                        </p>
-                    </div>
-
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge amber">School Administration Touchpoint</span>
-                        </div>
-                        <h4 class="ux-scenario-title">Fleet Dispatch &amp; Route Optimization</h4>
-                        <p class="ux-scenario-text">
-                            Intelligent routing algorithms that consolidate pickup stops, reduce fuel expenditures, track driver speeding compliance, and generate automated government transport regulatory audits.
-                        </p>
-                    </div>
-
-                    <div class="ux-scenario-card">
-                        <div class="ux-scenario-header">
-                            <span class="ux-scenario-badge purple">Safety &amp; Compliance Touchpoint</span>
-                        </div>
-                        <h4 class="ux-scenario-title">Automated Incident Protocols</h4>
-                        <p class="ux-scenario-text">
-                            Instant automated alerts triggered if a bus deviates from its approved geofenced corridor, exceeds regional school-zone speed limits, or remains stationary for an abnormal period with students on board.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="graphic-feature-points" style="margin-top: 24px;">
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="shield-check" class="w-4 h-4"></i> Product Impact</span>
-                        <p class="graphic-point-text">Synthesized into the official Halo Product Requirement Document (PRD) guiding engineering development for school pilot rollouts in Kerala.</p>
-                    </div>
-                    <div class="graphic-point">
-                        <span class="graphic-point-title"><i data-lucide="lock" class="w-4 h-4"></i> NDA Protection</span>
-                        <p class="graphic-point-text">Institutional client contracts, school partner rosters, and commercial pricing tiers are strictly confidential.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================================
-             CHAPTER 04: IMPACT & REFLECTIONS
-             ============================================ -->
-        <section class="case-section" id="impact">
-            <div class="section-header">
-                <span class="section-number">Chapter 04</span>
-                <h2 class="section-title">Measurable Impact &amp; Learnings</h2>
-                <p class="section-intro">
-                    Working within an early-stage, fast-moving mobility tech company was a transformative experience that grounded my product design skills in real-world transit and operational complexities.
-                </p>
-            </div>
-
-            <div class="features-grid-3">
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <i data-lucide="layers" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">Systemic Transit UX</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Public mobility requires designing for edge cases in motion—spotty connectivity, moving vehicles, and split-second transfer decisions. Designing clear information hierarchies that eliminate cognitive strain for commuters was my biggest takeaway.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <i data-lucide="zap" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">Startup Agility &amp; Speed</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Delivered 14 distinct projects across the internship—ranging from strategic benchmarking decks for investor summits to on-ground vehicle decals printed within 24-hour turnaround windows.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-card-header">
-                        <div class="feature-icon-badge">
-                            <i data-lucide="users" class="w-5 h-5"></i>
-                        </div>
-                        <h4 class="feature-card-title">Cross-Team Empathy</h4>
-                    </div>
-                    <p class="feature-card-desc">
-                        Learned to communicate design rationale not just with designers, but with backend engineers building ONDC APIs, operations leads managing bus depots, and sales leads meeting fleet owners.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================================
-             TEAM & CULTURE SNAPSHOT (PAGE 15)
-             ============================================ -->
+        <!-- Team Photo Section (Below Outcome) -->
         <section class="team-photo-section">
-            <div class="team-photo-card">
-                <img src="assets/team_meeting.jpg" alt="Xplor AI Mobility Team Meeting" class="team-photo-img" loading="lazy">
+            <div class="team-photo-card" aria-label="Xplor AI Mobility Design Team">
+                <img src="assets/team_meeting.jpg" alt="Xplor AI Mobility Design Team" class="team-photo-img" loading="lazy">
             </div>
         </section>
 
-        <!-- ============================================
-             FINAL END CTA & CONTACT
-             ============================================ -->
-        <section class="case-end-cta">
-            <span class="end-cta-eyebrow">Interested in Learning More?</span>
-            <h3 class="end-cta-title">Let's Walk Through the Full Process</h3>
-            <p class="end-cta-desc">
-                Due to NDA restrictions, detailed UX prototypes, user testing transcripts, and proprietary app screens are preserved for private walkthroughs. If you are a recruiter, hiring manager, or design team curious to see how I tackle complex systemic design, I would love to connect.
-            </p>
-            <div class="end-cta-buttons">
-                <a href="mailto:rehanjose.design@gmail.com?subject=Discussion%20Request%3A%20Xplor%20AI%20Mobility%20Case%20Study" class="cta-nda-primary">
-                    <i data-lucide="mail" class="w-4 h-4"></i>
-                    <span>Contact Rehan</span>
-                </a>
-            </div>
-        </section>
+        <!-- Closing Line -->
+        <div class="closing-touch-line">
+            <span>If you'd like to learn more about the process or my role, feel free to get in touch.</span>
+            <a href="../../index.html#contact" class="touch-link" id="getInTouchBtn">
+                <span>Get in touch</span>
+                <span>↗</span>
+            </a>
+        </div>
 
     </main>
 
@@ -1086,7 +634,7 @@
                     </ul>
                 </div>
 
-                <!-- Column 3: Connect & Socials -->
+                <!-- Column 2: Connect & Socials -->
                 <div class="sitemap-col">
                     <h4 class="sitemap-col-title">Connect</h4>
                     <ul class="sitemap-list">
@@ -1114,6 +662,7 @@
             lucide.createIcons();
         }
 
+        // Mobile Menu
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileToggle = document.getElementById('mobile-menu-toggle');
         const mobileClose = document.getElementById('mobile-menu-close');
@@ -1142,5 +691,4 @@
         });
     </script>
 </body>
-
 </html>
