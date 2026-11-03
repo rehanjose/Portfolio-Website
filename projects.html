@@ -35,7 +35,11 @@
         rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css?v=41">
+    <link rel="stylesheet" href="styles.css?v=42">
+
+    <!-- Preload theme backdrops for instant switching -->
+    <link rel="preload" as="image" href="Homepage%20Assets/NETBACKDROPBLACK.png">
+    <link rel="preload" as="image" href="Homepage%20Assets/netbackdrop.png">
 </head>
 
 <body>
@@ -64,13 +68,13 @@
 
                 <div class="hidden md:flex items-center gap-6">
                     <a href="index.html#home"
-                        class="nav-link text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Home</a>
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Home</a>
                     <a href="about.html"
-                        class="nav-link text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">About</a>
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">About</a>
                     <a href="projects.html"
-                        class="nav-link active text-xs font-bold uppercase tracking-widest text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.9)] transition-all duration-300">Projects</a>
+                        class="nav-link active text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Projects</a>
                     <a href="index.html#contact"
-                        class="nav-link text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Contact</a>
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Contact</a>
                 </div>
 
                 <div class="flex items-center gap-3">
@@ -120,17 +124,6 @@
             <div class="archive-header">
                 <span class="archive-eyebrow">SELECTED WORKS &amp; ARCHIVE</span>
                 <h1 class="archive-title">ALL PROJECTS</h1>
-                <p class="archive-subtitle">
-                    A comprehensive index of product design, smart mobility, AI companions, visual identity systems, and spatial experiments.
-                </p>
-
-                <!-- Filter Controls -->
-                <div class="archive-filters" role="tablist" aria-label="Project categories">
-                    <button class="archive-filter-btn active" data-filter="all">All (7)</button>
-                    <button class="archive-filter-btn" data-filter="product">Product Design (7)</button>
-                    <button class="archive-filter-btn" data-filter="ui-web">UI/UX &amp; Web (5)</button>
-                    <!-- <button class="archive-filter-btn" data-filter="visual">Visual &amp; Brand (2)</button> -->
-                </div>
             </div>
 
             <!-- Projects Grid -->
@@ -377,31 +370,7 @@
             window.location.href = 'index.html#contact';
         }
 
-        // Category Filtering (scoped in IIFE)
-        (function () {
-            const filterBtns = document.querySelectorAll('.archive-filter-btn');
-            const cards = document.querySelectorAll('.archive-grid .project-card, .archive-card');
 
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const filter = btn.getAttribute('data-filter');
-
-                    cards.forEach(card => {
-                        const categories = (card.getAttribute('data-category') || '').split(' ');
-                        if (filter === 'all' || categories.includes(filter)) {
-                            card.style.display = 'flex';
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        })();
     </script>
 
     <!-- Dinely In-Progress Modal -->
@@ -474,7 +443,7 @@
         </div>
     </div>
 
-    <script src="script.js?v=39"></script>
+    <script src="script.js?v=42"></script>
 </body>
 
 </html>

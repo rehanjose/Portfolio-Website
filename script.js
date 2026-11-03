@@ -191,11 +191,6 @@ function applyTheme(theme) {
     document.querySelectorAll('.nav-logo:not(.nav-logo--dark):not(.nav-logo--light)').forEach(img => {
         img.src = theme === 'light' ? 'Homepage%20Assets/rehanlogoblack.png' : 'Homepage%20Assets/logo.png';
     });
-
-    // Re-init Lucide so icon strokes get the right color
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
 }
 
 function toggleThemeWithRipple(e, btn) {
@@ -235,8 +230,8 @@ function toggleThemeWithRipple(e, btn) {
                     ]
                 },
                 {
-                    duration: 720,
-                    easing: 'cubic-bezier(0.19, 1, 0.22, 1)',
+                    duration: 350,
+                    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
                     pseudoElement: '::view-transition-new(root)'
                 }
             );
@@ -260,16 +255,13 @@ function toggleThemeWithRipple(e, btn) {
 
         requestAnimationFrame(() => {
             ripple.classList.add('is-animating');
+            applyTheme(nextTheme);
         });
 
         setTimeout(() => {
-            applyTheme(nextTheme);
-        }, 300);
-
-        setTimeout(() => {
             ripple.classList.add('is-fading');
-            setTimeout(() => ripple.remove(), 400);
-        }, 520);
+            setTimeout(() => ripple.remove(), 250);
+        }, 280);
         return;
     }
 
@@ -1209,7 +1201,16 @@ function updateCardStacking() {
     });
 }
 
-window.addEventListener('scroll', updateCardStacking, { passive: true });
+let isStackingTicking = false;
+window.addEventListener('scroll', () => {
+    if (!isStackingTicking) {
+        requestAnimationFrame(() => {
+            updateCardStacking();
+            isStackingTicking = false;
+        });
+        isStackingTicking = true;
+    }
+}, { passive: true });
 refreshProjectStacking();
 
 // ============================================================
@@ -1397,14 +1398,8 @@ refreshProjectStacking();
     });
 
     window.addEventListener('scroll', () => {
-        if (isActive && mouseX >= 0 && mouseY >= 0) {
-            const elUnderMouse = document.elementFromPoint(mouseX, mouseY);
-            const config = getHoverConfig(elUnderMouse);
-            if (config) {
-                setBadgeActive(config, mouseX, mouseY);
-            } else {
-                setBadgeInactive();
-            }
+        if (isActive) {
+            setBadgeInactive();
         }
     }, { passive: true });
 })();

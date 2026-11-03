@@ -66,6 +66,8 @@ body::after {
     pointer-events: none;
     transition: opacity 0.3s ease;
     will-change: opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 /* Layer 1: Dark Mode Net Backdrop */
@@ -237,6 +239,16 @@ body::after {
     transition: none;
 }
 
+#navbar-container,
+#navbar-container *,
+.center-nav-bar,
+.center-nav-bar *,
+.nav-link,
+.nav-resume-btn,
+.nav-resume-btn * {
+    font-family: 'Space Mono', monospace !important;
+}
+
 
 
 /* Active navigation link highlighting */
@@ -284,9 +296,9 @@ body::after {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(24, 24, 27, 0.40);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(24, 24, 27, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
     color: var(--text-primary);
@@ -321,12 +333,12 @@ body::after {
 }
 
 [data-theme="light"] .theme-toggle--top-right {
-    background: rgba(255, 255, 255, 0.40);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(17, 17, 17, 0.10);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(17, 17, 17, 0.12);
     box-shadow: 0 10px 25px -5px rgba(17, 17, 17, 0.08),
-                0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+                0 0 0 1px rgba(255, 255, 255, 0.8) inset;
     color: #111111;
 }
 
@@ -2476,12 +2488,12 @@ body::after {
 [data-theme="light"] #navbar-container nav,
 [data-theme="light"] nav.bg-zinc-900\/90,
 [data-theme="light"] nav.bg-zinc-900\/30 {
-    background: rgba(255, 255, 255, 0.40) !important;
-    backdrop-filter: blur(24px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
     border: 1px solid rgba(17, 17, 17, 0.10) !important;
     box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08),
-                0 0 0 1px rgba(255, 255, 255, 0.6) inset !important;
+                0 0 0 1px rgba(255, 255, 255, 0.8) inset !important;
 }
 
 [data-theme="light"] .nav-link {

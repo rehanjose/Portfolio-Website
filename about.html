@@ -38,7 +38,11 @@
         rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css?v=41">
+    <link rel="stylesheet" href="styles.css?v=42">
+
+    <!-- Preload theme backdrops for instant switching -->
+    <link rel="preload" as="image" href="Homepage%20Assets/NETBACKDROPBLACK.png">
+    <link rel="preload" as="image" href="Homepage%20Assets/netbackdrop.png">
 
     <style>
         html, body {
@@ -488,9 +492,9 @@
             align-items: center;
             gap: 12px;
             padding: 16px 36px;
-            background: rgba(24, 24, 27, 0.45);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(24, 24, 27, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
             font-family: 'Space Mono', monospace;
@@ -528,9 +532,9 @@
         }
 
         [data-theme="light"] .about-btn-secondary {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: #111111;
             border-color: rgba(17, 17, 17, 0.12);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
@@ -579,19 +583,18 @@
             background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 45%, transparent 70%);
             pointer-events: none;
             z-index: 1;
-            filter: blur(20px);
             opacity: 0;
-            transform: scale(0.5);
+            transform: scale(0.5) translateZ(0);
             transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         #photo-sphere-section.is-visible .photo-sphere-backdrop-glow {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) translateZ(0);
         }
 
         [data-theme="light"] .photo-sphere-backdrop-glow {
-            background: radial-gradient(circle, rgba(17, 17, 17, 0.06) 0%, rgba(17, 17, 17, 0.015) 45%, transparent 70%);
+            background: radial-gradient(circle, rgba(17, 17, 17, 0.05) 0%, rgba(17, 17, 17, 0.015) 45%, transparent 70%);
         }
 
         .photo-sphere-viewport {
@@ -1097,7 +1100,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="script.js?v=39"></script>
+    <script src="script.js?v=42"></script>
     <script>
         // Initialize Lucide icons
         if (typeof lucide !== 'undefined') {
