@@ -1606,3 +1606,227 @@ p {
 #craftImgLightbox .lightbox-close:hover {
     opacity: 1;
 }
+
+/* =========================================
+   17. RESPONSIVE OPTIMIZATIONS (TABLETS & MOBILE)
+   ========================================= */
+
+@media (max-width: 1024px) {
+    .section-padding {
+        padding: 90px 0;
+    }
+
+    .container {
+        padding: 0 32px;
+    }
+
+    .craft-hero {
+        min-height: 50vh;
+        padding-top: 80px;
+    }
+
+    .craft-hero__title {
+        font-size: clamp(48px, 8vw, 68px);
+    }
+
+    .process-sticky-side {
+        width: 38%;
+    }
+
+    .process-steps-side {
+        width: 62%;
+        padding-left: 80px;
+    }
+
+    .process-sticky-content {
+        transform: translateX(-40px);
+    }
+}
+
+@media (max-width: 992px) {
+    .process-scroll-container {
+        padding: 60px 0 80px;
+    }
+
+    .process-scroll-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .process-sticky-side {
+        position: relative;
+        top: 0;
+        width: 100%;
+        height: auto;
+        padding-right: 0;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .process-sticky-content {
+        transform: none;
+        max-width: 680px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .process-sticky-title {
+        font-size: 38px;
+        margin-bottom: 12px;
+    }
+
+    .process-steps-side {
+        width: 100%;
+        padding: 0;
+    }
+
+    /* Hide desktop connector line, dot, and fixed progress track */
+    .process-steps-side::before,
+    .process-line-dot,
+    .process-progress-track {
+        display: none !important;
+    }
+
+    .process-scroll-step {
+        padding: 32px 28px;
+        opacity: 1 !important;
+        transform: none !important;
+        margin-bottom: 24px;
+        border-left: 4px solid #C2A24D;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .process-step__image-placeholder img {
+        height: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-padding {
+        padding: 70px 0;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    h2 {
+        font-size: 32px;
+        margin-bottom: 18px;
+    }
+
+    .craft-hero {
+        min-height: 45vh;
+        padding-top: 70px;
+        padding-bottom: 40px;
+    }
+
+    .craft-hero__title {
+        font-size: clamp(38px, 8.5vw, 56px);
+        margin-bottom: 12px;
+    }
+
+    .hero__subtitle {
+        font-size: 16px;
+    }
+
+    .hero__description {
+        font-size: 15.5px;
+        padding: 0 10px;
+    }
+
+    .about__decorative,
+    .craft-intro .about__decorative,
+    img[src*="gold.png"] {
+        display: none !important;
+    }
+
+    .process-sticky-title {
+        font-size: 32px;
+    }
+
+    .process-scroll-step {
+        padding: 26px 20px;
+    }
+
+    .process-step__number {
+        font-size: 46px;
+    }
+
+    .process-step__title {
+        font-size: 26px;
+    }
+
+    .process-step__text {
+        font-size: 15px;
+        line-height: 1.65;
+    }
+
+    .process-step__image-placeholder img {
+        height: 240px;
+    }
+
+    #craftImgLightbox .lightbox-inner {
+        max-width: 95vw;
+    }
+
+    #craftImgLightbox .lightbox-close {
+        top: -36px;
+        right: 4px;
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-padding {
+        padding: 50px 0;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    .craft-hero__title {
+        font-size: clamp(30px, 9vw, 42px);
+    }
+
+    .about__description {
+        font-size: 14.5px;
+    }
+
+    .process-sticky-title {
+        font-size: 28px;
+    }
+
+    .process-scroll-step {
+        padding: 22px 16px;
+        margin-bottom: 18px;
+    }
+
+    .process-step__number {
+        font-size: 38px;
+        margin-bottom: 6px;
+    }
+
+    .process-step__title {
+        font-size: 22px;
+    }
+
+    .process-step__image-placeholder {
+        margin-top: 14px;
+        margin-bottom: 18px;
+    }
+
+    .process-step__image-placeholder img {
+        height: 190px;
+    }
+
+    .process-step__text {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+}

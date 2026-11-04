@@ -1471,3 +1471,167 @@ p {
     opacity: 1;
 }
 
+/* =========================================
+   17. RESPONSIVE OPTIMIZATIONS (TABLETS & MOBILE)
+   ========================================= */
+
+@media (max-width: 1024px) {
+    .section-padding {
+        padding: 90px 0;
+    }
+
+    .container {
+        padding: 0 32px;
+    }
+
+    .weavers-hero {
+        min-height: 50vh;
+        padding-top: 80px;
+    }
+
+    .weavers-hero__title {
+        font-size: clamp(48px, 8vw, 68px);
+    }
+
+    .weavers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        padding: 40px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-padding {
+        padding: 70px 0;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    h2 {
+        font-size: 32px;
+        margin-bottom: 18px;
+    }
+
+    .weavers-hero {
+        min-height: 45vh;
+        padding-top: 70px;
+        padding-bottom: 40px;
+    }
+
+    .weavers-hero__title {
+        font-size: clamp(38px, 8.5vw, 56px);
+        margin-bottom: 12px;
+    }
+
+    .hero__subtitle {
+        font-size: 16px;
+    }
+
+    .hero__description {
+        font-size: 15.5px;
+        padding: 0 10px;
+    }
+
+    .about__decorative,
+    .weavers-intro .about__decorative,
+    .community-section .about__decorative,
+    img[src*="gold.png"] {
+        display: none !important;
+    }
+
+    .weavers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 30px 0;
+    }
+
+    .weaver-card {
+        padding: 30px 20px;
+    }
+
+    .weaver-card__img-wrapper {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 18px;
+    }
+
+    .weaver-card__name {
+        font-size: 26px;
+    }
+
+    .weaver-card__role {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    .weaver-card__exp {
+        font-size: 13.5px;
+        line-height: 1.5;
+    }
+
+    .weaver-profile-card {
+        padding: 16px;
+        max-width: 92vw;
+    }
+
+    .weaver-profile-card__image {
+        max-height: 72vh;
+    }
+
+    #weaversImgLightbox .lightbox-inner {
+        max-width: 95vw;
+    }
+
+    #weaversImgLightbox .lightbox-close {
+        top: -36px;
+        right: 4px;
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 560px) {
+    .section-padding {
+        padding: 50px 0;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    .weavers-hero__title {
+        font-size: clamp(32px, 9vw, 44px);
+    }
+
+    .about__description {
+        font-size: 14.5px;
+    }
+
+    .weavers-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 24px 0;
+    }
+
+    .weaver-card {
+        padding: 28px 18px;
+        max-width: 380px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .weaver-card__img-wrapper {
+        width: 130px;
+        height: 130px;
+    }
+
+    .weaver-card__name {
+        font-size: 24px;
+    }
+}
+

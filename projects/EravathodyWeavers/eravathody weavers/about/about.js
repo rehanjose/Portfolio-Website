@@ -199,12 +199,26 @@ if (contactModel && openContactModelBtn && closeContactModelBtn) {
     
     if(!wrapper || !track || items.length === 0) return;
 
-    const ITEM_WIDTH = 350 + 50; // card width + margin-right (from CSS)
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+
+    function getItemWidth() {
+        if (!items[0]) return 400;
+        const style = window.getComputedStyle(items[0]);
+        const mr = parseFloat(style.marginRight) || 0;
+        return items[0].offsetWidth + mr;
+    }
 
     let targetTranslate = 0;
     let currentTranslate = 0;
 
     window.addEventListener('scroll', () => {
+        // On mobile, timeline is natural vertical reading flow — no sticky scroll trapping
+        if (isMobile()) {
+            return;
+        }
+
         const wrapperRect = wrapper.getBoundingClientRect();
         const scrollDistance = -wrapperRect.top;
         const scrollableHeight = wrapperRect.height - window.innerHeight;
@@ -226,16 +240,21 @@ if (contactModel && openContactModelBtn && closeContactModelBtn) {
             });
 
             // Center the active card: offset so active card is at viewport center
-            const centerOffset = (window.innerWidth / 2) - (ITEM_WIDTH / 2);
-            targetTranslate = (activeIndex * ITEM_WIDTH) - centerOffset;
+            const itemWidth = getItemWidth();
+            const centerOffset = (window.innerWidth / 2) - (itemWidth / 2);
+            targetTranslate = (activeIndex * itemWidth) - centerOffset;
             if (targetTranslate < 0) targetTranslate = 0;
         }
     });
 
     // Smooth Lerp Animation Loop
     function smoothScroll() {
-        currentTranslate += (targetTranslate - currentTranslate) * 0.08;
-        track.style.transform = `translateX(-${currentTranslate}px)`;
+        if (!isMobile()) {
+            currentTranslate += (targetTranslate - currentTranslate) * 0.08;
+            track.style.transform = `translateX(-${currentTranslate}px)`;
+        } else {
+            track.style.transform = '';
+        }
         requestAnimationFrame(smoothScroll);
     }
     

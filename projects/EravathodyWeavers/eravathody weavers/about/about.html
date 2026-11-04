@@ -34,10 +34,10 @@
         rel="stylesheet">
 
     <!-- Link external CSS -->
-    <link rel="stylesheet" href="about.css">
-    <link rel="stylesheet" href="../chatbot.css">
-    <link rel="stylesheet" href="../navbar.css">
-    <link rel="stylesheet" href="../footer.css">
+    <link rel="stylesheet" href="about.css?v=2">
+    <link rel="stylesheet" href="../chatbot.css?v=2">
+    <link rel="stylesheet" href="../navbar.css?v=2">
+    <link rel="stylesheet" href="../footer.css?v=2">
 </head>
 
 <body>
@@ -63,16 +63,23 @@
                 <li><a href="../contact/contact.html">Contact Us</a></li>
             </ul>
         </nav>
-        <div class="header__search">
-            <div class="header__search-bar">
-                <input type="text" class="header__search-input" placeholder="Search...">
+        <div class="header__actions">
+            <div class="header__search">
+                <div class="header__search-bar">
+                    <input type="text" class="header__search-input" placeholder="Search...">
+                </div>
+                <button class="search-toggle" aria-label="Toggle Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
             </div>
-            <button class="search-toggle" aria-label="Toggle Search">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="nav-toggle__bar"></span>
+                <span class="nav-toggle__bar"></span>
+                <span class="nav-toggle__bar"></span>
             </button>
         </div>
     </header>
@@ -255,13 +262,18 @@
                 </div>
                 <div class="book-controls">
                     <button id="bookPrev" class="flipbook-nav-btn" aria-label="Previous page">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                     </button>
                     <span id="bookPageNum" class="flipbook-page-num">— / —</span>
                     <button id="bookNext" class="flipbook-nav-btn" aria-label="Next page">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                    <button id="bookZoomBtn" class="flipbook-nav-btn flipbook-zoom-btn" aria-label="Zoom page">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                        <span class="zoom-btn-label">Zoom</span>
                     </button>
                 </div>
+                <p class="book-mobile-hint">Swipe or tap arrows to flip &bull; Tap Zoom to read clearly</p>
             </div>
         </section>
 
@@ -425,7 +437,7 @@
 
     <!-- StPageFlip library for real book spread with page-turn animation -->
     <script src="https://unpkg.com/page-flip/dist/js/page-flip.browser.js"></script>
-    <script src="about.js"></script>
+    <script src="about.js?v=2"></script>
     <script>
         // ---- Real Book Flipbook (StPageFlip) ----
         (function() {
@@ -448,55 +460,129 @@
             img.onload = function() {
                 const naturalRatio = img.naturalHeight / img.naturalWidth;
 
-                // Calculate book dimensions to fit nicely
-                const maxW = Math.min(window.innerWidth * 0.9, 1200);
-                const pageW = Math.floor(maxW / 2);
-                const pageH = Math.floor(pageW * naturalRatio);
+                // Responsive book dimensions
+                const isMobile = window.innerWidth < 768;
+                let pageW, pageH, stageW;
 
-                stage.style.width  = (pageW * 2) + 'px';
+                if (isMobile) {
+                    pageW = Math.min(window.innerWidth - 32, 380);
+                    pageH = Math.floor(pageW * naturalRatio);
+                    stageW = pageW;
+                } else {
+                    const maxW = Math.min(window.innerWidth * 0.9, 1200);
+                    pageW = Math.floor(maxW / 2);
+                    pageH = Math.floor(pageW * naturalRatio);
+                    stageW = pageW * 2;
+                }
+
+                stage.style.width  = stageW + 'px';
                 stage.style.height = pageH + 'px';
 
                 const pageFlip = new St.PageFlip(stage, {
                     width:       pageW,
                     height:      pageH,
                     size:        'fixed',
-                    showCover:   true,
+                    showCover:   !isMobile,
                     drawShadow:  true,
-                    flippingTime: 700,
-                    usePortrait:  false,
+                    flippingTime: 500,
+                    usePortrait:  isMobile,
                     startZIndex:  10,
-                    swipeDistance: 30,
+                    swipeDistance: isMobile ? 60 : 30,
                     clickEventForward: true,
                     useMouseEvents: true,
                 });
 
                 pageFlip.loadFromImages(pages);
 
-                const openingMask = document.createElement('div');
-                openingMask.className = 'book-opening-mask';
-                stage.appendChild(openingMask);
+                // Opening mask ONLY for desktop 2-page spread
+                if (!isMobile) {
+                    const openingMask = document.createElement('div');
+                    openingMask.className = 'book-opening-mask';
+                    stage.appendChild(openingMask);
 
-                function syncOpeningMask(pageIndex) {
-                    openingMask.classList.toggle('is-hidden', pageIndex > 0);
+                    function syncOpeningMask(pageIndex) {
+                        openingMask.classList.toggle('is-hidden', pageIndex > 0);
+                    }
+
+                    syncOpeningMask(pageFlip.getCurrentPageIndex ? pageFlip.getCurrentPageIndex() : 0);
+
+                    pageFlip.on('flip', function(e) {
+                        syncOpeningMask(e.data);
+                    });
                 }
-
-                syncOpeningMask(pageFlip.getCurrentPageIndex ? pageFlip.getCurrentPageIndex() : 0);
 
                 pageFlip.on('flip', function(e) {
                     const cur = e.data + 1;
                     pageNumEl.textContent = cur + ' / ' + pageFlip.getPageCount();
-                    syncOpeningMask(e.data);
                 });
 
                 if (prevBtn) prevBtn.addEventListener('click', function() { pageFlip.flipPrev(); });
                 if (nextBtn) nextBtn.addEventListener('click', function() { pageFlip.flipNext(); });
 
                 pageNumEl.textContent = '1 / ' + pageFlip.getPageCount();
+
+                // Zoom / Fullscreen Modal Logic for mobile readability
+                const zoomBtn = document.getElementById('bookZoomBtn');
+                function openPageZoom() {
+                    const curIdx = pageFlip.getCurrentPageIndex ? pageFlip.getCurrentPageIndex() : 0;
+                    const curImg = pages[curIdx] || pages[0];
+                    const modal = document.getElementById('flipbookModal');
+                    if (modal) {
+                        modal.innerHTML = `
+                            <button class="model__close-btn" id="closeBookZoom" aria-label="Close zoom">&times;</button>
+                            <div class="book-zoom-content">
+                                <img src="${curImg}" alt="Research Book Page ${curIdx + 1}" class="book-zoom-img">
+                                <div class="book-zoom-bar">
+                                    <button id="zoomPrev" class="zoom-nav-btn" aria-label="Previous page">&larr; Prev</button>
+                                    <span>Page ${curIdx + 1} of ${pages.length}</span>
+                                    <button id="zoomNext" class="zoom-nav-btn" aria-label="Next page">Next &rarr;</button>
+                                </div>
+                            </div>
+                        `;
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+
+                        const closeBtn = document.getElementById('closeBookZoom');
+                        if (closeBtn) {
+                            closeBtn.onclick = () => {
+                                modal.classList.remove('active');
+                                document.body.style.overflow = '';
+                            };
+                        }
+                        modal.onclick = (e) => {
+                            if (e.target === modal || e.target.classList.contains('book-zoom-content')) {
+                                modal.classList.remove('active');
+                                document.body.style.overflow = '';
+                            }
+                        };
+
+                        const zPrev = document.getElementById('zoomPrev');
+                        const zNext = document.getElementById('zoomNext');
+                        if (zPrev) {
+                            zPrev.onclick = (e) => {
+                                e.stopPropagation();
+                                pageFlip.flipPrev();
+                                setTimeout(openPageZoom, 250);
+                            };
+                        }
+                        if (zNext) {
+                            zNext.onclick = (e) => {
+                                e.stopPropagation();
+                                pageFlip.flipNext();
+                                setTimeout(openPageZoom, 250);
+                            };
+                        }
+                    }
+                }
+
+                if (zoomBtn) {
+                    zoomBtn.addEventListener('click', openPageZoom);
+                }
             };
         })();
     </script>
-    <script src="../chatbot.js"></script>
-    <script src="../search.js"></script>
+    <script src="../chatbot.js?v=2"></script>
+    <script src="../search.js?v=2"></script>
 </body>
 
 </html>

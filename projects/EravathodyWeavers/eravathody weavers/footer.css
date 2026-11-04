@@ -98,6 +98,8 @@
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: color 0.3s ease;
+    display: inline-block;
+    padding: 2px 0;
 }
 
 .footer__links a:hover {
@@ -110,7 +112,7 @@
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     max-width: 100%;
-    margin: 0 0 0 0;
+    margin: 0;
 }
 
 /* Bottom bar */
@@ -149,4 +151,75 @@
 
 .footer__bottom-links a:hover {
     color: #C2A24D;
+}
+
+/* =========================================
+   TABLET RESPONSIVE (<= 992px)
+   ========================================= */
+@media (max-width: 992px) {
+    .footer__top {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 32px;
+        padding: 50px 36px 36px;
+    }
+
+    .footer__brand {
+        grid-column: 1 / -1;
+        padding-right: 0;
+        margin-bottom: 8px;
+    }
+
+    .footer__bottom {
+        padding: 20px 36px;
+    }
+}
+
+/* =========================================
+   MOBILE RESPONSIVE (<= 600px)
+   ========================================= */
+@media (max-width: 600px) {
+    .footer__top {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 40px 20px 28px;
+        text-align: left;
+    }
+
+    .footer__brand {
+        text-align: left;
+    }
+
+    .footer__logo {
+        font-size: 24px;
+    }
+
+    .footer__title {
+        margin-bottom: 12px;
+    }
+
+    .footer__links li {
+        margin-bottom: 8px;
+    }
+
+    .footer__links a {
+        padding: 4px 0;
+        font-size: 14.5px;
+    }
+
+    .footer__bottom {
+        padding: 20px 16px;
+    }
+
+    .footer__copy {
+        font-size: 11.5px;
+        line-height: 1.6;
+    }
+}
+
+/* Global mobile optimization: Remove gold.png across all pages on mobile */
+@media (max-width: 768px) {
+    .about__decorative,
+    img[src*="gold.png"] {
+        display: none !important;
+    }
 }

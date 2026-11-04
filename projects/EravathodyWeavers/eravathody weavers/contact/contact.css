@@ -350,14 +350,35 @@
 /* =========================================
    4. RESPONSIVE
    ========================================= */
+@media (max-width: 1024px) {
+    .contact-grid {
+        gap: 60px;
+        margin-left: 0;
+    }
+
+    .contact-hero__title {
+        font-size: 58px;
+    }
+
+    .contact-section {
+        padding: 60px 0 80px;
+    }
+}
+
 @media (max-width: 900px) {
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 40px;
+        margin-left: 0;
     }
 
     .contact-hero__title {
-        font-size: 52px;
+        font-size: clamp(38px, 8vw, 52px);
+    }
+
+    .contact-hero__subtitle {
+        font-size: 16px;
+        padding: 0 16px;
     }
 
     .contact-form-wrapper {
@@ -366,10 +387,89 @@
 
     .contact-form__row {
         flex-direction: column;
+        gap: 14px;
     }
 
     .faq-header h2 {
-        font-size: 38px;
+        font-size: 34px;
+    }
+
+    .find-us-map {
+        height: 320px;
+    }
+}
+
+@media (max-width: 600px) {
+    .contact-hero {
+        min-height: 40vh;
+        padding-top: 70px;
+        padding-bottom: 40px;
+    }
+
+    .contact-hero__title {
+        font-size: clamp(32px, 8.5vw, 42px);
+        margin-bottom: 12px;
+    }
+
+    .contact-hero__subtitle {
+        font-size: 14.5px;
+    }
+
+    .contact-section {
+        padding: 40px 0 60px;
+    }
+
+    .contact-form-wrapper {
+        padding: 24px 16px;
+    }
+
+    .contact-form-wrapper h3 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+        padding: 12px 14px;
+        font-size: 13.5px;
+    }
+
+    .contact-form__submit {
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+    }
+
+    .contact-info-card {
+        padding: 24px 18px;
+    }
+
+    .faq-section {
+        padding: 50px 0 60px;
+    }
+
+    .faq-header h2 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .faq-question {
+        padding: 18px 20px;
+        font-size: 15px;
+    }
+
+    .faq-answer p {
+        padding: 16px 20px 20px;
+        font-size: 14px;
+    }
+
+    .find-us-header {
+        padding: 14px 20px;
+    }
+
+    .find-us-map {
+        height: 260px;
     }
 }
 

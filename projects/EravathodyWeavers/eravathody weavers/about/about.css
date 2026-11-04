@@ -2149,6 +2149,119 @@ p {
     border: 1px solid rgba(194,162,77,0.25);
 }
 
+.book-stage {
+    touch-action: pan-y;
+}
+
+#bookStage canvas {
+    touch-action: pan-y;
+}
+
+.flipbook-zoom-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+    width: auto;
+    border-radius: 24px;
+    background: rgba(194, 162, 77, 0.15);
+    border-color: rgba(194, 162, 77, 0.5);
+    color: #F4F1EA;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.flipbook-zoom-btn:hover {
+    background: #C2A24D;
+    color: #1A1209;
+}
+
+.book-mobile-hint {
+    display: none;
+    font-size: 12.5px;
+    color: rgba(194, 162, 77, 0.85);
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 14px;
+    font-style: italic;
+    font-family: 'Syne', sans-serif;
+}
+
+/* Flipbook Zoom Modal */
+#flipbookModal {
+    z-index: 99999;
+}
+
+#flipbookModal .model__close-btn {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    font-size: 38px;
+    color: #ffffff;
+    z-index: 100000;
+    background: rgba(0,0,0,0.4);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.book-zoom-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 95vw;
+    max-width: 900px;
+    max-height: 92vh;
+    padding: 20px 10px;
+}
+
+.book-zoom-img {
+    max-width: 100%;
+    max-height: calc(88vh - 70px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(194, 162, 77, 0.25);
+    background: #111;
+}
+
+.book-zoom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 14px;
+    color: #F4F1EA;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+}
+
+.zoom-nav-btn {
+    background: rgba(194, 162, 77, 0.2);
+    color: #F4F1EA;
+    border: 1px solid rgba(194, 162, 77, 0.5);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.zoom-nav-btn:hover {
+    background: #C2A24D;
+    color: #1A1209;
+}
+
 /* =========================================
    MUDALIYAR IMAGE LIGHTBOX
    ========================================= */
@@ -2208,4 +2321,462 @@ p {
 
 #aboutImgLightbox .lightbox-close:hover {
     opacity: 1;
+}
+
+/* =========================================
+   18. RESPONSIVE OPTIMIZATIONS (TABLETS & MOBILE)
+   ========================================= */
+
+@media (max-width: 1024px) {
+    .section-padding {
+        padding: 90px 0;
+    }
+
+    .container {
+        padding: 0 32px;
+    }
+
+    .about-hero {
+        min-height: 50vh;
+        padding-top: 80px;
+    }
+
+    .about-hero__title {
+        font-size: clamp(48px, 8vw, 68px);
+    }
+
+    /* Intro grid */
+    .about__grid {
+        gap: 40px;
+    }
+
+    /* Timeline */
+    .timeline-item {
+        flex: 0 0 320px;
+        margin-right: 36px;
+        padding: 32px;
+    }
+
+    .timeline-year {
+        font-size: 42px;
+    }
+
+    .timeline-event {
+        font-size: 20px;
+    }
+
+    /* Vision & Mission */
+    .vm-grid {
+        gap: 36px;
+    }
+
+    .vm-card {
+        padding: 48px 36px 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-padding {
+        padding: 70px 0;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    h2 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    /* Hero */
+    .about-hero {
+        min-height: 45vh;
+        padding-top: 70px;
+        padding-bottom: 50px;
+    }
+
+    .about-hero__title {
+        font-size: clamp(38px, 8.5vw, 56px);
+        margin-bottom: 14px;
+    }
+
+    .hero__subtitle {
+        font-size: 16px;
+    }
+
+    .hero__description {
+        font-size: 15.5px;
+        padding: 0 10px;
+    }
+
+    /* Intro: Remove gold.png decorative element on mobile */
+    .about__decorative,
+    .about-intro .about__decorative,
+    img[src*="gold.png"] {
+        display: none !important;
+    }
+
+    .about__grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .about__text-column--left {
+        text-align: left;
+    }
+
+    .about__image-column {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .about__plain-img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .about__photo-caption {
+        font-size: 14px;
+        margin-top: 8px;
+    }
+
+    /* Timeline on mobile: Natural vertical reading flow with connected golden thread */
+    .timeline-wrapper {
+        height: auto !important;
+        padding: 60px 0 70px;
+        background-attachment: scroll !important;
+    }
+
+    .timeline-sticky {
+        position: static !important;
+        height: auto !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    .timeline-title {
+        font-size: 30px;
+        margin-bottom: 36px;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .timeline-container {
+        position: relative;
+        width: 100%;
+        max-width: 580px;
+        margin: 0 auto;
+        padding: 0 20px 0 40px;
+    }
+
+    .timeline-track {
+        display: flex !important;
+        flex-direction: column !important;
+        position: relative !important;
+        left: 0 !important;
+        width: 100% !important;
+        gap: 26px !important;
+        transform: none !important;
+        align-items: stretch !important;
+    }
+
+    /* Vertical golden line running down timeline */
+    .timeline-track::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 24px !important;
+        bottom: 24px !important;
+        left: -18px !important;
+        right: auto !important;
+        width: 3px !important;
+        height: auto !important;
+        transform: none !important;
+        background: #C2A24D !important;
+        opacity: 0.85;
+        z-index: 1;
+    }
+
+    .timeline-item {
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        padding: 26px 24px 22px !important;
+        transform: none !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        border-left: 4px solid #C2A24D !important;
+        border-top: none !important;
+        border-radius: 4px;
+        background: #ffffff !important;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Milestone node connecting to vertical line */
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -26px;
+        top: 30px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #C2A24D;
+        border: 3px solid #E6DED2;
+        box-shadow: 0 0 0 2px #C2A24D;
+        z-index: 3;
+    }
+
+    /* All content inside cards crystal clear & visible on mobile */
+    .timeline-item > * {
+        opacity: 1 !important;
+    }
+
+    .timeline-item.active {
+        transform: none !important;
+        box-shadow: 0 8px 28px rgba(194, 162, 77, 0.25) !important;
+    }
+
+    .timeline-year {
+        font-size: 34px !important;
+        margin-bottom: 6px !important;
+        color: #C2A24D;
+        line-height: 1.1;
+    }
+
+    .timeline-event {
+        font-size: 19px !important;
+        margin-bottom: 8px !important;
+        line-height: 1.3;
+        color: #1C1C1C;
+    }
+
+    .timeline-desc {
+        font-size: 14.5px !important;
+        line-height: 1.6 !important;
+        color: #444;
+    }
+
+    /* Vision & Mission */
+    .vm-banner {
+        height: 240px;
+    }
+
+    .vm-banner__text h2 {
+        font-size: 32px;
+    }
+
+    .vm-cards-row {
+        padding-top: 50px !important;
+        padding-bottom: 60px !important;
+    }
+
+    .vm-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-top: 10px;
+    }
+
+    .vm-card {
+        padding: 36px 24px 30px;
+        transform: none !important;
+    }
+
+    .vm-title {
+        font-size: 26px;
+        margin-bottom: 12px;
+    }
+
+    .vm-text {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    /* Video Section */
+    .video-section {
+        padding: 60px 0;
+    }
+
+    .video-wrapper--large {
+        max-width: 100%;
+        aspect-ratio: 16/9;
+        margin: 0 auto;
+    }
+
+    .yt-facade {
+        aspect-ratio: 16/9;
+    }
+
+    /* Flipbook Mobile Optimization */
+    .flipbook-section {
+        padding: 50px 0;
+    }
+
+    .book-viewer-wrap {
+        padding: 0 0 36px;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .flipbook-header {
+        padding: 30px 16px 22px;
+    }
+
+    .flipbook-header h2 {
+        font-size: 24px;
+        line-height: 1.3;
+    }
+
+    .flipbook-intro-text {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .book-opening-mask {
+        display: none !important;
+    }
+
+    .book-stage {
+        max-width: 100%;
+        touch-action: pan-y !important;
+    }
+
+    #bookStage canvas {
+        touch-action: pan-y !important;
+    }
+
+    .book-controls {
+        gap: 16px;
+        padding: 10px 18px;
+        margin-top: 20px;
+    }
+
+    .flipbook-nav-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    .flipbook-zoom-btn {
+        height: 42px;
+        padding: 0 14px;
+    }
+
+    .flipbook-page-num {
+        font-size: 14px;
+    }
+
+    .book-mobile-hint {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-padding {
+        padding: 50px 0;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    .about-hero__title {
+        font-size: clamp(32px, 9vw, 44px);
+    }
+
+    .about__description {
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin-bottom: 18px;
+    }
+
+    .timeline-title {
+        font-size: 26px;
+        margin-bottom: 28px;
+    }
+
+    .timeline-container {
+        padding: 0 14px 0 32px;
+    }
+
+    .timeline-track::before {
+        left: -15px !important;
+    }
+
+    .timeline-item {
+        padding: 22px 18px 20px !important;
+    }
+
+    .timeline-item::before {
+        left: -22px;
+        top: 28px;
+        width: 12px;
+        height: 12px;
+    }
+
+    .timeline-year {
+        font-size: 30px !important;
+    }
+
+    .timeline-event {
+        font-size: 17px !important;
+    }
+
+    .timeline-desc {
+        font-size: 13.5px !important;
+    }
+
+    .book-controls {
+        gap: 10px;
+        padding: 8px 14px;
+    }
+
+    .flipbook-nav-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+    .flipbook-zoom-btn {
+        height: 38px;
+        padding: 0 12px;
+    }
+
+    .flipbook-zoom-btn .zoom-btn-label {
+        font-size: 12px;
+    }
+
+    .vm-banner {
+        height: 200px;
+    }
+
+    .vm-banner__text h2 {
+        font-size: 26px;
+    }
+
+    .vm-title {
+        font-size: 23px;
+    }
+
+    .vm-text {
+        font-size: 14px;
+    }
+
+    .flipbook-header h2 {
+        font-size: 22px;
+    }
+
+    #aboutImgLightbox .lightbox-inner {
+        max-width: 95vw;
+    }
+
+    #aboutImgLightbox .lightbox-close {
+        top: -36px;
+        right: 4px;
+        font-size: 28px;
+    }
 }

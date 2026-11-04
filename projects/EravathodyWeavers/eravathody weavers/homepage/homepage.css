@@ -1611,3 +1611,526 @@ p {
 .about__polaroid:hover {
     transform: scale(1.02) rotate(-2deg);
 }
+
+/* =========================================
+   17. RESPONSIVE OPTIMIZATIONS (TABLETS & MOBILE)
+   ========================================= */
+
+@media (max-width: 1024px) {
+    .section-padding {
+        padding: 100px 0;
+    }
+
+    .container {
+        padding: 0 32px;
+    }
+
+    h2 {
+        font-size: 38px;
+        margin-bottom: 24px;
+    }
+
+    /* Hero */
+    .hero__title {
+        font-size: clamp(56px, 8.5vw, 88px);
+        letter-spacing: 1.5px;
+    }
+
+    .hero__subtitle {
+        font-size: 22px;
+    }
+
+    .hero__description {
+        font-size: 18px;
+        max-width: 600px;
+    }
+
+    /* About */
+    .about__grid {
+        gap: 40px;
+    }
+
+    .about__image-column {
+        right: 0;
+    }
+
+    /* Craft Banner */
+    .craft-banner .container {
+        padding-right: 40px;
+    }
+
+    .craft-banner-title {
+        font-size: 40px;
+    }
+
+    /* Gallery Section */
+    .gallery__item {
+        flex: 0 0 300px;
+        height: 360px;
+    }
+
+    .gallery__track {
+        padding: 30px 40px;
+    }
+
+    /* Contact Banner */
+    .contact-banner {
+        padding: 70px 6%;
+    }
+
+    .contact-banner__heading {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-padding {
+        padding: 80px 0;
+    }
+
+    .container {
+        padding: 0 24px;
+    }
+
+    h2 {
+        font-size: 34px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 15.5px;
+        margin-bottom: 20px;
+    }
+
+    /* Hero */
+    .hero {
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding-top: 70px;
+        padding-bottom: 60px;
+    }
+
+    .hero__title {
+        font-size: clamp(40px, 9vw, 64px);
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+    }
+
+    .hero__subtitle {
+        font-size: 19px;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+
+    .hero__description {
+        font-size: 16px;
+        padding: 0 16px;
+    }
+
+    .hero__swipe-indicator {
+        bottom: 20px;
+    }
+
+    /* About Section */
+    .about {
+        min-height: auto;
+        padding: 80px 0;
+    }
+
+    .about__decorative,
+    img[src*="gold.png"] {
+        display: none !important;
+    }
+
+    .about__grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .about__image-column {
+        right: 0;
+        margin-bottom: 10px;
+    }
+
+    .about__polaroid {
+        max-width: 320px;
+        padding: 14px 14px 44px 14px;
+    }
+
+    .about__polaroid-caption {
+        font-size: 26px;
+        margin-bottom: -28px;
+    }
+
+    .about__text-column {
+        text-align: center;
+        align-items: center;
+    }
+
+    .about__description {
+        font-size: 16px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Craft Banner */
+    .craft-banner {
+        min-height: auto;
+        padding: 80px 0;
+    }
+
+    .craft-banner .container {
+        padding: 0 24px;
+    }
+
+    .craft-banner-content {
+        margin: 0 auto;
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .craft-banner-title {
+        font-size: 34px;
+    }
+
+    .craft-banner-desc {
+        font-size: 16px;
+    }
+
+    /* Artisan Showcase */
+    .artisan-title {
+        font-size: 36px;
+    }
+
+    .artisan-subtext {
+        font-size: 15.5px;
+        margin-bottom: 30px;
+    }
+
+    .artisan-photo-wrapper {
+        margin: 0 auto 36px auto;
+        border-radius: 6px;
+    }
+
+    /* Product Gallery */
+    .gallery {
+        padding: 60px 0;
+    }
+
+    .gallery__header {
+        padding: 0 24px 30px;
+    }
+
+    .gallery__heading {
+        font-size: 36px;
+    }
+
+    .gallery__track {
+        padding: 20px 24px;
+        gap: 16px;
+    }
+
+    .gallery__item {
+        flex: 0 0 260px;
+        height: 320px;
+        transform: scale(0.96);
+    }
+
+    .gallery__nav-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* Gallery Banner */
+    .gallery-banner {
+        min-height: auto;
+        padding: 70px 20px;
+    }
+
+    .gallery-banner__title {
+        font-size: 36px;
+    }
+
+    .gallery-banner__desc {
+        font-size: 16px;
+    }
+
+    /* Contact Banner */
+    .contact-banner {
+        min-height: auto;
+        padding: 70px 24px;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .contact-banner__content {
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .contact-banner__heading {
+        font-size: 40px;
+        margin-bottom: 24px;
+    }
+
+    .contact-banner__text {
+        font-size: 14.5px;
+    }
+
+    /* Newsletter */
+    .newsletter {
+        padding: 50px 24px;
+    }
+
+    .newsletter__title {
+        font-size: 28px;
+    }
+
+    .newsletter__desc {
+        font-size: 14.5px;
+    }
+
+    /* Modals */
+    .model__content {
+        width: 92%;
+        max-height: 88vh;
+    }
+
+    .contact-form-card.model__card {
+        padding: 36px 24px;
+    }
+
+    .contact-form-card__heading {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .form .form__row--three-col,
+    .form .form__row--two-col {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .lightbox__content {
+        width: 94%;
+        height: 75vh;
+    }
+
+    #closeLightboxModel {
+        top: 10px;
+        right: 15px;
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-padding {
+        padding: 60px 0;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+
+    p {
+        font-size: 14.5px;
+        line-height: 1.6;
+    }
+
+    /* Hero */
+    .hero {
+        padding-top: 64px;
+        padding-bottom: 40px;
+    }
+
+    .hero__title {
+        font-size: clamp(30px, 9.5vw, 44px);
+        letter-spacing: 0.5px;
+        margin-bottom: 12px;
+    }
+
+    .hero__subtitle {
+        font-size: 15px;
+    }
+
+    .hero__description {
+        font-size: 14px;
+        padding: 0 8px;
+    }
+
+    /* About Section */
+    .about {
+        padding: 60px 0;
+    }
+
+    .about__polaroid {
+        max-width: 270px;
+        padding: 10px 10px 36px 10px;
+    }
+
+    .about__polaroid-caption {
+        font-size: 22px;
+        margin-bottom: -22px;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        font-size: 13px;
+    }
+
+    /* Craft Banner */
+    .craft-banner {
+        padding: 60px 0;
+    }
+
+    .craft-banner-title {
+        font-size: 28px;
+    }
+
+    .craft-banner-desc {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    /* Artisan Showcase */
+    .artisan-title {
+        font-size: 28px;
+    }
+
+    .artisan-subtext {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    /* Product Gallery */
+    .gallery {
+        padding: 40px 0;
+        border-top-width: 5px;
+        border-bottom-width: 5px;
+    }
+
+    .gallery__heading {
+        font-size: 28px;
+    }
+
+    .gallery__subheading {
+        font-size: 13.5px;
+    }
+
+    .gallery__track {
+        padding: 15px 12px;
+    }
+
+    .gallery__item {
+        flex: 0 0 220px;
+        height: 280px;
+    }
+
+    .gallery__nav-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+    /* Gallery Banner */
+    .gallery-banner {
+        padding: 50px 16px;
+    }
+
+    .gallery-banner__title {
+        font-size: 28px;
+    }
+
+    .gallery-banner__desc {
+        font-size: 14px;
+    }
+
+    /* Contact Banner */
+    .contact-banner {
+        padding: 50px 16px;
+    }
+
+    .contact-banner__heading {
+        font-size: 30px;
+    }
+
+    .contact-banner__label {
+        font-size: 14px;
+    }
+
+    .contact-banner__text {
+        font-size: 13.5px;
+    }
+
+    /* Newsletter */
+    .newsletter {
+        padding: 40px 16px;
+    }
+
+    .newsletter__title {
+        font-size: 24px;
+    }
+
+    .newsletter__desc {
+        font-size: 13.5px;
+    }
+
+    .newsletter__form {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .newsletter__input {
+        width: 100%;
+        border-radius: 4px;
+        padding: 12px 14px;
+        text-align: center;
+        font-size: 13.5px;
+    }
+
+    .newsletter__btn {
+        width: 100%;
+        border-left: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 4px;
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    /* Modal Form */
+    .contact-form-card.model__card {
+        padding: 26px 16px;
+    }
+
+    .contact-form-card__heading {
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+    .form input[type="text"],
+    .form input[type="tel"],
+    .form input[type="email"],
+    .form input[type="date"],
+    .form .form__select,
+    .form__textarea {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .form__submit-btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    .model__close-btn {
+        top: -32px;
+        right: 0;
+        font-size: 26px;
+    }
+}
