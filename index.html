@@ -35,7 +35,7 @@
         rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css?v=42">
+    <link rel="stylesheet" href="styles.css?v=43">
 
     <!-- Preload theme backdrops for instant switching -->
     <link rel="preload" as="image" href="Homepage%20Assets/NETBACKDROPBLACK.png">
@@ -197,11 +197,11 @@
                 <!-- Projects Status Toggle Bar (Parallel to Title) -->
                 <div class="projects-status-toggle-wrapper">
                     <div class="projects-status-toggle" role="tablist" aria-label="Filter projects by status">
-                        <button class="status-toggle-btn active" data-status="completed" role="tab" aria-selected="true">
-                            <span>Completed</span>
+                        <button class="status-toggle-btn active" data-status="real" role="tab" aria-selected="true">
+                            <span>Real</span>
                         </button>
-                        <button class="status-toggle-btn" data-status="progress" role="tab" aria-selected="false">
-                            <span>In Progress</span>
+                        <button class="status-toggle-btn" data-status="concept" role="tab" aria-selected="false">
+                            <span>Concept</span>
                         </button>
                     </div>
                 </div>
@@ -209,8 +209,8 @@
 
             <div class="projects-container">
                 <div class="projects-grid">
-                    <!-- Project 1 — Xplor AI Mobility (Completed) -->
-                    <div class="project-card" data-category="ui-ux" data-status="completed" data-glow="255, 255, 255" data-glow-override
+                    <!-- Project 1 — Xplor AI Mobility (Real) -->
+                    <div class="project-card" data-category="ui-ux" data-status="real" data-glow="255, 255, 255" data-glow-override
                         onclick="openProjectWithTracking('projects/Xplor/xplor.html', 'Xplor AI Mobility')">
                         <div class="project-image-wrapper">
                             <img src="xplorthumbnail.png" alt="Xplor AI Mobility project thumbnail"
@@ -223,8 +223,8 @@
                         </div>
                     </div>
 
-                    <!-- Project 2 — STRYDE (Completed) -->
-                    <div class="project-card" data-category="experience-design" data-status="completed" data-glow="255, 255, 255"
+                    <!-- Project 2 — STRYDE (Concept) -->
+                    <div class="project-card status-hidden" data-category="experience-design" data-status="concept" data-glow="255, 255, 255"
                         data-glow-override onclick="openProjectWithTracking('projects/Stryde/stryde.html', 'STRYDE')">
                         <div class="project-image-wrapper">
                             <img src="strydethumbnail.jpeg" alt="STRYDE project thumbnail"
@@ -236,8 +236,8 @@
                         </div>
                     </div>
 
-                    <!-- Project — Eravathody Handloom Weavers (Completed) -->
-                    <div class="project-card" data-category="ui-ux" data-status="completed" data-glow="255, 255, 255" data-glow-override
+                    <!-- Project 3 — Eravathody Handloom Weavers (Real) -->
+                    <div class="project-card" data-category="ui-ux" data-status="real" data-glow="255, 255, 255" data-glow-override
                         onclick="openProjectWithTracking('projects/EravathodyWeavers/eravathody.html', 'Eravathody Handloom Weavers')">
                         <div class="project-image-wrapper">
                             <img src="eravathodythumbnail.jpg" alt="Eravathody Handloom Weavers project thumbnail"
@@ -251,8 +251,8 @@
                         </div>
                     </div>
 
-                    <!-- Project 3 — Dinely (In Progress) -->
-                    <div class="project-card status-hidden" data-category="ui-ux" data-status="progress" data-glow="255, 255, 255" data-glow-override
+                    <!-- Project 4 — Dinely (Concept) -->
+                    <div class="project-card status-hidden" data-category="ui-ux" data-status="concept" data-glow="255, 255, 255" data-glow-override
                         onclick="openDinelyModal()">
                         <div class="project-image-wrapper">
                             <div class="project-status-badge">IN PROGRESS</div>
@@ -266,8 +266,8 @@
                         </div>
                     </div>
 
-                    <!-- Project 4 — ReflexLabs AI (Completed) -->
-                    <div class="project-card" data-category="ui-ux" data-status="completed" data-glow="255, 255, 255" data-glow-override
+                    <!-- Project 5 — ReflexLabs AI (Real) -->
+                    <div class="project-card" data-category="ui-ux" data-status="real" data-glow="255, 255, 255" data-glow-override
                         onclick="openProjectWithTracking('projects/ReflexLabsAIreal/real.html', 'ReflexLabs AI')">
                         <div class="project-image-wrapper">
                             <img src="thumbnailreflex.png" alt="ReflexLabs AI Website Redesign thumbnail"
@@ -281,8 +281,8 @@
                         </div>
                     </div>
 
-                    <!-- Project 5 — mParivahan Redesign (In Progress) -->
-                    <div class="project-card status-hidden" data-category="ui-ux" data-status="progress" data-glow="255, 255, 255" data-glow-override
+                    <!-- Project 6 — mParivahan Redesign (Concept) -->
+                    <div class="project-card status-hidden" data-category="ui-ux" data-status="concept" data-glow="255, 255, 255" data-glow-override
                         onclick="openMparivahanModal()">
                         <div class="project-image-wrapper">
                             <div class="project-status-badge">IN PROGRESS</div>
@@ -296,8 +296,8 @@
                         </div>
                     </div>
 
-                    <!-- Project 6 — Accessibility in Exams (In Progress) -->
-                    <div class="project-card status-hidden" data-category="ui-ux" data-status="progress" data-glow="255, 255, 255" data-glow-override
+                    <!-- Project 7 — Accessibility in Exams (Concept) -->
+                    <div class="project-card status-hidden" data-category="ui-ux" data-status="concept" data-glow="255, 255, 255" data-glow-override
                         onclick="openAccessibilityModal()">
                         <div class="project-image-wrapper">
                             <div class="project-status-badge">IN PROGRESS</div>
@@ -310,8 +310,8 @@
                         </div>
                     </div>
 
-                    <!-- Project 7 — AlexaBot (Hidden on Landing) -->
-                    <div class="project-card hidden" data-category="3d-spatial" data-status="completed" data-glow="255, 255, 255"
+                    <!-- Project 8 — AlexaBot (Hidden on Landing) -->
+                    <div class="project-card hidden" data-category="3d-spatial" data-status="concept" data-glow="255, 255, 255"
                         data-glow-override onclick="openProjectWithTracking('projects/AlexaBot/alexabot.html', 'AlexaBot')">
                         <div class="project-image-wrapper">
                             <img src="Homepage%20Assets/ALEXABOT.png" alt="AlexaBot — 3D Design"
@@ -468,7 +468,7 @@
     </div>
 
     <!-- Custom JavaScript -->
-    <script src="script.js?v=42"></script>
+    <script src="script.js?v=43"></script>
 </body>
 
 </html>

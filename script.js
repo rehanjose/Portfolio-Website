@@ -388,13 +388,13 @@ window.addEventListener('scroll', () => {
 // Initial call
 updateHeroAnimations();
 
-// --- PROJECT STATUS TOGGLE (COMPLETED vs PROGRESS) ---
+// --- PROJECT STATUS TOGGLE (REAL vs CONCEPT) ---
 const statusToggleBtns = document.querySelectorAll('.status-toggle-btn');
 
 function initProjectStatusToggle() {
     if (!statusToggleBtns.length) return;
 
-    let currentStatus = 'completed'; // Default to 'completed'
+    let currentStatus = 'real'; // Default to 'real'
 
     function applyStatusFilter(status) {
         currentStatus = status;
@@ -457,7 +457,7 @@ function initProjectStatusToggle() {
     });
 
     // Initialize with default
-    applyStatusFilter('completed');
+    applyStatusFilter('real');
 }
 
 // Run status toggle init

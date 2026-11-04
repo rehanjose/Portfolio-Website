@@ -16,7 +16,7 @@
     }
 </script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<link rel="stylesheet" href="../../styles.css?v=42">
+<link rel="stylesheet" href="../../styles.css?v=43">
 <link rel="stylesheet" href="style.css?v=2">
 <style>
 /* Scoped Mobile Menu & Nav Styles */
@@ -319,7 +319,7 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
     <div class="process-step">
       <div class="step-num">02</div>
       <div class="step-title">Define</div>
-      <p>3 user personas. Empathy mapping across user types. Identifying the core trust and identity gaps.</p>
+      <p>Audience needs analysis and problem definition. Identifying the core trust and identity gaps.</p>
     </div>
     <div class="process-step">
       <div class="step-num">03</div>
@@ -477,244 +477,10 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
 </section>
 
 <!-- ══════════════════════════════════
-  06  PERSONAS
+  05  INFORMATION ARCHITECTURE
 ══════════════════════════════════ -->
 <section class="s-darker">
-  <div class="tag">05 — User Personas</div>
-  <h2 class="big-text" style="max-width:700px;margin-bottom:16px;">Three users. Three <span class="o">reasons</span> the site fails them.</h2>
-  <p class="body-text" style="margin-bottom:0;">Each persona represents a distinct user need that the existing site was actively working against. These aren't archetypes for decoration — they drove every design decision that followed.</p>
-
-  <div class="persona-grid">
-
-    <!-- Persona 1 -->
-    <div class="persona-card">
-      <!-- Photo slot -->
-      <div class="persona-photo">
-        <img src="persona/p1.png" alt="Persona 1: Arjun" style="width: 100%; height: 100%; object-fit: cover;">
-      </div>
-
-      <div class="persona-num">Persona 01</div>
-      <div class="persona-name">Arjun</div>
-      <div class="persona-role">26 · Startup Founder · Bangalore</div>
-
-      <div class="persona-detail">
-        <label>Tech Level</label>
-        <div class="tech-bar-row">
-          <div class="tech-bar-segments">
-            <div class="tech-seg on"></div>
-            <div class="tech-seg on"></div>
-            <div class="tech-seg on"></div>
-            <div class="tech-seg on"></div>
-            <div class="tech-seg"></div>
-          </div>
-          <span class="tech-bar-label">High (4/5)</span>
-        </div>
-      </div>
-
-      <div class="persona-detail">
-        <label>The Problem</label>
-        <p>No team page → no trust → no sign-up</p>
-      </div>
-
-      <p class="persona-quote">Wants to know who's behind the platform before investing time or money. Credibility is everything for a first-time founder.</p>
-
-      <div class="persona-goals">
-        <label>Goals</label>
-        <ul class="goal-list">
-          <li>Find a trusted platform to launch his startup idea</li>
-          <li>Verify the team's credibility before committing</li>
-          <li>See real proof of past work before signing up</li>
-        </ul>
-      </div>
-
-      <div class="persona-frustrations">
-        <label>Frustrations</label>
-        <ul class="frustration-list">
-          <li>No founder or team information anywhere</li>
-          <li>Cannot verify expertise or background</li>
-          <li>Hesitates to sign up due to lack of transparency</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Persona 2 -->
-    <div class="persona-card">
-      <!-- Photo slot -->
-      <div class="persona-photo">
-        <img src="persona/p2.png" alt="Persona 2: Anita" style="width: 100%; height: 100%; object-fit: cover;">
-      </div>
-
-      <div class="persona-num">Persona 02</div>
-      <div class="persona-name">Anita</div>
-      <div class="persona-role">34 · Aspiring Entrepreneur · Kochi</div>
-
-      <div class="persona-detail">
-        <label>Tech Level</label>
-        <div class="tech-bar-row">
-          <div class="tech-bar-segments">
-            <div class="tech-seg on"></div>
-            <div class="tech-seg on"></div>
-            <div class="tech-seg"></div>
-            <div class="tech-seg"></div>
-            <div class="tech-seg"></div>
-          </div>
-          <span class="tech-bar-label">Low (2/5)</span>
-        </div>
-      </div>
-
-      <div class="persona-detail">
-        <label>The Problem</label>
-        <p>No work shown → no proof → no trust</p>
-      </div>
-
-      <p class="persona-quote">A homemaker turning passion into business. Needs visible proof and simple language — not promises and jargon.</p>
-
-      <div class="persona-goals">
-        <label>Goals</label>
-        <ul class="goal-list">
-          <li>Find a platform that speaks her language, not tech jargon</li>
-          <li>See success stories she can relate to personally</li>
-          <li>Understand the service without needing a tech background</li>
-        </ul>
-      </div>
-
-      <div class="persona-frustrations">
-        <label>Frustrations</label>
-        <ul class="frustration-list">
-          <li>No case studies or real success stories</li>
-          <li>Cannot relate — no small business representation</li>
-          <li>Intimidated by technical language without clarity</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Persona 3 -->
-    <div class="persona-card">
-      <!-- Photo slot -->
-      <div class="persona-photo">
-        <img src="persona/p3.png" alt="Persona 3: Kabir" style="width: 100%; height: 100%; object-fit: cover;">
-      </div>
-
-      <div class="persona-num">Persona 03</div>
-      <div class="persona-name">Kabir</div>
-      <div class="persona-role">24 · UX/UI Designer · Delhi</div>
-
-      <div class="persona-detail">
-        <label>Tech Level</label>
-        <div class="tech-bar-row">
-          <div class="tech-bar-segments">
-            <div class="tech-seg on"></div>
-            <div class="tech-seg on"></div>
-            <div class="tech-seg on"></div>
-            <div class="tech-seg on"></div>
-            <div class="tech-seg on"></div>
-          </div>
-          <span class="tech-bar-label">Expert (5/5)</span>
-        </div>
-      </div>
-
-      <div class="persona-detail">
-        <label>The Problem</label>
-        <p>Weak branding → no inspiration → no connection</p>
-      </div>
-
-      <p class="persona-quote">Values aesthetics and coherence. A platform promising digital innovation must demonstrate it through its own interface.</p>
-
-      <div class="persona-goals">
-        <label>Goals</label>
-        <ul class="goal-list">
-          <li>Find a platform that reflects strong design thinking</li>
-          <li>Collaborate with a team that values visual craft</li>
-          <li>Be inspired by a brand before committing to it</li>
-        </ul>
-      </div>
-
-      <div class="persona-frustrations">
-        <label>Frustrations</label>
-        <ul class="frustration-list">
-          <li>Website feels visually bland and disconnected</li>
-          <li>No distinct brand identity to build trust from</li>
-          <li>Inconsistent visual structure throughout</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════════════════════════
-  07  EMPATHY MAP
-══════════════════════════════════ -->
-<section class="s-dark">
-  <div class="tag">06 — Empathy Mapping</div>
-  <h2 class="big-text" style="max-width:700px;margin-bottom:16px;">Inside the user's <span class="o">head.</span></h2>
-  <p class="body-text" style="margin-bottom:0;">Mapping what users say, think, do, and feel helped us move past surface complaints and understand the <strong>emotional state</strong> driving their behaviour on the site.</p>
-
-  <div class="empathy-grid">
-
-    <div class="emp-cell">
-      <span class="emp-icon" style="color:var(--white);font-size:20px;font-family:'Space Mono',monospace;letter-spacing:0.1em;">SAYS</span>
-      <div class="emp-title">What they say out loud</div>
-      <ul class="emp-list">
-        <li>"What exactly does this platform do?"</li>
-        <li>"Who is behind this product?"</li>
-        <li>"Can this really help someone like me?"</li>
-        <li>"Do they have any real success stories?"</li>
-        <li>"Where do I even start?"</li>
-        <li>"This doesn't look very engaging."</li>
-      </ul>
-    </div>
-
-    <div class="emp-cell" style="background:var(--surface2);">
-      <span class="emp-icon" style="color:var(--white);font-size:20px;font-family:'Space Mono',monospace;letter-spacing:0.1em;">THINKS</span>
-      <div class="emp-title">What they think silently</div>
-      <ul class="emp-list">
-        <li>This feels unclear and difficult to trust</li>
-        <li>I want to know who is behind this platform</li>
-        <li>I need proof before committing anything</li>
-        <li>They promise a lot — but where's the evidence?</li>
-        <li>I might be wasting my time here</li>
-      </ul>
-    </div>
-
-    <div class="emp-cell" style="background:var(--surface2);">
-      <span class="emp-icon" style="color:var(--white);font-size:20px;font-family:'Space Mono',monospace;letter-spacing:0.1em;">DOES</span>
-      <div class="emp-title">Observable behaviour</div>
-      <ul class="emp-list">
-        <li>Scans the site for team info or credentials</li>
-        <li>Searches for portfolio, case studies, testimonials</li>
-        <li>Scrolls quickly trying to understand the offering</li>
-        <li>Compares with other platforms immediately</li>
-        <li>Leaves the site if clarity isn't found fast</li>
-      </ul>
-    </div>
-
-    <div class="emp-cell" style="background:var(--orange-dim);border-left:2px solid var(--orange);">
-      <span class="emp-icon" style="color:var(--orange);font-size:20px;font-family:'Space Mono',monospace;letter-spacing:0.1em;">FEELS</span>
-      <div class="emp-title" style="color:var(--orange);">Emotional state</div>
-      <ul class="emp-list">
-        <li>Uncertain about the platform's legitimacy</li>
-        <li>Skeptical — too many promises, too little proof</li>
-        <li>Confused by unclear information architecture</li>
-        <li>Uninspired by the visual experience</li>
-        <li>Hesitant — on the edge of leaving</li>
-        <li>Overwhelmed by lack of a clear entry point</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Key insight from empathy map -->
-  <div style="margin-top:40px;padding:36px 40px;border:1px solid var(--border);border-left:3px solid var(--orange);background:var(--surface);">
-    <p style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;">Key Insight</p>
-    <p style="font-size:clamp(16px,2vw,22px);font-weight:600;color:var(--white);line-height:1.4;">Users weren't failing to understand the product — they were failing to <em style="color:var(--orange);font-style:normal;">trust it.</em> Clarity and credibility had to come before any other design decision.</p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════
-  08  INFORMATION ARCHITECTURE
-══════════════════════════════════ -->
-<section class="s-darker">
-  <div class="tag">07 — Information Architecture</div>
+  <div class="tag">05 — Information Architecture</div>
   <h2 class="big-text" style="max-width:700px;margin-bottom:16px;">Structuring content so users <span class="o">stay.</span></h2>
   <p class="body-text" style="margin-bottom:0;">The IA was built around one principle: <strong>earn trust, then earn action.</strong> Every section exists to answer a question the user is already asking before they ask it aloud.</p>
 
@@ -722,10 +488,10 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
 </section>
 
 <!-- ══════════════════════════════════
-  09  DESIGN SYSTEM
+  06  DESIGN SYSTEM
 ══════════════════════════════════ -->
 <section class="s-dark">
-  <div class="tag">08 — Design System</div>
+  <div class="tag">06 — Design System</div>
   <h2 class="big-text" style="max-width:600px;margin-bottom:56px;">A cohesive <span class="o">visual</span> language.</h2>
 
   <div class="ds-row">
@@ -788,10 +554,10 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
 </section>
 
 <!-- ══════════════════════════════════
-  10  WIREFRAMES
+  07  WIREFRAMES
 ══════════════════════════════════ -->
 <section class="s-darker">
-  <div class="tag">09 — Wireframes</div>
+  <div class="tag">07 — Wireframes</div>
   <h2 class="big-text" style="max-width:600px;margin-bottom:40px;">Low-Fidelity <span class="o">Wireframes.</span></h2>
 
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; align-items: start;">
@@ -867,10 +633,10 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
 </section>
 
 <!-- ══════════════════════════════════
-  11  FINAL UI
+  08  FINAL UI
 ══════════════════════════════════ -->
 <section class="s-dark">
-  <div class="tag" style="justify-content:center;">10 — Final UI Screens</div>
+  <div class="tag" style="justify-content:center;">08 — Final UI Screens</div>
   <h2 class="big-text" style="max-width:700px;margin-bottom:16px;margin-left:auto;margin-right:auto;text-align:center;">The <span class="o">orange pixel</span> comes alive.</h2>
   <p class="body-text" style="margin-bottom:32px;text-align:center;max-width:700px;margin-left:auto;margin-right:auto;">High fidelity screens for the homepage and team page — Sudo Var, orange on black, pixel-grid motifs carrying the brand identity through every section.</p>
 
@@ -892,10 +658,10 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
 
   </div>
 <!-- ══════════════════════════════════
-  11  DESIGN DETAILS & ELEMENTS
+  09  DESIGN DETAILS & ELEMENTS
 ══════════════════════════════════ -->
 <section class="s-darker">
-  <div class="tag">11 — Design Details & Elements</div>
+  <div class="tag">09 — Design Details & Elements</div>
   <h2 class="big-text" style="max-width:700px;margin-bottom:16px;">The DNA of the <span class="o">redesign.</span></h2>
   <p class="body-text" style="margin-bottom:56px;">A modular, scalable design system built on custom pixel-grid logic. Every element—from navigation to the core identity—carries the same futuristic blueprint.</p>
 
@@ -951,10 +717,10 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
 </section>
 
 <!-- ══════════════════════════════════
-  12  BEFORE / AFTER
+  10  BEFORE / AFTER
 ══════════════════════════════════ -->
 <section class="s-darker">
-  <div class="tag">11 — Before / After</div>
+  <div class="tag">10 — Before / After</div>
   <h2 class="big-text" style="max-width:600px;margin-bottom:56px;">Same brand. Different <span class="o">story.</span></h2>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
@@ -997,14 +763,16 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
 
 
 <!-- ══════════════════════════════════
-  LIVE WEBSITE
+  LIVE PRODUCTION TIMELINE
 ══════════════════════════════════ -->
 <section style="display: flex; justify-content: center; align-items: center; padding: 80px 24px; border-bottom: 1px solid var(--border);">
-  <p style="font-family: 'Space Mono', monospace; font-size: clamp(14px, 2.5vw, 18px); text-transform: uppercase; letter-spacing: 0.1em; color: var(--white); margin: 0; text-align: center;">
-    View the live website → 
-    <a href="https://www.reflexlabs.ai" target="_blank" style="color: var(--orange); text-decoration: none; border-bottom: 1px solid var(--orange); padding-bottom: 2px; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-      www.reflexlabs.ai
-    </a>
+  <p style="font-family: 'Space Mono', monospace; font-size: clamp(13px, 2.2vw, 17px); text-transform: uppercase; letter-spacing: 0.1em; color: var(--white); margin: 0; text-align: center; line-height: 1.8;">
+    This design was live on the real website from <span style="color: var(--orange);">November 2025 — July 2026</span>
+    <span style="display: block; font-size: 13px; margin-top: 10px; letter-spacing: 0.08em;">
+      <a href="https://www.reflexlabs.ai" target="_blank" style="color: var(--muted); text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 2px; transition: all 0.3s ease;" onmouseover="this.style.color='var(--orange)'; this.style.borderColor='var(--orange)'" onmouseout="this.style.color='var(--muted)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'">
+        www.reflexlabs.ai ↗
+      </a>
+    </span>
   </p>
 </section>
 
