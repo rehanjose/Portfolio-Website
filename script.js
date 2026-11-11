@@ -925,14 +925,350 @@ function goToContactFromModal(source) {
     }
 }
 
-// Close on Esc key
+// --- INTERACTIVE STORYBOARD / COMIC MODAL ---
+const STORY_PROJECTS = {
+    eravathody: {
+        title: "Eravathody Handloom Weavers",
+        badge: "STORYBOARD",
+        caseStudyUrl: "projects/EravathodyWeavers/eravathody.html",
+        trackingLabel: "Eravathody Handloom Weavers",
+        frames: Array.from({ length: 9 }, (_, i) => encodeURI(`Stories/Story-Eravathody Weavers/Frame ${i + 1}.png`))
+    },
+    dinely: {
+        title: "Dinely",
+        badge: "STORYBOARD",
+        caseStudyUrl: "projects/Dinely/dinely.html",
+        trackingLabel: "Dinely",
+        frames: Array.from({ length: 15 }, (_, i) => encodeURI(`Stories/Story-Dinely/Frame ${i + 10}.png`))
+    },
+    reflexlabs: {
+        title: "ReflexLabs AI",
+        badge: "STORYBOARD",
+        caseStudyUrl: "projects/ReflexLabsAIreal/real.html",
+        trackingLabel: "ReflexLabs AI",
+        frames: Array.from({ length: 8 }, (_, i) => encodeURI(`Stories/Story-reflexlabs/Frame ${i + 25}.png`))
+    },
+    stryde: {
+        title: "STRYDE",
+        badge: "STORYBOARD",
+        caseStudyUrl: "projects/Stryde/stryde.html",
+        trackingLabel: "STRYDE",
+        frames: Array.from({ length: 12 }, (_, i) => encodeURI(`Stories/Story-Stryde/Frame ${i + 33}.png`))
+    }
+};
+
+let activeStoryKey = null;
+let activeStoryIndex = 0;
+const storyPreloadCache = new Map();
+
+function preloadStoryImage(src) {
+    if (!src) return Promise.resolve();
+    if (storyPreloadCache.has(src)) {
+        return storyPreloadCache.get(src);
+    }
+    const promise = new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = src;
+    });
+    storyPreloadCache.set(src, promise);
+    return promise;
+}
+
+function preloadStoryNeighbors(projectKey, centerIndex) {
+    const project = STORY_PROJECTS[projectKey];
+    if (!project) return;
+    // Immediately preload current, next 2, and previous 1 frame
+    const priorityIndices = [centerIndex, centerIndex + 1, centerIndex + 2, centerIndex - 1];
+    priorityIndices.forEach((idx) => {
+        if (idx >= 0 && idx < project.frames.length) {
+            preloadStoryImage(project.frames[idx]);
+        }
+    });
+    // Queue remaining frames in idle time
+    setTimeout(() => {
+        project.frames.forEach((src) => preloadStoryImage(src));
+    }, 150);
+}
+
+function ensureStoryModal() {
+    let modal = document.getElementById('story-modal');
+    if (modal) return modal;
+
+    modal = document.createElement('div');
+    modal.id = 'story-modal';
+    modal.className = 'story-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Project Storyboard');
+    modal.onclick = () => closeStoryModal();
+
+    modal.innerHTML = `
+        <div class="story-modal-dialog" onclick="event.stopPropagation()">
+            <button type="button" class="story-close-btn" onclick="closeStoryModal()" aria-label="Close storyboard">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="story-progress-bar" id="story-progress-bar" role="tablist" aria-label="Story progress"></div>
+            <div class="story-stage" id="story-stage">
+                <button type="button" class="story-tap-zone story-tap-zone--prev" id="story-tap-prev" onclick="prevStoryFrame()" aria-label="Previous frame"></button>
+                <button type="button" class="story-tap-zone story-tap-zone--next" id="story-tap-next" onclick="nextStoryFrame()" aria-label="Next frame"></button>
+                <div class="story-stage-loader"><div class="story-spinner"></div></div>
+                <img src="" alt="Project Storyboard Frame" class="story-frame-img" id="story-frame-img" draggable="false">
+            </div>
+            <div class="story-footer">
+                <div class="story-nav-row">
+                    <button type="button" class="story-nav-btn" id="story-prev-btn" onclick="prevStoryFrame()">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back</span>
+                    </button>
+                    <span class="story-counter" id="story-counter">01 / 09</span>
+                    <button type="button" class="story-nav-btn" id="story-next-btn" onclick="nextStoryFrame()">
+                        <span>Next</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+                <button type="button" class="story-case-study-btn" id="story-case-study-btn" onclick="goToStoryCaseStudy()">
+                    <span class="story-skip-pill" id="story-skip-pill">SKIP</span>
+                    <span>View Detailed Case Study</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+    initStoryTouchGestures(modal);
+    return modal;
+}
+
+function initStoryTouchGestures(modal) {
+    const stage = modal.querySelector('#story-stage');
+    if (!stage || stage.dataset.touchBound === 'true') return;
+    stage.dataset.touchBound = 'true';
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    let isSwiping = false;
+
+    stage.addEventListener('touchstart', (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchEndX = touchStartX;
+        touchEndY = touchStartY;
+        isSwiping = true;
+    }, { passive: true });
+
+    stage.addEventListener('touchmove', (e) => {
+        if (!isSwiping || !e.touches || e.touches.length !== 1) return;
+        touchEndX = e.touches[0].clientX;
+        touchEndY = e.touches[0].clientY;
+    }, { passive: true });
+
+    stage.addEventListener('touchend', () => {
+        if (!isSwiping) return;
+        isSwiping = false;
+        const dx = touchEndX - touchStartX;
+        const dy = touchEndY - touchStartY;
+        if (Math.abs(dx) > 38 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+            if (dx < 0) {
+                nextStoryFrame();
+            } else {
+                prevStoryFrame();
+            }
+        }
+    }, { passive: true });
+}
+
+function renderStoryFrame(direction) {
+    const project = STORY_PROJECTS[activeStoryKey];
+    if (!project) return;
+
+    const modal = ensureStoryModal();
+    const total = project.frames.length;
+    const idx = Math.max(0, Math.min(activeStoryIndex, total - 1));
+    activeStoryIndex = idx;
+
+    const titleEl = modal.querySelector('#story-project-title');
+    const badgeEl = modal.querySelector('#story-badge');
+    const counterEl = modal.querySelector('#story-counter');
+    const progressEl = modal.querySelector('#story-progress-bar');
+    const stageEl = modal.querySelector('#story-stage');
+    const imgEl = modal.querySelector('#story-frame-img');
+    const prevBtn = modal.querySelector('#story-prev-btn');
+    const nextBtn = modal.querySelector('#story-next-btn');
+    const tapPrev = modal.querySelector('#story-tap-prev');
+    const tapNext = modal.querySelector('#story-tap-next');
+    const caseStudyBtn = modal.querySelector('#story-case-study-btn');
+
+    if (titleEl) titleEl.textContent = project.title;
+    if (badgeEl) badgeEl.textContent = project.badge || 'STORYBOARD';
+    if (counterEl) {
+        const curStr = String(idx + 1).padStart(2, '0');
+        const totStr = String(total).padStart(2, '0');
+        counterEl.textContent = `${curStr} / ${totStr}`;
+    }
+
+    // Build or update progress segments
+    if (progressEl) {
+        if (progressEl.children.length !== total) {
+            progressEl.innerHTML = '';
+            for (let i = 0; i < total; i++) {
+                const seg = document.createElement('button');
+                seg.type = 'button';
+                seg.className = 'story-progress-segment';
+                seg.setAttribute('aria-label', `Go to frame ${i + 1}`);
+                seg.onclick = () => goToStoryFrame(i);
+                progressEl.appendChild(seg);
+            }
+        }
+        Array.from(progressEl.children).forEach((seg, i) => {
+            seg.classList.toggle('is-completed', i < idx);
+            seg.classList.toggle('is-active', i === idx);
+        });
+    }
+
+    const isFirst = idx === 0;
+    const isLast = idx === total - 1;
+
+    if (prevBtn) prevBtn.disabled = isFirst;
+    if (nextBtn) nextBtn.disabled = isLast;
+    if (tapPrev) tapPrev.disabled = isFirst;
+    if (tapNext) tapNext.disabled = isLast;
+
+    if (caseStudyBtn) {
+        caseStudyBtn.classList.toggle('is-final-frame', isLast);
+    }
+
+    const targetSrc = project.frames[idx];
+    if (imgEl && stageEl) {
+        const animClass = direction === 'prev' ? 'is-switching-prev' : (direction === 'next' ? 'is-switching-next' : '');
+        if (animClass) {
+            imgEl.classList.remove('is-switching-next', 'is-switching-prev');
+            imgEl.classList.add(animClass);
+        }
+
+        stageEl.classList.add('is-loading');
+        preloadStoryImage(targetSrc).then(() => {
+            if (STORY_PROJECTS[activeStoryKey] !== project || activeStoryIndex !== idx) return;
+            imgEl.src = targetSrc;
+            imgEl.alt = `${project.title} — Storyboard Frame ${idx + 1} of ${total}`;
+            stageEl.classList.remove('is-loading');
+            requestAnimationFrame(() => {
+                imgEl.classList.remove('is-switching-next', 'is-switching-prev');
+            });
+        });
+    }
+
+    preloadStoryNeighbors(activeStoryKey, idx);
+}
+
+function openStoryModal(projectKey) {
+    const project = STORY_PROJECTS[projectKey];
+    if (!project) return;
+
+    activeStoryKey = projectKey;
+    activeStoryIndex = 0;
+
+    const modal = ensureStoryModal();
+    initStoryTouchGestures(modal);
+    renderStoryFrame(null);
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    if (typeof gtag === 'function') {
+        try {
+            gtag('event', 'story_open', {
+                event_category: 'portfolio_story',
+                event_label: project.trackingLabel || project.title,
+                transport_type: 'beacon'
+            });
+        } catch (e) {}
+    }
+}
+
+function closeStoryModal() {
+    const modal = document.getElementById('story-modal');
+    if (modal && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    activeStoryKey = null;
+}
+
+function nextStoryFrame() {
+    if (!activeStoryKey) return;
+    const project = STORY_PROJECTS[activeStoryKey];
+    if (!project) return;
+    if (activeStoryIndex < project.frames.length - 1) {
+        activeStoryIndex += 1;
+        renderStoryFrame('next');
+    }
+}
+
+function prevStoryFrame() {
+    if (!activeStoryKey) return;
+    if (activeStoryIndex > 0) {
+        activeStoryIndex -= 1;
+        renderStoryFrame('prev');
+    }
+}
+
+function goToStoryFrame(index) {
+    if (!activeStoryKey) return;
+    const project = STORY_PROJECTS[activeStoryKey];
+    if (!project || index === activeStoryIndex) return;
+    const dir = index > activeStoryIndex ? 'next' : 'prev';
+    activeStoryIndex = index;
+    renderStoryFrame(dir);
+}
+
+function goToStoryCaseStudy() {
+    if (!activeStoryKey) return;
+    const project = STORY_PROJECTS[activeStoryKey];
+    if (!project) return;
+    const url = project.caseStudyUrl;
+    const label = project.trackingLabel || project.title;
+    closeStoryModal();
+    openProjectWithTracking(url, label);
+}
+
+// Warm-preload frame 1 of story projects on card hover / touchstart for instant modal opening
+document.addEventListener('DOMContentLoaded', () => {
+    Object.values(STORY_PROJECTS).forEach((proj) => {
+        if (proj.frames && proj.frames[0]) {
+            preloadStoryImage(proj.frames[0]);
+        }
+    });
+});
+
+// Close on Esc key & navigate story with Left / Right arrow keys
 document.addEventListener('keydown', (e) => {
+    const storyModal = document.getElementById('story-modal');
+    const isStoryOpen = storyModal && storyModal.classList.contains('active');
+
     if (e.key === 'Escape') {
+        if (isStoryOpen) {
+            closeStoryModal();
+            return;
+        }
         closeComingSoon();
         closeExpModal();
         closeDinelyModal();
         closeMparivahanModal();
         closeAccessibilityModal();
+    } else if (isStoryOpen) {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextStoryFrame();
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevStoryFrame();
+        }
     }
 });
 
@@ -1255,6 +1591,9 @@ refreshProjectStacking();
         }
         const mainContentEl = document.getElementById('main-content');
         if (mainContentEl && !mainContentEl.classList.contains('visible')) {
+            return null;
+        }
+        if (target.closest('.story-modal, .coming-soon-modal, .exp-modal-overlay')) {
             return null;
         }
 
