@@ -214,6 +214,7 @@ if (contactModel && openContactModelBtn && closeContactModelBtn) {
         '30 Images/_DSC6682.jpg',
         '30 Images/_DSC7013.jpg',
         '30 Images/_DSC7354.jpg',
+        '30 Images/_MG_9872.jpg',
         '30 Images/_MG_9878.jpg',
         '30 Images/eravathodi.png'
     ];
