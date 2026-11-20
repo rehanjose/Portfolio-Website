@@ -1283,6 +1283,7 @@ const experienceData = {
         period: "Sept. 2026",
         location: "Remote",
         certificate: false,
+        workUrl: "https://www.alramzdesign.com/",
         highlights: [
             "Designed and developed a 0→1 responsive website based on client requirements.",
             "Created sitemap, user flows, and UI Design in Figma; developed using HTML, CSS & JavaScript.",
@@ -1389,6 +1390,26 @@ function openExpModal(expId) {
             li.textContent = highlight;
             listEl.appendChild(li);
         });
+    }
+
+    const actionsWrap = modal ? modal.querySelector('.exp-modal-actions') : null;
+    let workBtn = document.getElementById('exp-modal-work-btn');
+    if (!workBtn && actionsWrap) {
+        workBtn = document.createElement('a');
+        workBtn.id = 'exp-modal-work-btn';
+        workBtn.className = 'exp-modal-work-btn';
+        workBtn.target = '_blank';
+        workBtn.rel = 'noopener noreferrer';
+        workBtn.innerHTML = `<span>View Work</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>`;
+        actionsWrap.insertBefore(workBtn, actionsWrap.firstChild);
+    }
+    if (workBtn) {
+        if (data.workUrl) {
+            workBtn.href = data.workUrl;
+            workBtn.style.display = 'inline-flex';
+        } else {
+            workBtn.style.display = 'none';
+        }
     }
 
     if (modal) {
@@ -1593,7 +1614,7 @@ refreshProjectStacking();
         if (mainContentEl && !mainContentEl.classList.contains('visible')) {
             return null;
         }
-        if (target.closest('.story-modal, .coming-soon-modal, .exp-modal-overlay')) {
+        if (target.closest('.story-modal, .coming-soon-modal, .exp-modal-overlay, .floating-scroll-top-btn')) {
             return null;
         }
 
@@ -1742,5 +1763,54 @@ refreshProjectStacking();
         }
     }, { passive: true });
 })();
+
+// --- FLOATING BOTTOM-CENTER SCROLL TO TOP BUTTON (All Projects & Project Pages) ---
+(function initFloatingScrollTopButton() {
+    const isProjectsContext = () => {
+        const path = (window.location.pathname || '').toLowerCase();
+        return (
+            path.includes('projects.html') ||
+            path.includes('/projects/') ||
+            Boolean(document.getElementById('archive-grid')) ||
+            Boolean(document.querySelector('.project-details-page, .case-study-stage'))
+        );
+    };
+
+    function setupScrollTopBtn() {
+        if (!isProjectsContext()) return;
+        let btn = document.getElementById('floating-scroll-top-btn');
+        if (!btn) {
+            btn = document.createElement('button');
+            btn.type = 'button';
+            btn.id = 'floating-scroll-top-btn';
+            btn.className = 'floating-scroll-top-btn';
+            btn.setAttribute('aria-label', 'Scroll to top');
+            btn.setAttribute('title', 'Back to top');
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>`;
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            document.body.appendChild(btn);
+        }
+
+        const updateVisibility = () => {
+            if (window.scrollY > 300) {
+                btn.classList.add('is-visible');
+            } else {
+                btn.classList.remove('is-visible');
+            }
+        };
+
+        window.addEventListener('scroll', updateVisibility, { passive: true });
+        updateVisibility();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupScrollTopBtn);
+    } else {
+        setupScrollTopBtn();
+    }
+})();
+
 
 

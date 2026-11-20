@@ -40,7 +40,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Portfolio Base Stylesheet -->
-    <link rel="stylesheet" href="../../styles.css?v=42">
+    <link rel="stylesheet" href="../../styles.css?v=48">
 
     <style>
         :root {
@@ -512,6 +512,9 @@
                 <p class="section-para">
                     Over my internship at Xplor AI Mobility, I explored mobility UX enhancements, multimodal transit discovery, commuter state architectures, and interaction systems across Xplor's product ecosystem.
                 </p>
+                <p class="section-para">
+                    If you are a recruiter or hiring manager evaluating my work for a role, I can walk through relevant details of my design process and contributions privately over a call where necessary.
+                </p>
             </div>
         </section>
 
@@ -689,6 +692,29 @@
                 }
             });
         });
+
+        // Floating Bottom-Center Scroll to Top Button
+        (function () {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.id = 'floating-scroll-top-btn';
+            btn.className = 'floating-scroll-top-btn';
+            btn.setAttribute('aria-label', 'Scroll to top');
+            btn.setAttribute('title', 'Back to top');
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>';
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            document.body.appendChild(btn);
+
+            const toggleBtn = () => {
+                if (window.scrollY > 300) {
+                    btn.classList.add('is-visible');
+                } else {
+                    btn.classList.remove('is-visible');
+                }
+            };
+            window.addEventListener('scroll', toggleBtn, { passive: true });
+            toggleBtn();
+        })();
     </script>
 </body>
 </html>

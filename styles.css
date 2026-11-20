@@ -2247,6 +2247,56 @@ body::after {
     color: var(--text-muted);
 }
 
+.exp-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.exp-modal-work-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #000000 !important;
+    border: 1px solid #ffffff;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.16);
+}
+
+.exp-modal-work-btn:hover {
+    background: #e4e4e7;
+    border-color: #e4e4e7;
+    color: #000000 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(255, 255, 255, 0.28);
+}
+
+[data-theme="light"] .exp-modal-work-btn {
+    background: #111111;
+    color: #ffffff !important;
+    border-color: #111111;
+    box-shadow: 0 6px 20px rgba(17, 17, 17, 0.16);
+}
+
+[data-theme="light"] .exp-modal-work-btn:hover {
+    background: #27272a;
+    border-color: #27272a;
+    color: #ffffff !important;
+    box-shadow: 0 10px 26px rgba(17, 17, 17, 0.26);
+}
+
 @media (max-width: 640px) {
     .exp-modal-card {
         padding: 24px 18px !important;
@@ -4373,6 +4423,85 @@ body::after {
         padding: 11px 14px;
     }
 }
+
+/* ============================================
+   FLOATING BOTTOM-CENTER SCROLL TO TOP BUTTON
+   Shown across All Projects & Project Case Studies on scroll
+   ============================================ */
+.floating-scroll-top-btn {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translate(-50%, 16px) scale(0.92);
+    z-index: 90;
+    width: 46px;
+    height: 46px;
+    border-radius: 9999px;
+    background: rgba(24, 24, 27, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                visibility 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                background-color 0.22s ease,
+                color 0.22s ease,
+                border-color 0.22s ease,
+                box-shadow 0.22s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.floating-scroll-top-btn.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, 0) scale(1);
+}
+
+.floating-scroll-top-btn:hover {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    transform: translate(-50%, -3px) scale(1.06);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6), 0 0 18px rgba(255, 255, 255, 0.38);
+}
+
+.floating-scroll-top-btn:active {
+    transform: translate(-50%, -1px) scale(0.98);
+}
+
+[data-theme="light"] .floating-scroll-top-btn {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(17, 17, 17, 0.16);
+    color: #111111;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+[data-theme="light"] .floating-scroll-top-btn:hover {
+    background: #111111;
+    color: #ffffff;
+    border-color: #111111;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 600px) {
+    .floating-scroll-top-btn {
+        bottom: 20px;
+        width: 44px;
+        height: 44px;
+    }
+}
+
 
 
 
