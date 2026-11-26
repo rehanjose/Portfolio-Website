@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEED Redesign &amp; Competitive Exams Accessibility — Rehan Jose</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/png" href="../../Homepage Assets/logo.png">
+
+    <!-- Theme initialization before render to avoid FOUC -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CRRKNVG7VK');
+    </script>
+
+    <!-- Fonts: Plus Jakarta Sans + Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Portfolio Base Stylesheet -->
+    <link rel="stylesheet" href="../../styles.css?v=49">
+
+    <style>
+        :root {
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            /* Dark Theme (Default) */
+            --bg-page: #000000;
+            --surface-card: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --border-subtle: rgba(255, 255, 255, 0.10);
+            --border-highlight: rgba(255, 255, 255, 0.22);
+            --text-main: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.72);
+            --text-muted: rgba(255, 255, 255, 0.45);
+            --accent-blue: #3b82f6;
+            --accent-blue-light: rgba(59, 130, 246, 0.12);
+
+            --column-width: 760px;
+            --deck-width: 960px;
+        }
+
+        /* Light Theme Adaptation */
+        [data-theme="light"] {
+            --bg-page: #fcfcfb;
+            --surface-card: #ffffff;
+            --surface-hover: #f5f5f4;
+            --border-subtle: rgba(0, 0, 0, 0.08);
+            --border-highlight: rgba(0, 0, 0, 0.20);
+            --text-main: #141414;
+            --text-secondary: #525252;
+            --text-muted: #8c8c8c;
+            --accent-blue: #2563eb;
+            --accent-blue-light: #eaf1fb;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a,
+        a:hover,
+        a:focus,
+        a:visited,
+        .nav-link,
+        .nav-resume-btn,
+        .mobile-nav-link,
+        .touch-link,
+        .sitemap-link {
+            text-decoration: none !important;
+        }
+
+        #navbar-container, #navbar-container *,
+        .center-nav-bar, .center-nav-bar *,
+        .nav-resume-btn, .nav-resume-btn * {
+            font-family: var(--font-mono) !important;
+        }
+
+        /* Centered Single Column Stage */
+        .case-study-stage {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: var(--column-width);
+            margin: 0 auto;
+            padding: 140px 24px 64px;
+        }
+
+        .status-badge-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            background: var(--accent-blue-light);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px var(--accent-blue);
+        }
+
+        .part-kicker {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            letter-spacing: 0.1em;
+            color: var(--accent-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .case-title {
+            font-size: 2.45rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.035em;
+            color: var(--text-main);
+            margin-bottom: 14px;
+        }
+
+        .case-subtitle {
+            font-size: 1.14rem;
+            font-weight: 400;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            letter-spacing: -0.01em;
+            margin-bottom: 36px;
+        }
+
+        /* Hero Image Panel */
+        .hero-image-panel {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 38px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            background-color: var(--surface-card);
+        }
+
+        .hero-panel-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .hero-image-panel:hover .hero-panel-img {
+            transform: scale(1.02);
+        }
+
+        /* Meta Strip Grid */
+        .meta-strip-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px 20px;
+            padding: 8px 0 32px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .meta-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .meta-value {
+            font-size: 0.96rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border-subtle);
+            margin: 12px 0 44px;
+        }
+
+        .case-section-block {
+            margin-bottom: 48px;
+        }
+
+        .section-heading-text {
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+
+        .section-para {
+            font-size: 1.04rem;
+            line-height: 1.72;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .section-para:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Stat Cards Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 26px 0;
+        }
+
+        .stat-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 20px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .stat-number {
+            font-family: var(--font-mono);
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.1;
+        }
+
+        .stat-caption {
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: var(--text-secondary);
+        }
+
+        /* 3-Level Gap Cards */
+        .gap-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .gap-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 20px 22px;
+        }
+
+        .gap-card-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .gap-num {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .gap-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .gap-desc {
+            font-size: 0.96rem;
+            line-height: 1.65;
+            color: var(--text-secondary);
+        }
+
+        /* Journey Flow Pills */
+        .journey-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin: 22px 0;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .journey-step {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 9999px;
+            border: 1px solid var(--border-subtle);
+            background: var(--surface-hover);
+        }
+
+        .journey-arrow {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        /* Portals Chip List */
+        .portal-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 18px 0 6px;
+        }
+
+        .portal-chip {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 5px 11px;
+            border-radius: 9999px;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            background: var(--surface-card);
+        }
+
+        .portal-chip--highlight {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: var(--accent-blue-light);
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        /* Glassmorphism Quote Block */
+        .outcome-quote-block {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            padding: 24px 28px;
+            border-radius: 0 16px 16px 0;
+            font-size: 1.14rem;
+            font-weight: 500;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 24px 0;
+        }
+
+        [data-theme="light"] .outcome-quote-block {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        /* Research Paper CTA Card */
+        .paper-cta-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 22px 24px;
+            border-radius: 18px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-highlight);
+            margin-top: 24px;
+        }
+
+        .paper-cta-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .paper-cta-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .paper-cta-sub {
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            color: var(--text-muted);
+        }
+
+        .paper-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 20px;
+            border-radius: 9999px;
+            background: var(--text-main);
+            color: var(--bg-page) !important;
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        .paper-cta-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* Wide Presentation Deck Section (Dinely-style stacked slides) */
+        .deck-stage {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: var(--deck-width);
+            margin: 0 auto;
+            padding: 0 24px 40px;
+        }
+
+        .deck-header {
+            max-width: var(--column-width);
+            margin: 0 auto 32px;
+        }
+
+        .slides-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+            background: var(--surface-card);
+        }
+
+        [data-theme="light"] .slides-stack {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .slides-stack img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .slides-stack img:last-child {
+            border-bottom: none;
+        }
+
+        .deck-footer-note {
+            max-width: var(--column-width);
+            margin: 28px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Closing Line */
+        .closing-stage {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: var(--column-width);
+            margin: 0 auto;
+            padding: 16px 24px 96px;
+        }
+
+        .closing-touch-line {
+            margin-top: 24px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 1.04rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .touch-link {
+            color: var(--accent-blue);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .touch-link:hover {
+            color: #60a5fa;
+            transform: translateX(2px);
+        }
+
+        @media (max-width: 768px) {
+            .case-study-stage {
+                padding: 112px 18px 44px;
+            }
+            .deck-stage {
+                padding: 0 14px 32px;
+            }
+            .closing-stage {
+                padding: 12px 18px 72px;
+            }
+            .case-title {
+                font-size: 1.9rem;
+            }
+            .case-subtitle {
+                font-size: 1.02rem;
+                margin-bottom: 26px;
+            }
+            .hero-image-panel,
+            .slides-stack {
+                border-radius: 16px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .meta-strip-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+            .closing-touch-line {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ── 3-PART NAVBAR FOR PROJECT VIEW ── -->
+    <!-- Top Left Corner: Project Name (Desktop) / Back (Mobile) -->
+    <div class="fixed top-6 left-6 md:left-12 z-50 flex items-center h-14">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <span>CEED</span>
+        </a>
+        <a href="../../projects.html" onclick="if (window.history.length > 1 && document.referrer) { window.history.back(); return false; }"
+            class="nav-resume-btn mobile-back-btn inline-flex md:hidden items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-5 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300"
+            aria-label="Go back">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
+        </a>
+    </div>
+
+    <!-- Center: Homepage Navbar (Full Floating Glass Pill) -->
+    <div id="navbar-container" class="fixed top-6 left-0 w-full flex justify-center z-40 px-4 pointer-events-none navbar-visible hidden md:flex">
+        <nav
+            class="bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 w-full max-w-xl lg:max-w-2xl transition-all duration-300 pointer-events-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="../../index.html" aria-label="Rehan Jose Home" class="flex items-center">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--light">
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../../index.html#home"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Home</a>
+                    <a href="../../about.html"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">About</a>
+                    <a href="../../projects.html"
+                        class="nav-link active text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Projects</a>
+                    <a href="../../index.html#contact"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="../../ResumeRehanJose.pdf" target="_blank"
+                        class="hidden sm:flex items-center gap-2 text-xs font-bold uppercase text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">
+                        <span>Resume</span>
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Top Right Corner: Back to Projects & Mobile Toggle -->
+    <div class="fixed top-6 right-6 md:right-12 z-50 flex items-center gap-3 h-14">
+        <a href="../../projects.html"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back to Projects</span>
+        </a>
+        <button id="mobile-menu-toggle"
+            class="md:hidden flex items-center justify-center w-14 h-14 rounded-full bg-zinc-900/30 backdrop-blur-xl border border-white/10 text-white hover:border-white/30 transition-all duration-300"
+            aria-label="Toggle Menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close Menu">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <nav class="mobile-nav">
+                <a href="../../index.html#home" class="mobile-nav-link">Home</a>
+                <a href="../../about.html" class="mobile-nav-link">About</a>
+                <a href="../../projects.html" class="mobile-nav-link">Projects</a>
+                <a href="../../index.html#contact" class="mobile-nav-link">Contact</a>
+                <a href="../../ResumeRehanJose.pdf" target="_blank" class="mobile-nav-link mobile-nav-resume">
+                    <span>Resume</span>
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- ── PART 01: RESEARCH PAPER STAGE ── -->
+    <main class="case-study-stage">
+        <div class="status-badge-row">
+            <span class="status-pill">
+                <span class="status-dot"></span>
+                <span>Ongoing Project · Progress Share</span>
+            </span>
+        </div>
+
+        <h1 class="case-title">The Exam Is Accessible. Is the Journey to It?</h1>
+        <p class="case-subtitle">
+            First, we audited 15 Indian competitive examination portals in a joint accessibility research paper—then carried those findings directly into an inclusive redesign of the CEED website.
+        </p>
+
+        <!-- Hero Image -->
+        <div class="hero-image-panel">
+            <img src="../../inclusive.png" alt="Accessibility in Indian Competitive Examination Portals" class="hero-panel-img" loading="eager" fetchpriority="high">
+        </div>
+
+        <!-- Meta Strip -->
+        <div class="meta-strip-grid">
+            <div class="meta-item">
+                <span class="meta-label">Team</span>
+                <span class="meta-value">Rehan Jose &amp; Malavika P Pillai</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Context</span>
+                <span class="meta-value">NIFT Kannur · Inclusive Design</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Status</span>
+                <span class="meta-value">Ongoing · Research &amp; CEED Discovery</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Methods</span>
+                <span class="meta-value">WAVE Audit, Manual WCAG 2.2, Survey &amp; UX Redesign</span>
+            </div>
+        </div>
+
+        <div class="section-divider" aria-hidden="true"></div>
+
+        <!-- ── PART 01: THE RESEARCH PAPER ── -->
+        <section class="case-section-block">
+            <p class="part-kicker">Part 01 · Research Paper</p>
+            <h2 class="section-heading-text">Accessibility &amp; Inclusivity of Competitive Examination Registration Portals in India</h2>
+            <p class="section-para">
+                Competitive examinations are a primary gateway to higher education, professional licensing, and public employment in India. While conducting bodies increasingly provide accommodations inside the exam hall—such as scribes, extra time, and accessible centres—those measures break down if a candidate with disabilities cannot independently navigate the website to discover the exam, understand eligibility, request provisions, and submit the application.
+            </p>
+            <p class="section-para">
+                Together with my teammate <strong>Malavika P Pillai</strong>, we set out to investigate a focused question: <em>Can a candidate independently discover, navigate, understand, and complete the digital registration journey for an Indian competitive examination using assistive or alternative forms of interaction?</em>
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">15</span>
+                    <span class="stat-caption">Major Indian exam portals audited across the 2026 registration cycle</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2-Layer</span>
+                    <span class="stat-caption">Automated WAVE scans paired with manual keyboard, screen-reader &amp; voice walkthroughs</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">5K–52L+</span>
+                    <span class="stat-caption">Annual candidate scale—from specialized design tests to massive national exams</span>
+                </div>
+            </div>
+
+            <p class="section-para">
+                We intentionally evaluated portals across the full spectrum of candidate participation—from high-volume national recruitment and entrance systems to specialized design, architecture, and law examinations:
+            </p>
+
+            <div class="portal-chips" aria-label="15 audited Indian examination portals">
+                <span class="portal-chip">RRB Group D</span>
+                <span class="portal-chip">SSC CGL</span>
+                <span class="portal-chip">NEET UG</span>
+                <span class="portal-chip">NTA / CUET UG</span>
+                <span class="portal-chip">GATE</span>
+                <span class="portal-chip">UPSC CSE</span>
+                <span class="portal-chip">JEE Advanced</span>
+                <span class="portal-chip">CAT</span>
+                <span class="portal-chip">KEAM</span>
+                <span class="portal-chip">CLAT</span>
+                <span class="portal-chip">ICAI</span>
+                <span class="portal-chip">NATA</span>
+                <span class="portal-chip">ICAR</span>
+                <span class="portal-chip">NID DAT</span>
+                <span class="portal-chip portal-chip--highlight">CEED ★</span>
+            </div>
+        </section>
+
+        <!-- Journey & 3-Level Framework -->
+        <section class="case-section-block">
+            <h2 class="section-heading-text">Accessibility Is a Journey, Not a Feature</h2>
+            <p class="section-para">
+                One of our central findings was that a low automated WAVE error count—or an accessibility toolbar on the homepage—does not guarantee a candidate can finish applying. On portals like UPSC and RRB, accessibility panels present on the main site vanished the moment a candidate entered the registration portal itself. Barriers appeared across every step of the flow:
+            </p>
+
+            <div class="journey-flow" aria-label="Examination registration journey stages">
+                <span class="journey-step">Discover</span>
+                <span class="journey-arrow">→</span>
+                <span class="journey-step">Understand</span>
+                <span class="journey-arrow">→</span>
+                <span class="journey-step">Navigate</span>
+                <span class="journey-arrow">→</span>
+                <span class="journey-step">Register</span>
+                <span class="journey-arrow">→</span>
+                <span class="journey-step">Verify</span>
+                <span class="journey-arrow">→</span>
+                <span class="journey-step">Upload</span>
+                <span class="journey-arrow">→</span>
+                <span class="journey-step">Submit</span>
+            </div>
+
+            <div class="gap-cards">
+                <div class="gap-card">
+                    <div class="gap-card-header">
+                        <span class="gap-num">01</span>
+                        <h3 class="gap-title">Technical Accessibility</h3>
+                    </div>
+                    <p class="gap-desc">
+                        Missing alternative text, contrast failures, structural and ARIA defects, and unlabeled form controls detected through WAVE—revealing wide inconsistency with no shared accessibility pattern across Indian exam systems.
+                    </p>
+                </div>
+                <div class="gap-card">
+                    <div class="gap-card-header">
+                        <span class="gap-num">02</span>
+                        <h3 class="gap-title">Structural Navigability</h3>
+                    </div>
+                    <p class="gap-desc">
+                        Keyboard focus that disappeared midway through pages, auto-opening dropdowns forcing users through every menu item, inaccessible pop-ups and OTP inputs, broken mobile ordering, and accessibility controls dropping off during registration and payment.
+                    </p>
+                </div>
+                <div class="gap-card">
+                    <div class="gap-card-header">
+                        <span class="gap-num">03</span>
+                        <h3 class="gap-title">Information Accessibility</h3>
+                    </div>
+                    <p class="gap-desc">
+                        Critical brochures, eligibility rules, and PwD provisions locked inside untagged PDFs; auto-scrolling tickers carrying dates and scribe notices; vague labels like &ldquo;Self-Service Portal&rdquo; or &ldquo;CEN&rdquo;; and generic &ldquo;click here&rdquo; upload links.
+                    </p>
+                </div>
+            </div>
+
+            <div class="outcome-quote-block">
+                &ldquo;An accessible examination does not necessarily mean an accessible path to the examination.&rdquo;
+            </div>
+
+            <div class="paper-cta-card">
+                <div class="paper-cta-meta">
+                    <span class="paper-cta-title">Read the Full Research Paper (PDF)</span>
+                    <span class="paper-cta-sub">12 Pages · Malavika P Pillai &amp; Rehan Jose · NIFT Kannur</span>
+                </div>
+                <a href="CompetitveExamsInIndia%20(1).pdf" target="_blank" rel="noopener noreferrer" class="paper-cta-btn">
+                    <span>Open Paper</span>
+                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true"></div>
+
+        <!-- Bridge to Part 02: Why CEED -->
+        <section class="case-section-block" style="margin-bottom: 12px;">
+            <p class="part-kicker">Part 02 · Applied Redesign (Ongoing)</p>
+            <h2 class="section-heading-text">From Research to Action: Redesigning the CEED Website</h2>
+            <p class="section-para">
+                After completing the 15-portal study, we chose to focus our redesign on <strong>CEED (Common Entrance Examination for Design)</strong>—India&rsquo;s premier entrance examination for postgraduate design programmes at IITs and IISc. Despite representing the country&rsquo;s design community, CEED recorded the <strong>second-highest WAVE error count (45 errors, 118 alerts, AIM score 3.5)</strong> among all 15 audited portals.
+            </p>
+            <p class="section-para">
+                Our manual audit exposed no accessibility panel, no search or sitemap, invisible keyboard focus with auto-opening dropdowns, an untagged PDF brochure opening inside the same tab, generic &ldquo;click here&rdquo; upload links, and help delivered primarily through images. Below is our ongoing CEED redesign work-in-progress deck—covering heuristic evaluation, WCAG mapping, stakeholder prioritization, candidate survey insights, affinity mapping, personas, empathy maps, and user scenarios.
+            </p>
+        </section>
+    </main>
+
+    <!-- ── PART 02: CEED REDESIGN PRESENTATION DECK (DINELY-STYLE STACK) ── -->
+    <section class="deck-stage" aria-label="CEED Website Redesign Presentation Deck">
+        <div class="slides-stack">
+            <img src="slides/slide-01.jpg?v=2" alt="CEED Website Redesign — Slide 01: Title" loading="eager">
+            <img src="slides/slide-02.jpg?v=2" alt="CEED Website Redesign — Slide 02: What is CEED?" loading="eager">
+            <img src="slides/slide-03.jpg?v=2" alt="CEED Website Redesign — Slide 03: Why CEED?" loading="lazy">
+            <img src="slides/slide-04.jpg?v=2" alt="CEED Website Redesign — Slide 04: Problem Statement" loading="lazy">
+            <img src="slides/slide-05.jpg?v=2" alt="CEED Website Redesign — Slide 05: Secondary Research" loading="lazy">
+            <img src="slides/slide-06.jpg?v=2" alt="CEED Website Redesign — Slide 06: Secondary Research Visual" loading="lazy">
+            <img src="slides/slide-07.jpg?v=2" alt="CEED Website Redesign — Slide 07: Findings" loading="lazy">
+            <img src="slides/slide-08.jpg?v=2" alt="CEED Website Redesign — Slide 08: Portal Comparison Matrix" loading="lazy">
+            <img src="slides/slide-09.jpg?v=2" alt="CEED Website Redesign — Slide 09: Existing Information Architecture" loading="lazy">
+            <img src="slides/slide-10.jpg?v=2" alt="CEED Website Redesign — Slide 10: Heuristic Evaluation 1" loading="lazy">
+            <img src="slides/slide-11.jpg?v=2" alt="CEED Website Redesign — Slide 11: Heuristic Evaluation 2" loading="lazy">
+            <img src="slides/slide-12.jpg?v=2" alt="CEED Website Redesign — Slide 12: Heuristic Evaluation 3" loading="lazy">
+            <img src="slides/slide-13.jpg?v=2" alt="CEED Website Redesign — Slide 13: Heuristic Evaluation 4" loading="lazy">
+            <img src="slides/slide-14.jpg?v=2" alt="CEED Website Redesign — Slide 14: Technical Accessibility" loading="lazy">
+            <img src="slides/slide-15.jpg?v=2" alt="CEED Website Redesign — Slide 15: Journey Stage Observations" loading="lazy">
+            <img src="slides/slide-16.jpg?v=2" alt="CEED Website Redesign — Slide 16: WCAG Criteria Impact" loading="lazy">
+            <img src="slides/slide-17.jpg?v=2" alt="CEED Website Redesign — Slide 17: Barriers Beyond WCAG" loading="lazy">
+            <img src="slides/slide-18.jpg?v=2" alt="CEED Website Redesign — Slide 18: Design Remediation Details" loading="lazy">
+            <img src="slides/slide-19.jpg?v=2" alt="CEED Website Redesign — Slide 19: Redesign Objectives" loading="lazy">
+            <img src="slides/slide-20.jpg?v=2" alt="CEED Website Redesign — Slide 20: Stakeholder Identification" loading="lazy">
+            <img src="slides/slide-21.jpg?v=2" alt="CEED Website Redesign — Slide 21: Stakeholder Prioritization" loading="lazy">
+            <img src="slides/slide-22.jpg?v=2" alt="CEED Website Redesign — Slide 22: User Segments" loading="lazy">
+            <img src="slides/slide-23.jpg?v=2" alt="CEED Website Redesign — Slide 23: Problem Framing" loading="lazy">
+            <img src="slides/slide-24.jpg?v=2" alt="CEED Website Redesign — Slide 24: Survey Insights — Registration Outcome" loading="lazy">
+            <img src="slides/slide-25.jpg?v=2" alt="CEED Website Redesign — Slide 25: Survey Insights — Barriers Behind Drop-off" loading="lazy">
+            <img src="slides/slide-26.jpg?v=2" alt="CEED Website Redesign — Slide 26: Survey Insights — Errors, Saving &amp; Payment" loading="lazy">
+            <img src="slides/slide-27.jpg?v=2" alt="CEED Website Redesign — Slide 27: Wall of Information" loading="lazy">
+            <img src="slides/slide-28.jpg?v=2" alt="CEED Website Redesign — Slide 28: Affinity Mapping 1" loading="lazy">
+            <img src="slides/slide-29.jpg?v=2" alt="CEED Website Redesign — Slide 29: Affinity Mapping 2" loading="lazy">
+            <img src="slides/slide-30.jpg?v=2" alt="CEED Website Redesign — Slide 30: Personas, Empathy Maps &amp; Scenarios" loading="lazy">
+            <img src="slides/slide-31.jpg?v=2" alt="CEED Website Redesign — Slide 31: Persona 1 — Aarav" loading="lazy">
+            <img src="slides/slide-32.jpg?v=2" alt="CEED Website Redesign — Slide 32: Aarav Journey &amp; Emotions" loading="lazy">
+            <img src="slides/slide-33.jpg?v=2" alt="CEED Website Redesign — Slide 33: Scenario of Aarav" loading="lazy">
+            <img src="slides/slide-34.jpg?v=2" alt="CEED Website Redesign — Slide 34: Aarav Storyboard" loading="lazy">
+            <img src="slides/slide-35.jpg?v=2" alt="CEED Website Redesign — Slide 35: Persona 2 — Sneha" loading="lazy">
+            <img src="slides/slide-36.jpg?v=2" alt="CEED Website Redesign — Slide 36: Sneha Journey &amp; Emotions" loading="lazy">
+            <img src="slides/slide-37.jpg?v=2" alt="CEED Website Redesign — Slide 37: Scenario of Sneha" loading="lazy">
+            <img src="slides/slide-38.jpg?v=2" alt="CEED Website Redesign — Slide 38: Sneha Storyboard" loading="lazy">
+            <img src="slides/slide-39.jpg?v=2" alt="CEED Website Redesign — Slide 39: Persona 3 — Rohan" loading="lazy">
+            <img src="slides/slide-40.jpg?v=2" alt="CEED Website Redesign — Slide 40: Rohan Journey &amp; Emotions" loading="lazy">
+            <img src="slides/slide-41.jpg?v=2" alt="CEED Website Redesign — Slide 41: Scenario of Rohan" loading="lazy">
+            <img src="slides/slide-42.jpg?v=2" alt="CEED Website Redesign — Slide 42: Rohan Storyboard" loading="lazy">
+            <img src="slides/slide-43.jpg?v=2" alt="CEED Website Redesign — Slide 43: Persona 4 — Rajesh" loading="lazy">
+            <img src="slides/slide-44.jpg?v=2" alt="CEED Website Redesign — Slide 44: Rajesh Journey &amp; Emotions" loading="lazy">
+            <img src="slides/slide-45.jpg?v=2" alt="CEED Website Redesign — Slide 45: Scenario of Rajesh" loading="lazy">
+            <img src="slides/slide-46.jpg?v=2" alt="CEED Website Redesign — Slide 46: Rajesh Storyboard" loading="lazy">
+        </div>
+    </section>
+
+    <!-- ── ONGOING PROGRESS NOTE & CLOSING ── -->
+    <div class="closing-stage">
+        <div class="outcome-quote-block" style="margin-top: 8px;">
+            <strong>What&rsquo;s Next:</strong> This project is actively in progress. With our 15-portal research paper, CEED audit, survey synthesis, personas, and storyboards complete, we are now moving into restructured information architecture, accessible wireframes, and a tested interactive prototype for CEED.
+        </div>
+
+        <div class="closing-touch-line">
+            <span>Have thoughts on exam accessibility or inclusive design? I&rsquo;d love to hear your perspective.</span>
+            <a href="../../index.html#contact" class="touch-link">
+                <span>Get in touch</span>
+                <span>↗</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Global Sitemap Footer -->
+    <footer class="portfolio-sitemap-footer">
+        <div class="sitemap-container">
+            <div class="sitemap-grid">
+                <!-- Brand / Bio -->
+                <div class="sitemap-brand">
+                    <a href="../../index.html" class="sitemap-brand-link" aria-label="Rehan Jose Home">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--light">
+                        <span class="sitemap-logo-text">REHAN JOSE</span>
+                    </a>
+                    <div class="sitemap-status-pill">
+                        <span class="sitemap-status-dot"></span>
+                        <span>Available for Opportunities</span>
+                    </div>
+                </div>
+
+                <!-- Column 1: Navigation -->
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Navigation</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="../../index.html#home" class="sitemap-link">Home</a></li>
+                        <li><a href="../../about.html" class="sitemap-link">About</a></li>
+                        <li><a href="../../projects.html" class="sitemap-link">Projects Archive</a></li>
+                        <li><a href="../../about.html#experience" class="sitemap-link">Experience</a></li>
+                        <li><a href="../../index.html#contact" class="sitemap-link">Contact</a></li>
+                        <li><a href="../../ResumeRehanJose.pdf" target="_blank" class="sitemap-link">Resume <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Connect & Socials -->
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Connect</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="mailto:rehanjose11@gmail.com" class="sitemap-link">Email <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.linkedin.com/in/rehan-jose/" target="_blank" rel="noopener noreferrer" class="sitemap-link">LinkedIn <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.behance.net/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">Behance <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://github.com/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">GitHub <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://joserehan.wordpress.com/" target="_blank" rel="noopener noreferrer" class="sitemap-link">WordPress <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.instagram.com/rehan_j0se/?hl=en" target="_blank" rel="noopener noreferrer" class="sitemap-link">Instagram <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Copyright & Back to Top -->
+            <div class="sitemap-bottom">
+                <p class="sitemap-copyright">Designed and Built from scratch &middot; &copy; REHAN JOSE 2026 &middot; ALL RIGHTS RESERVED</p>
+                <button type="button" class="sitemap-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top ↑</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons, Mobile Menu & Floating Scroll Top -->
+    <script>
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // Mobile Menu
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const mobileClose = document.getElementById('mobile-menu-close');
+
+        if (mobileToggle && mobileMenu) {
+            mobileToggle.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        if (mobileClose && mobileMenu) {
+            mobileClose.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+
+        document.querySelectorAll('.mobile-nav-link, .mobile-nav-resume').forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu) {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Floating Bottom-Center Scroll to Top Button
+        (function () {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.id = 'floating-scroll-top-btn';
+            btn.className = 'floating-scroll-top-btn';
+            btn.setAttribute('aria-label', 'Scroll to top');
+            btn.setAttribute('title', 'Back to top');
+            btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>';
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            document.body.appendChild(btn);
+
+            const toggleBtn = () => {
+                if (window.scrollY > 300) {
+                    btn.classList.add('is-visible');
+                } else {
+                    btn.classList.remove('is-visible');
+                }
+            };
+            window.addEventListener('scroll', toggleBtn, { passive: true });
+            toggleBtn();
+        })();
+    </script>
+</body>
+</html>

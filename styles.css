@@ -2572,9 +2572,38 @@ body::after {
     color: #111111 !important;
 }
 
+/* Top corner project pills (Project Name, Back, Back to Projects) in light mode */
+[data-theme="light"] .nav-resume-btn {
+    background: rgba(255, 255, 255, 0.86) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-color: rgba(17, 17, 17, 0.12) !important;
+    color: #111111 !important;
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.10),
+                0 0 0 1px rgba(255, 255, 255, 0.85) inset !important;
+}
+
+[data-theme="light"] .nav-resume-btn span,
+[data-theme="light"] .nav-resume-btn svg {
+    color: #111111 !important;
+    stroke: #111111 !important;
+}
+
+[data-theme="light"] .nav-resume-btn:hover {
+    background: #111111 !important;
+    border-color: #111111 !important;
+    color: #ffffff !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18) !important;
+}
+
+[data-theme="light"] .nav-resume-btn:hover span,
+[data-theme="light"] .nav-resume-btn:hover svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
 @media (max-width: 767px) {
-    [data-theme="light"] button#mobile-menu-toggle.rounded-full,
-    [data-theme="light"] .mobile-back-btn {
+    [data-theme="light"] button#mobile-menu-toggle.rounded-full {
         background: rgba(255, 255, 255, 0.88) !important;
         border-color: rgba(17, 17, 17, 0.16) !important;
         color: #111111 !important;
@@ -2582,9 +2611,7 @@ body::after {
                     0 0 0 1px rgba(255, 255, 255, 0.85) inset !important;
     }
 
-    [data-theme="light"] button#mobile-menu-toggle.rounded-full svg,
-    [data-theme="light"] .mobile-back-btn svg,
-    [data-theme="light"] .mobile-back-btn span {
+    [data-theme="light"] button#mobile-menu-toggle.rounded-full svg {
         color: #111111 !important;
         stroke: #111111 !important;
     }

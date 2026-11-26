@@ -6,6 +6,17 @@
     <title>Dinely — Rehan Jose's Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
     <link rel="icon" type="image/png" href="../../Homepage Assets/logo.png">
+    <!-- Theme initialization before render to avoid FOUC -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -42,6 +53,17 @@
             .case-study-container { padding: 0 16px; }
         }
         .placeholder-text { font-family: 'Space Mono', monospace; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.2em; font-size: 14px; }
+        [data-theme="light"] body,
+        [data-theme="light"] .project-details-page {
+            background-color: #fcfcfb !important;
+            color: #141414;
+        }
+        [data-theme="light"] .placeholder-text {
+            color: rgba(17, 17, 17, 0.55);
+        }
+        [data-theme="light"] .case-study-container img {
+            border-color: rgba(0, 0, 0, 0.08) !important;
+        }
     </style>
 </head>
 <body class="bg-black">
