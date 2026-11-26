@@ -16,7 +16,7 @@
     }
 </script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<link rel="stylesheet" href="../../styles.css?v=48">
+<link rel="stylesheet" href="../../styles.css?v=49">
 <link rel="stylesheet" href="style.css?v=2">
 <style>
 /* Scoped Mobile Menu & Nav Styles */
@@ -28,37 +28,6 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
     font-family: 'Space Mono', monospace !important;
 }
 .nav-logo { margin-left: 8px; }
-.mobile-menu {
-    position: fixed; inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 9998; opacity: 0;
-    pointer-events: none; transition: opacity 0.3s ease;
-}
-.mobile-menu.active { opacity: 1; pointer-events: auto; }
-.mobile-menu-content {
-    position: relative; width: 100%; height: 100%; display: flex;
-    flex-direction: column; align-items: center; justify-content: center; padding: 32px;
-}
-.mobile-menu-close {
-    position: absolute; top: 32px; right: 32px; background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; width: 48px; height: 48px;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: all 0.3s ease;
-}
-.mobile-menu-close:hover { background: rgba(255, 255, 255, 0.05); transform: rotate(90deg); }
-.mobile-nav { display: flex; flex-direction: column; gap: 32px; align-items: center; }
-.mobile-nav-link {
-    font-size: 24px; font-weight: 700; font-family: 'Space Mono', monospace; text-transform: uppercase;
-    letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.6); text-decoration: none;
-    transition: all 0.3s ease; position: relative;
-}
-.mobile-nav-link:hover { color: #fff; transform: translateX(10px); }
-.mobile-nav-link::before {
-    content: ''; position: absolute; left: -24px; top: 50%; transform: translateY(-50%) scaleX(0);
-    width: 16px; height: 2px; background: #fff; transition: transform 0.3s ease;
-}
-.mobile-nav-link:hover::before { transform: translateY(-50%) scaleX(1); }
 @media (max-width: 768px) {
     /* Global scroll lock */
     html, body { overflow-x: hidden !important; width: 100% !important; position: relative !important; }
@@ -101,11 +70,17 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
 <body>
 
     <!-- ── NAVBAR ── -->
-    <!-- Top Left Corner: Project Name -->
+    <!-- Top Left Corner: Project Name (Desktop) / Back (Mobile) -->
     <div class="fixed top-6 left-6 md:left-12 z-50 flex items-center h-14">
         <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
-            class="nav-resume-btn inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
             <span>ReflexLabs AI</span>
+        </a>
+        <a href="../../projects.html" onclick="if (window.history.length > 1 && document.referrer) { window.history.back(); return false; }"
+            class="nav-resume-btn mobile-back-btn inline-flex md:hidden items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-5 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300"
+            aria-label="Go back">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
         </a>
     </div>
 
@@ -148,7 +123,7 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
     <!-- Top Right Corner: Back to Projects & Mobile Toggle -->
     <div class="fixed top-6 right-6 md:right-12 z-50 flex items-center gap-3 h-14">
         <a href="../../projects.html"
-            class="nav-resume-btn hidden sm:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
             <span>Back to Projects</span>
         </a>
@@ -166,8 +141,12 @@ a.fixed.top-6.right-4, a.fixed.top-6.right-4 * {
             <nav class="mobile-nav">
                 <a href="../../index.html#home" class="mobile-nav-link">Home</a>
                 <a href="../../about.html" class="mobile-nav-link">About</a>
-                <a href="../../index.html#projects" class="mobile-nav-link">Projects</a>
+                <a href="../../projects.html" class="mobile-nav-link">Projects</a>
                 <a href="../../index.html#contact" class="mobile-nav-link">Contact</a>
+                <a href="../../ResumeRehanJose.pdf" target="_blank" class="mobile-nav-link mobile-nav-resume">
+                    <span>Resume</span>
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                </a>
             </nav>
         </div>
     </div>

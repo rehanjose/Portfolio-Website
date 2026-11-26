@@ -16,7 +16,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../styles.css?v=48">
+    <link rel="stylesheet" href="../../styles.css?v=49">
     <style>
         #navbar-container, #navbar-container *,
         .center-nav-bar, .center-nav-bar *,
@@ -45,11 +45,17 @@
     </style>
 </head>
 <body class="bg-black">
-    <!-- Top Left Corner: Project Name -->
+    <!-- Top Left Corner: Project Name (Desktop) / Back (Mobile) -->
     <div class="fixed top-6 left-6 md:left-12 z-50 flex items-center h-14">
         <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
-            class="nav-resume-btn inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
             <span>DINELY</span>
+        </a>
+        <a href="../../projects.html" onclick="if (window.history.length > 1 && document.referrer) { window.history.back(); return false; }"
+            class="nav-resume-btn mobile-back-btn inline-flex md:hidden items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-5 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300"
+            aria-label="Go back">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
         </a>
     </div>
 
@@ -92,7 +98,7 @@
     <!-- Top Right Corner: Back to Projects & Mobile Toggle -->
     <div class="fixed top-6 right-6 md:right-12 z-50 flex items-center gap-3 h-14">
         <a href="../../projects.html"
-            class="nav-resume-btn hidden sm:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
             <span>Back to Projects</span>
         </a>
@@ -110,8 +116,12 @@
             <nav class="mobile-nav">
                 <a href="../../index.html#home" class="mobile-nav-link">Home</a>
                 <a href="../../about.html" class="mobile-nav-link">About</a>
-                <a href="../../index.html#projects" class="mobile-nav-link">Projects</a>
+                <a href="../../projects.html" class="mobile-nav-link">Projects</a>
                 <a href="../../index.html#contact" class="mobile-nav-link">Contact</a>
+                <a href="../../ResumeRehanJose.pdf" target="_blank" class="mobile-nav-link mobile-nav-resume">
+                    <span>Resume</span>
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                </a>
             </nav>
         </div>
     </div>
