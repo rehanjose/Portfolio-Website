@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Flip Image Test</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-CRRKNVG7VK');
+  </script>
+</head>
+<body>
+  <div id="book" style="width: 400px; height: 400px; background: red;"></div>
+  <script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+  <script>
+    var pf = new St.PageFlip(document.getElementById('book'), {
+      width: 400, height: 400, showCover: true
+    });
+    pf.loadFromImages(['pattern.png','pattern.png','pattern.png','pattern.png']);
+    setTimeout(() => {
+        // Output canvas properties or look for white
+    }, 1000);
+  </script>
+</body>
+</html>

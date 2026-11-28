@@ -4104,15 +4104,51 @@
             if (!viewer) return;
 
             const totalPages = 80;
+            const isMobileBook = () => window.innerWidth < 768;
             const maxSpread = 40;
             let currentSpread = 0;
+            let currentMobilePage = 1;
 
             function pageUrl(pageNum) {
                 const padded = String(pageNum).padStart(4, '0');
                 return 'eravathody%20weavers/about/BOOKJPG/CRD_book_Eravathody-compressed_page-' + padded + '.jpg';
             }
 
+            function renderMobilePage(pageNum, direction) {
+                currentMobilePage = Math.max(1, Math.min(totalPages, pageNum));
+                if (direction) {
+                    const animClass = direction === 'next' ? 'flipping-next' : 'flipping-prev';
+                    viewer.classList.add(animClass);
+                    setTimeout(() => viewer.classList.remove(animClass), 260);
+                }
+                viewer.classList.remove('is-cover-view');
+                if (coverHint) coverHint.style.display = 'none';
+                leftHalf.style.display = 'none';
+                rightHalf.style.display = 'block';
+                rightHalf.style.width = '100%';
+                rightImg.style.display = 'block';
+                rightImg.src = pageUrl(currentMobilePage);
+                if (cornerHint) cornerHint.textContent = currentMobilePage === totalPages ? 'End of Book' : 'Tap or swipe →';
+                label.textContent = 'Page ' + currentMobilePage + ' of ' + totalPages;
+                slider.min = 1;
+                slider.max = totalPages;
+                slider.value = currentMobilePage;
+                prevBtn.disabled = (currentMobilePage <= 1);
+                nextBtn.disabled = (currentMobilePage >= totalPages);
+                if (currentMobilePage < totalPages) {
+                    new Image().src = pageUrl(currentMobilePage + 1);
+                }
+            }
+
             function renderSpread(spreadIdx, direction) {
+                if (isMobileBook()) {
+                    renderMobilePage(spreadIdx <= 0 ? 1 : spreadIdx, direction);
+                    return;
+                }
+                leftHalf.style.display = '';
+                rightHalf.style.width = '';
+                slider.min = 0;
+                slider.max = maxSpread;
                 currentSpread = Math.max(0, Math.min(maxSpread, spreadIdx));
 
                 if (direction) {
@@ -4162,46 +4198,72 @@
                 slider.value = currentSpread;
             }
 
-            rightHalf.addEventListener('click', () => {
-                if (currentSpread < maxSpread) renderSpread(currentSpread + 1, 'next');
+            const stepNext = () => {
+                if (isMobileBook()) {
+                    if (currentMobilePage < totalPages) renderMobilePage(currentMobilePage + 1, 'next');
+                } else if (currentSpread < maxSpread) {
+                    renderSpread(currentSpread + 1, 'next');
+                }
+            };
+
+            const stepPrev = () => {
+                if (isMobileBook()) {
+                    if (currentMobilePage > 1) renderMobilePage(currentMobilePage - 1, 'prev');
+                } else if (currentSpread > 0) {
+                    renderSpread(currentSpread - 1, 'prev');
+                }
+            };
+
+            rightHalf.addEventListener('click', (e) => {
+                if (isMobileBook()) {
+                    const rect = rightHalf.getBoundingClientRect();
+                    if (e.clientX - rect.left < rect.width * 0.35) stepPrev();
+                    else stepNext();
+                } else {
+                    stepNext();
+                }
             });
 
-            leftHalf.addEventListener('click', () => {
-                if (currentSpread > 0) renderSpread(currentSpread - 1, 'prev');
-            });
+            let bookTouchX = 0;
+            viewer.addEventListener('touchstart', (e) => { bookTouchX = e.changedTouches[0].clientX; }, { passive: true });
+            viewer.addEventListener('touchend', (e) => {
+                if (!isMobileBook()) return;
+                const dx = e.changedTouches[0].clientX - bookTouchX;
+                if (Math.abs(dx) > 36) (dx < 0 ? stepNext() : stepPrev());
+            }, { passive: true });
 
-            prevBtn.addEventListener('click', () => {
-                if (currentSpread > 0) renderSpread(currentSpread - 1, 'prev');
-            });
-
-            nextBtn.addEventListener('click', () => {
-                if (currentSpread < maxSpread) renderSpread(currentSpread + 1, 'next');
-            });
+            leftHalf.addEventListener('click', stepPrev);
+            prevBtn.addEventListener('click', stepPrev);
+            nextBtn.addEventListener('click', stepNext);
 
             if (modalArrowPrev) {
                 modalArrowPrev.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    if (currentSpread > 0) renderSpread(currentSpread - 1, 'prev');
+                    stepPrev();
                 });
             }
 
             if (modalArrowNext) {
                 modalArrowNext.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    if (currentSpread < maxSpread) renderSpread(currentSpread + 1, 'next');
+                    stepNext();
                 });
             }
 
             slider.addEventListener('input', function () {
                 const target = parseInt(this.value, 10);
-                renderSpread(target, target > currentSpread ? 'next' : 'prev');
+                if (isMobileBook()) {
+                    renderMobilePage(target, target > currentMobilePage ? 'next' : 'prev');
+                } else {
+                    renderSpread(target, target > currentSpread ? 'next' : 'prev');
+                }
             });
 
             document.addEventListener('keydown', (e) => {
                 if (!bookModal || !bookModal.classList.contains('active')) return;
                 if (e.key === 'Escape') closeBookModal();
-                if (e.key === 'ArrowRight' && currentSpread < maxSpread) renderSpread(currentSpread + 1, 'next');
-                if (e.key === 'ArrowLeft' && currentSpread > 0) renderSpread(currentSpread - 1, 'prev');
+                if (e.key === 'ArrowRight') stepNext();
+                if (e.key === 'ArrowLeft') stepPrev();
             });
 
             renderSpread(0);

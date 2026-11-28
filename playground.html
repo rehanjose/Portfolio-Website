@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playground — Rehan Jose</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+    <link rel="icon" type="image/png" href="Homepage Assets/logo.png">
+
+    <!-- Theme initialization before render to avoid FOUC -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CRRKNVG7VK');
+    </script>
+
+    <!-- External Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css?v=49">
+
+    <!-- Preload theme backdrops -->
+    <link rel="preload" as="image" href="Homepage%20Assets/NETBACKDROPBLACK.png">
+    <link rel="preload" as="image" href="Homepage%20Assets/netbackdrop.png">
+
+    <style>
+        :root {
+            --pg-accent: #38bdf8;
+            --pg-accent-2: #f472b6;
+            --pg-accent-3: #a3e635;
+            --pg-accent-rgb: 56, 189, 248;
+        }
+
+        /* Interactive Spark & Confetti Canvas */
+        #pg-fx-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        /* Soft Ambient Floating Blobs */
+        .pg-ambient {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .pg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.22;
+            transition: background 0.8s ease;
+            animation: pgBlobFloat 14s ease-in-out infinite alternate;
+        }
+
+        .pg-blob--1 {
+            width: 420px;
+            height: 420px;
+            top: -80px;
+            left: -80px;
+            background: radial-gradient(circle, var(--pg-accent), transparent 70%);
+        }
+
+        .pg-blob--2 {
+            width: 380px;
+            height: 380px;
+            bottom: 5%;
+            right: -60px;
+            background: radial-gradient(circle, var(--pg-accent-2), transparent 70%);
+            animation-duration: 18s;
+            animation-delay: -4s;
+        }
+
+        .pg-blob--3 {
+            width: 300px;
+            height: 300px;
+            top: 45%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, var(--pg-accent-3), transparent 70%);
+            opacity: 0.12;
+            animation-duration: 16s;
+            animation-delay: -7s;
+        }
+
+        [data-theme="light"] .pg-blob {
+            opacity: 0.16;
+        }
+
+        @keyframes pgBlobFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(36px, -28px) scale(1.1); }
+            100% { transform: translate(-24px, 32px) scale(0.95); }
+        }
+
+        .playground-page {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            min-height: 100vh;
+            padding: 132px 24px 110px;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        .pg-header {
+            position: relative;
+            max-width: 760px;
+            margin: 0 auto 48px;
+            text-align: center;
+        }
+
+        .pg-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            background: rgba(var(--pg-accent-rgb), 0.12);
+            border: 1px solid rgba(var(--pg-accent-rgb), 0.32);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--pg-accent);
+            margin-bottom: 18px;
+            animation: pgPopIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .pg-eyebrow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pg-accent);
+            animation: pgPulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pgPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.45); opacity: 0.55; }
+        }
+
+        /* Rubber-Band Interactive Title */
+        .pg-title {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2.4rem, 5.6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+            user-select: none;
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .pg-letter {
+            display: inline-block;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .pg-letter.is-bouncing {
+            animation: pgRubberBand 0.72s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: var(--pg-accent);
+        }
+
+        @keyframes pgRubberBand {
+            0% { transform: scale3d(1, 1, 1) rotate(0deg); }
+            30% { transform: scale3d(1.28, 0.72, 1) rotate(-6deg); }
+            45% { transform: scale3d(0.78, 1.24, 1) rotate(5deg); }
+            60% { transform: scale3d(1.14, 0.88, 1) rotate(-3deg); }
+            75% { transform: scale3d(0.95, 1.06, 1) rotate(2deg); }
+            100% { transform: scale3d(1, 1, 1) rotate(0deg); }
+        }
+
+        .pg-subtitle {
+            font-size: clamp(0.98rem, 1.5vw, 1.12rem);
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .pg-note {
+            font-size: 0.84rem;
+            line-height: 1.55;
+            color: var(--text-muted);
+            margin-bottom: 26px;
+        }
+
+        /* ── PLAYFUL TOY BAR ── */
+        .pg-toybar {
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        [data-theme="light"] .pg-toybar {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(17, 17, 17, 0.1);
+            box-shadow: 0 10px 28px -12px rgba(0, 0, 0, 0.08);
+        }
+
+        .pg-toy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 15px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        background 0.2s ease,
+                        border-color 0.2s ease,
+                        box-shadow 0.2s ease;
+        }
+
+        .pg-toy-btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            background: rgba(var(--pg-accent-rgb), 0.16);
+            border-color: rgba(var(--pg-accent-rgb), 0.45);
+            box-shadow: 0 8px 20px -6px rgba(var(--pg-accent-rgb), 0.35);
+        }
+
+        .pg-toy-btn:active {
+            transform: scale(0.94);
+        }
+
+        [data-theme="light"] .pg-toy-btn {
+            background: rgba(17, 17, 17, 0.04);
+            border-color: rgba(17, 17, 17, 0.08);
+            color: #111111;
+        }
+
+        [data-theme="light"] .pg-toy-btn:hover {
+            background: rgba(var(--pg-accent-rgb), 0.16);
+            border-color: rgba(var(--pg-accent-rgb), 0.45);
+        }
+
+        /* ── DRAGGABLE STUDIO TAGS ── */
+        .pg-sticker {
+            position: absolute;
+            z-index: 25;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 9999px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            user-select: none;
+            cursor: grab;
+            background: rgba(24, 24, 27, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.86);
+            box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.5);
+            transition: box-shadow 0.2s ease, border-color 0.2s ease, scale 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            touch-action: none;
+        }
+
+        [data-theme="light"] .pg-sticker {
+            background: rgba(255, 255, 255, 0.88);
+            border-color: rgba(17, 17, 17, 0.14);
+            color: #141414;
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.12);
+        }
+
+        .pg-sticker:hover {
+            scale: 1.06;
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        [data-theme="light"] .pg-sticker:hover {
+            border-color: rgba(17, 17, 17, 0.32);
+        }
+
+        .pg-sticker.is-dragging {
+            cursor: grabbing;
+            scale: 1.1;
+            z-index: 45;
+            box-shadow: 0 22px 42px -10px rgba(0, 0, 0, 0.55);
+        }
+
+        .pg-sticker--1 {
+            top: 128px;
+            left: max(24px, calc(50% - 540px));
+            transform: rotate(-5deg);
+        }
+
+        .pg-sticker--2 {
+            top: 152px;
+            right: max(24px, calc(50% - 535px));
+            transform: rotate(5deg);
+        }
+
+        .pg-sticker--3 {
+            top: 230px;
+            left: max(20px, calc(50% - 585px));
+            transform: rotate(3deg);
+        }
+
+        .pg-sticker--4 {
+            top: 238px;
+            right: max(20px, calc(50% - 575px));
+            transform: rotate(-4deg);
+        }
+
+        /* ── STAGGERED 3 + 4 GRID ── */
+        .pg-grid-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+            perspective: 1200px;
+        }
+
+        .pg-row {
+            display: grid;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .pg-row--three {
+            max-width: 950px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .pg-row--four {
+            max-width: 1240px;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        /* ── PLAYFUL 3D TILT CARD ── */
+        .pg-card {
+            --mx: 50%;
+            --my: 50%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: rgba(22, 22, 26, 0.86);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 24px;
+            padding: 16px 16px 20px;
+            text-decoration: none !important;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                        border-color 0.25s ease,
+                        box-shadow 0.35s ease;
+            overflow: hidden;
+            opacity: 0;
+            animation: pgCardSpringIn 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation-delay: var(--stagger, 0ms);
+        }
+
+        .pg-card:hover {
+            border-color: rgba(255, 255, 255, 0.24);
+            box-shadow: 0 24px 52px -18px rgba(0, 0, 0, 0.65);
+        }
+
+        .pg-card.is-wave-bounce {
+            animation: pgWaveHop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
+        }
+
+        @keyframes pgCardSpringIn {
+            0% {
+                opacity: 0;
+                transform: translateY(34px) scale(0.94) rotate(-1.2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes pgWaveHop {
+            0% { transform: translateY(0) scale(1) rotate(0deg); }
+            35% { transform: translateY(-20px) scale(1.04) rotate(2deg); }
+            65% { transform: translateY(5px) scale(0.98) rotate(-1.2deg); }
+            100% { transform: translateY(0) scale(1) rotate(0deg); }
+        }
+
+        @keyframes pgPopIn {
+            0% { opacity: 0; transform: scale(0.85) translateY(-10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Inset Media Thumbnail */
+        .pg-thumb {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pg-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .pg-card:hover .pg-thumb img {
+            transform: scale(1.07) rotate(-0.8deg);
+        }
+
+        .pg-live-pill {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 4;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            background: rgba(0, 0, 0, 0.68);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        /* ── MINI INTERACTIVE TOYS INSIDE THUMBNAILS ── */
+
+        /* Toy 1: Squishy Click Counter Button (Card 2) */
+        .pg-toy-stage {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: radial-gradient(circle at 50% 40%, rgba(56, 189, 248, 0.16), rgba(15, 23, 42, 0.55));
+        }
+
+        .squish-btn {
+            padding: 10px 22px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, var(--pg-accent), var(--pg-accent-2));
+            color: #0b1120;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px -4px rgba(var(--pg-accent-rgb), 0.5);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+
+        .squish-btn:hover {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        .squish-btn:active {
+            transform: scale(0.84, 1.18);
+        }
+
+        .squish-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.65);
+            text-transform: uppercase;
+        }
+
+        /* Toy 2: Spinning 3D Wireframe Cube (Card 3) */
+        .cube-scene {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 420px;
+            background: radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.16), rgba(15, 15, 20, 0.6));
+            cursor: pointer;
+        }
+
+        .mini-cube {
+            width: 58px;
+            height: 58px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: pgCubeSpin 8s linear infinite;
+            transition: animation-duration 0.3s ease;
+        }
+
+        .pg-card:hover .mini-cube {
+            animation-duration: 2.6s;
+        }
+
+        .mini-cube-face {
+            position: absolute;
+            width: 58px;
+            height: 58px;
+            border: 1.5px solid var(--pg-accent-2);
+            background: rgba(244, 114, 182, 0.12);
+            border-radius: 6px;
+        }
+
+        .mini-cube-face--f { transform: rotateY(0deg) translateZ(29px); }
+        .mini-cube-face--b { transform: rotateY(180deg) translateZ(29px); }
+        .mini-cube-face--r { transform: rotateY(90deg) translateZ(29px); }
+        .mini-cube-face--l { transform: rotateY(-90deg) translateZ(29px); }
+        .mini-cube-face--t { transform: rotateX(90deg) translateZ(29px); }
+        .mini-cube-face--bt { transform: rotateX(-90deg) translateZ(29px); }
+
+        @keyframes pgCubeSpin {
+            0% { transform: rotateX(-20deg) rotateY(0deg); }
+            100% { transform: rotateX(340deg) rotateY(360deg); }
+        }
+
+        /* Toy 3: Interactive Palette Swatches (Card 4) */
+        .swatch-stage {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: radial-gradient(circle at 30% 30%, rgba(163, 230, 53, 0.12), rgba(15, 15, 20, 0.55));
+        }
+
+        .swatch-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .swatch-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+
+        .swatch-dot:hover {
+            transform: scale(1.25) translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Toy 4: Dancing Equalizer Bars (Card 5) */
+        .eq-stage {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 7px;
+            padding-bottom: 26px;
+            background: radial-gradient(circle at 50% 80%, rgba(56, 189, 248, 0.18), rgba(12, 14, 22, 0.65));
+        }
+
+        .eq-bar {
+            width: 10px;
+            height: 22px;
+            border-radius: 9999px;
+            background: linear-gradient(180deg, var(--pg-accent), var(--pg-accent-2));
+            animation: pgEqDance var(--dur, 1s) ease-in-out infinite alternate;
+            animation-delay: var(--del, 0s);
+        }
+
+        .pg-card:hover .eq-bar {
+            animation-duration: 0.38s !important;
+        }
+
+        @keyframes pgEqDance {
+            0% { height: 16px; opacity: 0.6; }
+            100% { height: 78px; opacity: 1; }
+        }
+
+        /* ── BESPOKE ARTWORK PREVIEWS FOR BEHANCE CARDS ── */
+        .pg-art {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .pg-art-title {
+            position: relative;
+            z-index: 2;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #ffffff;
+            font-size: 0.85rem;
+            line-height: 1.3;
+        }
+
+        .pg-art-sub {
+            position: relative;
+            z-index: 2;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.72);
+            margin-top: 6px;
+        }
+
+        /* 1. Batman Noir Crimson */
+        .pg-art--batman {
+            background: radial-gradient(circle at 50% 35%, #b91c1c 0%, #450a0a 52%, #09090b 100%);
+        }
+        .pg-art--batman::after {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.45), transparent 70%);
+            top: -30px;
+            transition: transform 0.6s ease;
+        }
+        .pg-card:hover .pg-art--batman::after { transform: scale(1.3); }
+
+        /* 2. Woven Into Me — Warm Editorial Fashion Film */
+        .pg-art--woven {
+            background: linear-gradient(135deg, #292524 0%, #78350f 55%, #d97706 100%);
+        }
+        .pg-art--woven::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 10px),
+                        repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 10px);
+        }
+
+        /* 3. Some Mornings Can Be Rude — Warm Amber / Espresso */
+        .pg-art--mornings {
+            background: linear-gradient(145deg, #f59e0b 0%, #c2410c 55%, #1c1917 100%);
+        }
+
+        /* 4. What If — Surreal Indigo / Violet */
+        .pg-art--whatif {
+            background: radial-gradient(circle at 75% 25%, #8b5cf6 0%, #312e81 55%, #0f172a 100%);
+        }
+
+        /* 5. Inktober '22 — High-contrast Monochrome Ink */
+        .pg-art--inktober {
+            background: linear-gradient(135deg, #18181b 0%, #09090b 100%);
+        }
+        .pg-art--inktober::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 10px;
+        }
+
+        /* 6. Live Sketches — Warm Sketchbook Paper */
+        .pg-art--sketches {
+            background:
+                repeating-linear-gradient(0deg, rgba(17,17,17,0.04) 0 1px, transparent 1px 18px),
+                linear-gradient(145deg, #f5f0e6 0%, #e7dec8 100%);
+        }
+        .pg-art--sketches .pg-art-title { color: #1c1917; }
+        .pg-art--sketches .pg-art-sub { color: rgba(28, 25, 23, 0.65); }
+
+        /* 7. Exploring Colours — Vibrant Chromatic Spectrum */
+        .pg-art--colours {
+            background: conic-gradient(from 140deg at 50% 50%, #f43f5e, #f59e0b, #10b981, #3b82f6, #a855f7, #f43f5e);
+        }
+        .pg-art--colours::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(0,0,0,0.18), rgba(0,0,0,0.48));
+        }
+
+        /* Toy 5: Morphing Gradient Orb (Card 7 - Behance) */
+        .orb-stage {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f97316, #ef4444 55%, #ec4899);
+            position: relative;
+        }
+
+        .morph-blob {
+            width: 82px;
+            height: 82px;
+            background: rgba(255, 255, 255, 0.28);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            animation: pgMorph 6s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+
+        @keyframes pgMorph {
+            0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; transform: rotate(0deg) scale(1); }
+            33% { border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%; transform: rotate(12deg) scale(1.08); }
+            66% { border-radius: 30% 70% 50% 50% / 60% 40% 60% 40%; transform: rotate(-10deg) scale(0.96); }
+        }
+
+        /* Card Copy */
+        .pg-card-body {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 0 4px;
+        }
+
+        .pg-card-title {
+            font-size: 1.06rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.015em;
+            margin-bottom: 9px;
+            line-height: 1.3;
+        }
+
+        .pg-card-desc {
+            font-size: 0.84rem;
+            line-height: 1.62;
+            color: rgba(255, 255, 255, 0.64);
+            margin-bottom: 18px;
+            flex: 1;
+        }
+
+        .pg-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.92);
+            text-decoration: underline !important;
+            text-underline-offset: 4px;
+            text-decoration-color: rgba(255, 255, 255, 0.35) !important;
+            transition: color 0.2s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .pg-card:hover .pg-card-link {
+            color: #ffffff;
+            text-decoration-color: #ffffff !important;
+            transform: translateX(3px);
+        }
+
+        .pg-card-status {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.42);
+        }
+
+        /* ── FULL-BLEED ANIMATED VISUAL POSTER CARD (Row 2, Slot 3) ── */
+        .pg-card--visual {
+            padding: 0;
+            min-height: 360px;
+            background: linear-gradient(145deg, #10b981 0%, #047857 48%, #064e3b 100%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .pg-visual-ring {
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: 1.5px dashed rgba(255, 255, 255, 0.26);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pgSlowSpin 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .pg-visual-ring--inner {
+            width: 150px;
+            height: 150px;
+            border-style: solid;
+            border-color: rgba(255, 255, 255, 0.18);
+            animation-direction: reverse;
+            animation-duration: 14s;
+        }
+
+        @keyframes pgSlowSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .pg-visual-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 24px 20px;
+        }
+
+        .pg-visual-kicker {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .pg-visual-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 10px;
+            margin: auto 0;
+            padding: 20px 6px;
+        }
+
+        .pg-visual-heading {
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .pg-visual-sub {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.82);
+            max-width: 205px;
+            line-height: 1.5;
+        }
+
+        /* ── IN-PAGE BEHANCE PRESENTATION MODAL ── */
+        .behance-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.28s ease;
+        }
+
+        .behance-modal.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        [data-theme="light"] .behance-modal {
+            background: rgba(245, 243, 235, 0.86);
+        }
+
+        .behance-modal-shell {
+            width: 100%;
+            max-width: 1120px;
+            height: min(88vh, 860px);
+            display: flex;
+            flex-direction: column;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #111113;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 32px 80px -20px rgba(0, 0, 0, 0.75);
+            transform: translateY(18px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .behance-modal.is-open .behance-modal-shell {
+            transform: translateY(0) scale(1);
+        }
+
+        [data-theme="light"] .behance-modal-shell {
+            background: #ffffff;
+            border-color: rgba(17, 17, 17, 0.12);
+            box-shadow: 0 28px 70px -20px rgba(0, 0, 0, 0.18);
+        }
+
+        .behance-modal-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(20, 20, 22, 0.95);
+            flex-shrink: 0;
+        }
+
+        [data-theme="light"] .behance-modal-bar {
+            background: #fafaf9;
+            border-bottom-color: rgba(17, 17, 17, 0.08);
+        }
+
+        .behance-modal-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .behance-modal-title {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        [data-theme="light"] .behance-modal-title {
+            color: #111111;
+        }
+
+        .behance-modal-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.78);
+            flex-shrink: 0;
+        }
+
+        [data-theme="light"] .behance-modal-tag {
+            background: rgba(17, 17, 17, 0.06);
+            color: #525252;
+        }
+
+        .behance-modal-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .behance-modal-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 36px;
+            padding: 0 12px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none !important;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .behance-modal-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateY(-1px);
+        }
+
+        .behance-modal-btn--icon {
+            width: 36px;
+            padding: 0;
+        }
+
+        [data-theme="light"] .behance-modal-btn {
+            background: rgba(17, 17, 17, 0.05);
+            border-color: rgba(17, 17, 17, 0.12);
+            color: #111111;
+        }
+
+        [data-theme="light"] .behance-modal-btn:hover {
+            background: rgba(17, 17, 17, 0.12);
+        }
+
+        .behance-modal-body {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+            width: 100%;
+            background: #0c0c0e;
+        }
+
+        [data-theme="light"] .behance-modal-body {
+            background: #f4f4f5;
+        }
+
+        .behance-modal-loader {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.76rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        [data-theme="light"] .behance-modal-loader {
+            color: rgba(17, 17, 17, 0.55);
+        }
+
+        .behance-modal-loader.is-hidden {
+            opacity: 0;
+        }
+
+        .behance-modal-iframe {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .behance-modal-gallery {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 28px 24px 40px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .behance-modal-gallery.is-active {
+            display: flex;
+        }
+
+        .behance-modal-gallery img {
+            max-width: 100%;
+            max-height: 76vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .behance-modal-gallery.is-deck img {
+            width: 100%;
+            max-width: 920px;
+            max-height: none;
+            border-radius: 12px;
+        }
+
+        .behance-modal-video-wrap {
+            width: 100%;
+            max-width: 920px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .behance-modal-section-label {
+            width: 100%;
+            max-width: 920px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+            padding-top: 4px;
+        }
+
+        [data-theme="light"] .behance-modal-section-label {
+            color: rgba(17, 17, 17, 0.55);
+        }
+
+        .behance-modal-video {
+            width: 100%;
+            max-height: 72vh;
+            border-radius: 16px;
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 24px 56px rgba(0, 0, 0, 0.5);
+            outline: none;
+        }
+
+        [data-theme="light"] .behance-modal-video {
+            border-color: rgba(17, 17, 17, 0.12);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.14);
+        }
+
+        [data-theme="light"] .behance-modal-gallery img {
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.14);
+            border-color: rgba(17, 17, 17, 0.08);
+        }
+
+        @media (max-width: 640px) {
+            .behance-modal {
+                padding: 10px;
+            }
+            .behance-modal-shell {
+                height: 90vh;
+                border-radius: 18px;
+            }
+            .behance-modal-bar {
+                padding: 12px 14px;
+            }
+            .behance-modal-tag,
+            .behance-modal-ext-text {
+                display: none;
+            }
+        }
+
+        /* Back CTA */
+        .pg-back-wrap {
+            margin-top: 64px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ── LIGHT MODE ── */
+        [data-theme="light"] .pg-card {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(17, 17, 17, 0.09);
+            box-shadow: 0 12px 32px -14px rgba(0, 0, 0, 0.08);
+        }
+
+        [data-theme="light"] .pg-card:hover {
+            border-color: rgba(17, 17, 17, 0.24);
+            box-shadow: 0 22px 46px -16px rgba(0, 0, 0, 0.14);
+        }
+
+        [data-theme="light"] .pg-card:hover .pg-card-link {
+            color: #000000;
+            text-decoration-color: #000000 !important;
+        }
+
+        [data-theme="light"] .pg-thumb {
+            border-color: rgba(17, 17, 17, 0.08);
+        }
+
+        [data-theme="light"] .pg-toy-stage,
+        [data-theme="light"] .cube-scene,
+        [data-theme="light"] .swatch-stage,
+        [data-theme="light"] .eq-stage {
+            background: radial-gradient(circle at 50% 45%, rgba(var(--pg-accent-rgb), 0.14), rgba(244, 244, 245, 0.9));
+        }
+
+        [data-theme="light"] .squish-count {
+            color: rgba(17, 17, 17, 0.55);
+        }
+
+        [data-theme="light"] .pg-card-title {
+            color: #111111;
+        }
+
+        [data-theme="light"] .pg-card-desc {
+            color: #525252;
+        }
+
+        [data-theme="light"] .pg-card-link {
+            color: #111111;
+            text-decoration-color: rgba(17, 17, 17, 0.35) !important;
+        }
+
+        [data-theme="light"] .pg-card-status {
+            color: rgba(17, 17, 17, 0.45);
+        }
+
+        [data-theme="light"] .pg-card--visual {
+            background: linear-gradient(145deg, #10b981 0%, #047857 48%, #064e3b 100%);
+            border-color: rgba(17, 17, 17, 0.12);
+        }
+
+        /* Responsive */
+        @media (max-width: 1120px) {
+            .pg-sticker {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .pg-row--three,
+            .pg-row--four {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                max-width: 760px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .playground-page {
+                padding: 110px 18px 80px;
+            }
+            .pg-header {
+                margin-bottom: 34px;
+            }
+            .pg-toybar {
+                border-radius: 20px;
+            }
+            .pg-row--three,
+            .pg-row--four,
+            #pg-row-fifth {
+                grid-template-columns: 1fr !important;
+            }
+            .pg-card--visual {
+                min-height: 280px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pg-blob, .mini-cube, .eq-bar, .morph-blob, .pg-visual-ring, .pg-eyebrow-dot {
+                animation: none !important;
+            }
+            .pg-card {
+                animation: none !important;
+                opacity: 1 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Interactive Sparks & Confetti Canvas -->
+    <canvas id="pg-fx-canvas" aria-hidden="true"></canvas>
+
+    <!-- Top Right Corner: Theme Toggle -->
+    <div class="fixed top-6 right-4 sm:right-6 md:right-10 z-50 flex items-center h-12 md:h-14">
+        <button class="theme-toggle theme-toggle--top-right" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+            <i data-lucide="moon" class="theme-icon theme-icon-moon w-4 h-4"></i>
+            <i data-lucide="sun" class="theme-icon theme-icon-sun w-4 h-4"></i>
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <div id="navbar-container" class="fixed top-6 left-0 w-full flex justify-center z-50 px-4 pr-16 sm:pr-20 md:px-4 navbar-visible pointer-events-none">
+        <nav
+            class="bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 w-full max-w-2xl transition-all duration-300 pointer-events-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="index.html" aria-label="Rehan Jose Home" class="flex items-center">
+                        <img src="Homepage%20Assets/logo.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--dark">
+                        <img src="Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--light">
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html#home"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Home</a>
+                    <a href="about.html"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">About</a>
+                    <a href="index.html#projects"
+                        class="nav-link active text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Projects</a>
+                    <a href="index.html#contact"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="ResumeRehanJose.pdf" target="_blank"
+                        class="hidden sm:flex items-center gap-2 text-xs font-bold uppercase text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">
+                        <span>Resume</span>
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                    <button id="mobile-menu-toggle" class="md:hidden text-white" aria-label="Open navigation menu"><i data-lucide="menu"
+                            class="w-5 h-5"></i></button>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <nav class="mobile-nav">
+                <a href="index.html#home" class="mobile-nav-link">Home</a>
+                <a href="about.html" class="mobile-nav-link">About</a>
+                <a href="index.html#projects" class="mobile-nav-link">Projects</a>
+                <a href="index.html#contact" class="mobile-nav-link">Contact</a>
+                <a href="ResumeRehanJose.pdf" target="_blank" class="mobile-nav-link mobile-nav-resume">
+                    <span>Resume</span>
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                </a>
+            </nav>
+            <div class="mt-8 flex items-center justify-center">
+                <button class="theme-toggle flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-xs font-bold uppercase text-white"
+                    aria-label="Toggle theme">
+                    <i data-lucide="moon" class="theme-icon theme-icon-moon w-4 h-4"></i>
+                    <i data-lucide="sun" class="theme-icon theme-icon-sun w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content: Interactive Playground -->
+    <main class="playground-page" id="playground-root">
+        <header class="pg-header">
+            <div>
+                <h1 class="pg-title" id="pg-bouncy-title" aria-label="Playground">Playground</h1>
+            </div>
+
+            <p class="pg-subtitle">My works spanning college projects, fun experiments, and every other spectrum of exploration.</p>
+        </header>
+
+        <div class="pg-grid-wrapper">
+            <!-- ── ROW 1: 3 CARDS ── -->
+            <div class="pg-row pg-row--three" id="pg-row-top">
+                <!-- Card 1: AlexaBot (Live) -->
+                <a href="projects/AlexaBot/alexabot.html" class="pg-card" style="--stagger: 40ms;" data-cursor-text="3D" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">3D</span>
+                        <img src="Homepage%20Assets/ALEXABOT.png" alt="AlexaBot 3D concept preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">AlexaBot</h2>
+                        <p class="pg-card-desc">Reimagining Alexa as a mobile, customizable 3D companion with personality—spin and inspect the live Three.js model inside.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 2: Converge 2025 Playbook (Full Interactive Showcase) -->
+                <a href="projects/converge/index.html" class="pg-card" style="--stagger: 120ms;" data-cursor-text="Editorial Design" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Editorial Design</span>
+                        <img src="projects/converge/presentation_assets/spreads/cover.jpg" alt="Converge 2025 Playbook cover" style="object-position: center 58%;">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Converge 2025 Playbook</h2>
+                        <p class="pg-card-desc">The 96-page official event compendium and rulebook designed for NIFT Kannur's Converge 2025 inter-campus fest.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 3: Beyond Jerseys (Live) -->
+                <a href="projects/BeyondJerseys/beyond-jerseys.html" class="pg-card" style="--stagger: 200ms;" data-cursor-text="Editorial Design" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Editorial</span>
+                        <img src="Homepage%20Assets/beyond-jerseys-thumbnail.jpg" alt="Beyond Jerseys editorial publication preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Beyond Jerseys</h2>
+                        <p class="pg-card-desc">A creative editorial publication capturing the intersection of football, fashion, and culture through visual storytelling and an interactive flipbook.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- ── ROW 2: 4 CARDS ── -->
+            <div class="pg-row pg-row--four" id="pg-row-bottom">
+                <!-- Card 4: Graduation Showcase 2026 (Live) -->
+                <a href="projects/GPshow/graduation-portfolio.html" class="pg-card" style="--stagger: 260ms;" data-cursor-text="Brand Identity" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Brand Identity</span>
+                        <img src="Homepage%20Assets/brandingthumbnail.jpg" alt="Graduation Showcase 2026 branding preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Graduation Showcase 2026</h2>
+                        <p class="pg-card-desc">A complete brand identity system for NIFT Kannur's graduation showcase—unifying multiple design disciplines across print, spatial, and digital touchpoints.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 5: The Batman (2022) Poster Redesign (Full Project Page) -->
+                <a href="projects/batman/batman-poster.html" class="pg-card" style="--stagger: 320ms;" data-cursor-text="Poster Design" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Poster</span>
+                        <img src="projects/batman/web/cover.jpg" alt="The Batman (2022) Poster Redesign">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">The Batman (2022) Poster Redesign</h2>
+                        <p class="pg-card-desc">A noir visual reinterpretation of Matt Reeves' The Batman, exploring mood, shadow, and crimson dramatic tension.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 6: Woven Into Me — Styling & Fashion Film (Full Project Page) -->
+                <a href="projects/WOVENINTOME/woven-into-me.html" class="pg-card" style="--stagger: 380ms;" data-cursor-text="Styling &amp; Fashion Film" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Fashion Film</span>
+                        <img src="projects/WOVENINTOME/slides/slide-01.jpg" alt="Woven Into Me — Styling &amp; Fashion Film">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Woven Into Me</h2>
+                        <p class="pg-card-desc">A styling and fashion film exploration blending textile identity, movement, and visual storytelling on screen.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 7: MAZHAYATHONAM (Full Project Page) -->
+                <a href="projects/MAZHAYATHONAM/mazhayathonam.html" class="pg-card" style="--stagger: 440ms;" data-cursor-text="Digital Sketch" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Digital Sketch</span>
+                        <img src="projects/MAZHAYATHONAM/mazhayathonam.jpg" alt="MAZHAYATHONAM digital sketch preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">MAZHAYATHONAM</h2>
+                        <p class="pg-card-desc">Onam in the midst of the 2022 Kochi floods—capturing festive spirit disrupted by heavy rain.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- ── ROW 3: 4 CARDS ── -->
+            <div class="pg-row pg-row--four" id="pg-row-extra">
+                <!-- Card 8: Some Mornings Can Be Rude (Full Project Page) -->
+                <a href="projects/SOMEMORNINGSCANBERUDE/some-mornings.html" class="pg-card" style="--stagger: 500ms;" data-cursor-text="Storyboard &amp; Comic" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Storyboard</span>
+                        <img src="projects/SOMEMORNINGSCANBERUDE/9.jpg" alt="Some Mornings Can Be Rude storyboard preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Some Mornings Can Be Rude</h2>
+                        <p class="pg-card-desc">A relatable illustrated storyboard inspired by waking up to realize you forgot to turn on the charger switch.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 9: Chikankari: Threads of Elegance (Full Project Page) -->
+                <a href="projects/chikankari/chikankari.html" class="pg-card" style="--stagger: 560ms;" data-cursor-text="Editorial Design" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Editorial Book</span>
+                        <img src="projects/chikankari/slides/slide-01.jpg" alt="Chikankari: Threads of Elegance editorial book preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Chikankari: Threads of Elegance</h2>
+                        <p class="pg-card-desc">Digital Design &amp; Communication jury book exploring the heritage, stitches, and visual craft of Lucknow's Chikankari embroidery.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 10: NBA Players Signature Patterns (Full Project Page) -->
+                <a href="projects/NBAPATTERN/nba-patterns.html" class="pg-card" style="--stagger: 620ms;" data-cursor-text="Illustration &amp; Pattern" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Pattern Series</span>
+                        <img src="projects/NBAPATTERN/slides/slide-01.jpg" alt="NBA Players Signature Patterns preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">NBA Signature Patterns</h2>
+                        <p class="pg-card-desc">Illustrated five iconic NBA players' signature poses and transformed their on-court silhouettes into bold repeating patterns.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 11: Not So Pointless (Full Project Page) -->
+                <a href="projects/Notsopointless/not-so-pointless.html" class="pg-card" style="--stagger: 680ms;" data-cursor-text="Information Design" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Short Film</span>
+                        <img src="projects/Notsopointless/thumb.jpg" alt="Not So Pointless short film preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Not So Pointless</h2>
+                        <p class="pg-card-desc">A short Information Design film exploring how ideas and data can be communicated clearly through a purely visual medium.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- ── ROW 4: 4 CARDS ── -->
+            <div class="pg-row pg-row--four" id="pg-row-fourth">
+                <!-- Card 12: Studio & Editorial Photography (Full Project Page) -->
+                <a href="projects/Studio%20photography/studio-photography.html" class="pg-card" style="--stagger: 740ms;" data-cursor-text="Studio Photography" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Photography</span>
+                        <img src="projects/Studio%20photography/slides/slide-01.jpg" alt="Studio &amp; Editorial Photography preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Studio &amp; Editorial Photography</h2>
+                        <p class="pg-card-desc">Semester photography collection created with Almira Anwar, Samruddhi Jagtap Vaibhav, and Malavika P Pillai.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 13: Swoosh — A Nike Styling Guide (Full Project Page) -->
+                <a href="projects/Swoosh/swoosh.html" class="pg-card" style="--stagger: 800ms;" data-cursor-text="Editorial Design" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Editorial Design</span>
+                        <img src="projects/Swoosh/slides/slide-01.jpg" alt="Swoosh — A Nike Styling Guide preview" style="object-position: center 90%;">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Swoosh — Nike Styling Guide</h2>
+                        <p class="pg-card-desc">Print Media &amp; Fashion editorial styling publication translating Nike's sportswear heritage into a 13-page print guide.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 14: Souled Store × Spider-Man Set Design (Full Project Page) -->
+                <a href="projects/Setdesign/set-design.html" class="pg-card" style="--stagger: 860ms;" data-cursor-text="Exhibition &amp; Set Design" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Set Design</span>
+                        <img src="projects/Setdesign/slides/slide-01.jpg" alt="Souled Store x Spider-Man Set Design preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Souled Store × Spider-Man</h2>
+                        <p class="pg-card-desc">Exhibition and set design concept for "Brand New Day"—translating Spider-Man's visual world into an immersive spatial experience.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+
+                <!-- Card 15: Photography Collection (Full Project Page) -->
+                <a href="projects/Photographycollection/photography-collection.html" class="pg-card" style="--stagger: 920ms;" data-cursor-text="Photography" data-cursor-type="project">
+                    <div class="pg-thumb">
+                        <span class="pg-live-pill">Photography</span>
+                        <img src="projects/Photographycollection/slides/slide-01.jpg" alt="Photography Collection preview">
+                    </div>
+                    <div class="pg-card-body">
+                        <h2 class="pg-card-title">Photography Collection</h2>
+                        <p class="pg-card-desc">A personal collection of frames shot on the Sony ILCE-6100—capturing light, everyday moments, texture, and composition.</p>
+                        <span class="pg-card-link">View details →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Back to Overview CTA -->
+        <div class="pg-back-wrap">
+            <a href="index.html#projects" class="view-more-projects-btn">
+                <i data-lucide="arrow-left" class="w-4 h-4" style="transform: rotate(0deg);"></i>
+                <span>Back to Overview</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Global Sitemap Footer -->
+    <footer class="portfolio-sitemap-footer">
+        <div class="sitemap-container">
+            <div class="sitemap-grid">
+                <div class="sitemap-brand">
+                    <a href="index.html" class="sitemap-brand-link" aria-label="Rehan Jose Home">
+                        <img src="Homepage%20Assets/logo.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--dark">
+                        <img src="Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--light">
+                        <span class="sitemap-logo-text">REHAN JOSE</span>
+                    </a>
+                    <div class="sitemap-status-pill">
+                        <span class="sitemap-status-dot"></span>
+                        <span>Available for Opportunities</span>
+                    </div>
+                </div>
+
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Navigation</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="index.html#home" class="sitemap-link">Home</a></li>
+                        <li><a href="about.html" class="sitemap-link">About</a></li>
+                        <li><a href="projects.html" class="sitemap-link">Projects Archive</a></li>
+                        <li><a href="playground.html" class="sitemap-link">Playground</a></li>
+                        <li><a href="about.html#experience" class="sitemap-link">Experience</a></li>
+                        <li><a href="index.html#contact" class="sitemap-link">Contact</a></li>
+                        <li><a href="ResumeRehanJose.pdf" target="_blank" class="sitemap-link">Resume <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Connect</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="mailto:rehanjose11@gmail.com" class="sitemap-link">Email <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.linkedin.com/in/rehan-jose/" target="_blank" rel="noopener noreferrer" class="sitemap-link">LinkedIn <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.behance.net/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">Behance <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://github.com/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">GitHub <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://joserehan.wordpress.com/" target="_blank" rel="noopener noreferrer" class="sitemap-link">WordPress <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.instagram.com/rehan_j0se/?hl=en" target="_blank" rel="noopener noreferrer" class="sitemap-link">Instagram <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sitemap-bottom">
+                <p class="sitemap-copyright">Designed and Built from scratch &middot; &copy; REHAN JOSE 2026 &middot; ALL RIGHTS RESERVED</p>
+                <button type="button" class="sitemap-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top ↑</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- In-Page Behance Presentation Viewer Modal -->
+    <div id="behance-modal" class="behance-modal" role="dialog" aria-modal="true" aria-labelledby="behance-modal-title">
+        <div class="behance-modal-shell">
+            <div class="behance-modal-bar">
+                <div class="behance-modal-meta">
+                    <h2 id="behance-modal-title" class="behance-modal-title">Project</h2>
+                    <span id="behance-modal-tag" class="behance-modal-tag">Visual</span>
+                </div>
+                <div class="behance-modal-actions">
+                    <button type="button" id="behance-prev" class="behance-modal-btn behance-modal-btn--icon" aria-label="Previous project" title="Previous">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <button type="button" id="behance-next" class="behance-modal-btn behance-modal-btn--icon" aria-label="Next project" title="Next">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                    <a id="behance-ext-link" href="#" target="_blank" rel="noopener noreferrer" class="behance-modal-btn" title="Open on Behance">
+                        <span class="behance-modal-ext-text">Behance</span>
+                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                    </a>
+                    <button type="button" id="behance-close" class="behance-modal-btn behance-modal-btn--icon" aria-label="Close presentation" title="Close (Esc)">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="behance-modal-body">
+                <div id="behance-loader" class="behance-modal-loader">Loading presentation...</div>
+                <div id="behance-gallery" class="behance-modal-gallery"></div>
+                <iframe id="behance-iframe" class="behance-modal-iframe" allowfullscreen lazyload frameborder="0" allow="clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Portfolio Scripts -->
+    <script src="script.js?v=48"></script>
+
+    <!-- Playground Interactive Physics & Motion Engine -->
+    <script>
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        (function () {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // 1. Rubber-Band Interactive Title Letters
+            const titleEl = document.getElementById('pg-bouncy-title');
+            if (titleEl) {
+                const text = titleEl.textContent.trim();
+                titleEl.textContent = '';
+                [...text].forEach((ch) => {
+                    const span = document.createElement('span');
+                    span.className = 'pg-letter';
+                    span.textContent = ch === ' ' ? '\u00A0' : ch;
+                    const bounce = () => {
+                        span.classList.remove('is-bouncing');
+                        void span.offsetWidth;
+                        span.classList.add('is-bouncing');
+                    };
+                    span.addEventListener('mouseenter', bounce);
+                    span.addEventListener('click', (e) => {
+                        bounce();
+                        spawnBurst(e.clientX, e.clientY, 16);
+                    });
+                    span.addEventListener('animationend', () => span.classList.remove('is-bouncing'));
+                    titleEl.appendChild(span);
+                });
+            }
+
+            // 2. Canvas Sparks & Confetti Engine
+            const canvas = document.getElementById('pg-fx-canvas');
+            const ctx = canvas ? canvas.getContext('2d') : null;
+            let particles = [];
+            const palette = ['#38bdf8', '#f472b6', '#a3e635', '#fde047', '#fb923c', '#c084fc'];
+
+            function resizeCanvas() {
+                if (!canvas) return;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            function spawnBurst(x, y, count = 24) {
+                if (prefersReducedMotion || !ctx) return;
+                for (let i = 0; i < count; i++) {
+                    const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+                    const speed = 2.5 + Math.random() * 6.5;
+                    particles.push({
+                        x,
+                        y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed - 2.2,
+                        size: 4 + Math.random() * 5,
+                        color: palette[Math.floor(Math.random() * palette.length)],
+                        rot: Math.random() * Math.PI * 2,
+                        vrot: (Math.random() - 0.5) * 0.25,
+                        life: 1,
+                        decay: 0.015 + Math.random() * 0.014,
+                        shape: Math.random() > 0.45 ? 'rect' : 'circle'
+                    });
+                }
+            }
+
+            function animateParticles() {
+                if (!ctx || !canvas) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = particles.filter(p => p.life > 0);
+                for (const p of particles) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.16; // playful gravity
+                    p.vx *= 0.99;
+                    p.rot += p.vrot;
+                    p.life -= p.decay;
+
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, p.life);
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot);
+                    ctx.fillStyle = p.color;
+                    if (p.shape === 'rect') {
+                        ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.65);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, p.size / 2.2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+                requestAnimationFrame(animateParticles);
+            }
+            if (!prefersReducedMotion) animateParticles();
+
+            // 3. 3D Magnetic Card Tilt & Cursor Spotlight
+            const cards = document.querySelectorAll('.pg-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    if (prefersReducedMotion || window.innerWidth < 768) return;
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const px = (x / rect.width) * 100;
+                    const py = (y / rect.height) * 100;
+                    const rotateY = ((x / rect.width) - 0.5) * 12;
+                    const rotateX = ((y / rect.height) - 0.5) * -12;
+                    card.style.setProperty('--mx', px + '%');
+                    card.style.setProperty('--my', py + '%');
+                    card.style.transform = `translateY(-6px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.015)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+
+            // 4. Draggable Stickers
+            document.querySelectorAll('.pg-sticker').forEach(sticker => {
+                let dragging = false, startX = 0, startY = 0, origLeft = 0, origTop = 0;
+                sticker.addEventListener('pointerdown', (e) => {
+                    dragging = true;
+                    sticker.setPointerCapture(e.pointerId);
+                    sticker.classList.add('is-dragging');
+                    const rect = sticker.getBoundingClientRect();
+                    const parentRect = sticker.offsetParent.getBoundingClientRect();
+                    origLeft = rect.left - parentRect.left;
+                    origTop = rect.top - parentRect.top;
+                    sticker.style.left = origLeft + 'px';
+                    sticker.style.top = origTop + 'px';
+                    sticker.style.right = 'auto';
+                    startX = e.clientX;
+                    startY = e.clientY;
+                });
+                sticker.addEventListener('pointermove', (e) => {
+                    if (!dragging) return;
+                    sticker.style.left = (origLeft + (e.clientX - startX)) + 'px';
+                    sticker.style.top = (origTop + (e.clientY - startY)) + 'px';
+                });
+                sticker.addEventListener('pointerup', (e) => {
+                    if (!dragging) return;
+                    dragging = false;
+                    sticker.classList.remove('is-dragging');
+                    spawnBurst(e.clientX, e.clientY, 12);
+                });
+            });
+
+            // 5. Toy Bar Actions
+            const moods = [
+                { a: '#38bdf8', a2: '#f472b6', a3: '#a3e635', rgb: '56, 189, 248' },
+                { a: '#fb7185', a2: '#fbbf24', a3: '#c084fc', rgb: '251, 113, 133' },
+                { a: '#a3e635', a2: '#2dd4bf', a3: '#38bdf8', rgb: '163, 230, 53' },
+                { a: '#c084fc', a2: '#38bdf8', a3: '#f472b6', rgb: '192, 132, 252' }
+            ];
+            let moodIdx = 0;
+
+            function applyMood(m) {
+                const r = document.documentElement.style;
+                r.setProperty('--pg-accent', m.a);
+                r.setProperty('--pg-accent-2', m.a2);
+                if (m.a3) r.setProperty('--pg-accent-3', m.a3);
+                r.setProperty('--pg-accent-rgb', m.rgb);
+            }
+
+            document.getElementById('btn-confetti')?.addEventListener('click', (e) => {
+                spawnBurst(e.clientX, e.clientY, 40);
+                spawnBurst(window.innerWidth * 0.25, window.innerHeight * 0.35, 32);
+                spawnBurst(window.innerWidth * 0.75, window.innerHeight * 0.35, 32);
+            });
+
+            document.getElementById('btn-wave')?.addEventListener('click', () => {
+                document.querySelectorAll('.pg-card').forEach((card, i) => {
+                    card.classList.remove('is-wave-bounce');
+                    setTimeout(() => {
+                        void card.offsetWidth;
+                        card.classList.add('is-wave-bounce');
+                        setTimeout(() => card.classList.remove('is-wave-bounce'), 700);
+                    }, i * 75);
+                });
+            });
+
+            document.getElementById('btn-shuffle')?.addEventListener('click', (e) => {
+                ['pg-row-top', 'pg-row-bottom'].forEach(id => {
+                    const row = document.getElementById(id);
+                    if (!row) return;
+                    const items = Array.from(row.children);
+                    for (let i = items.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [items[i], items[j]] = [items[j], items[i]];
+                    }
+                    items.forEach((item, idx) => {
+                        row.appendChild(item);
+                        item.classList.remove('is-wave-bounce');
+                        setTimeout(() => {
+                            void item.offsetWidth;
+                            item.classList.add('is-wave-bounce');
+                            setTimeout(() => item.classList.remove('is-wave-bounce'), 680);
+                        }, idx * 55);
+                    });
+                });
+                spawnBurst(e.clientX, e.clientY, 22);
+            });
+
+            document.getElementById('btn-mood')?.addEventListener('click', (e) => {
+                moodIdx = (moodIdx + 1) % moods.length;
+                applyMood(moods[moodIdx]);
+                spawnBurst(e.clientX, e.clientY, 20);
+            });
+
+            // 6. Card Mini Toys
+            let boops = 0;
+            const squishBtn = document.getElementById('squish-toy');
+            const squishCounter = document.getElementById('squish-counter');
+            const boopWords = ['BOOP ME', 'NICE!', 'AGAIN!', 'SQUISHY!', 'WHEEE!', 'MORE!'];
+            squishBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                boops++;
+                squishBtn.textContent = boopWords[boops % boopWords.length];
+                if (squishCounter) squishCounter.textContent = `${boops} ${boops === 1 ? 'boop' : 'boops'}`;
+                spawnBurst(e.clientX, e.clientY, 18);
+            });
+
+            document.getElementById('cube-toy')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                spawnBurst(e.clientX, e.clientY, 20);
+            });
+
+            document.querySelectorAll('.swatch-dot').forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    applyMood({
+                        a: dot.dataset.accent,
+                        a2: dot.dataset.accent2,
+                        rgb: dot.dataset.rgb
+                    });
+                    spawnBurst(e.clientX, e.clientY, 18);
+                });
+            });
+
+            document.getElementById('visual-poster-card')?.addEventListener('click', (e) => {
+                spawnBurst(e.clientX, e.clientY, 36);
+            });
+
+            // 7. In-Page Presentation Modal (Native Local Gallery + Behance Fallback)
+            const behanceModal = document.getElementById('behance-modal');
+            const behanceIframe = document.getElementById('behance-iframe');
+            const behanceGallery = document.getElementById('behance-gallery');
+            const behanceTitle = document.getElementById('behance-modal-title');
+            const behanceTag = document.getElementById('behance-modal-tag');
+            const behanceExtLink = document.getElementById('behance-ext-link');
+            const behanceLoader = document.getElementById('behance-loader');
+            const behanceTriggers = Array.from(document.querySelectorAll('.pg-behance-trigger'));
+            let currentBehanceIdx = -1;
+
+            function openBehanceAt(idx) {
+                const el = behanceTriggers[idx];
+                if (!el || !behanceModal || !behanceIframe || !behanceGallery) return;
+                // Pause any currently playing video before switching
+                behanceGallery.querySelectorAll('video').forEach(v => v.pause());
+
+                currentBehanceIdx = idx;
+                const id = el.dataset.behanceId;
+                const localRaw = el.dataset.localImages;
+                const localVideo = el.dataset.localVideo;
+                const slidesPrefix = el.dataset.localSlidesPrefix;
+                const slidesCount = parseInt(el.dataset.localSlidesCount || '0', 10);
+                behanceTitle.textContent = el.dataset.behanceTitle || 'Project';
+                behanceTag.textContent = el.dataset.behanceTag || 'Project';
+
+                if (localRaw || localVideo || (slidesPrefix && slidesCount > 0)) {
+                    if (behanceExtLink) behanceExtLink.style.display = 'none';
+                    behanceIframe.style.display = 'none';
+                    behanceIframe.src = 'about:blank';
+                    behanceLoader.classList.add('is-hidden');
+
+                    let html = '';
+                    if (localVideo) {
+                        html += `
+                            <div class="behance-modal-video-wrap">
+                                <span class="behance-modal-section-label">01 · Fashion Film</span>
+                                <video class="behance-modal-video" controls playsinline preload="metadata">
+                                    <source src="${localVideo}" type="video/mp4">
+                                </video>
+                            </div>`;
+                    }
+
+                    let imgs = [];
+                    if (localRaw) {
+                        imgs = JSON.parse(localRaw);
+                    } else if (slidesPrefix && slidesCount > 0) {
+                        for (let i = 1; i <= slidesCount; i++) {
+                            imgs.push(`${slidesPrefix}${String(i).padStart(2, '0')}.jpg`);
+                        }
+                    }
+
+                    if (imgs.length > 0) {
+                        if (localVideo) {
+                            html += `<span class="behance-modal-section-label" style="margin-top:8px;">02 · Styling &amp; Process (${imgs.length} Slides)</span>`;
+                        }
+                        html += imgs
+                            .map((src, i) => `<img src="${src}" alt="${behanceTitle.textContent} — Slide ${i + 1}" loading="${i < 3 ? 'eager' : 'lazy'}">`)
+                            .join('');
+                    }
+
+                    behanceGallery.classList.toggle('is-deck', imgs.length > 1 || !!localVideo);
+                    behanceGallery.innerHTML = html;
+                    behanceGallery.scrollTop = 0;
+                    behanceGallery.classList.add('is-active');
+                } else {
+                    if (behanceExtLink) {
+                        behanceExtLink.href = el.href || '#';
+                        behanceExtLink.style.display = 'inline-flex';
+                    }
+                    behanceGallery.classList.remove('is-active', 'is-deck');
+                    behanceGallery.innerHTML = '';
+                    behanceIframe.style.display = 'block';
+                    behanceLoader.classList.remove('is-hidden');
+                    behanceIframe.src = `https://www.behance.net/embed/project/${id}?ilo0=1`;
+                }
+
+                behanceModal.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeBehanceModal() {
+                if (!behanceModal || !behanceIframe || !behanceGallery) return;
+                behanceGallery.querySelectorAll('video').forEach(v => v.pause());
+                behanceModal.classList.remove('is-open');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    if (!behanceModal.classList.contains('is-open')) {
+                        behanceIframe.src = 'about:blank';
+                        behanceGallery.classList.remove('is-active', 'is-deck');
+                        behanceGallery.innerHTML = '';
+                    }
+                }, 260);
+            }
+
+            behanceTriggers.forEach((el, idx) => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openBehanceAt(idx);
+                });
+            });
+
+            behanceIframe?.addEventListener('load', () => {
+                if (behanceIframe.src && behanceIframe.src !== 'about:blank') {
+                    behanceLoader?.classList.add('is-hidden');
+                }
+            });
+
+            document.getElementById('behance-close')?.addEventListener('click', closeBehanceModal);
+            document.getElementById('behance-prev')?.addEventListener('click', () => {
+                if (!behanceTriggers.length) return;
+                openBehanceAt((currentBehanceIdx - 1 + behanceTriggers.length) % behanceTriggers.length);
+            });
+            document.getElementById('behance-next')?.addEventListener('click', () => {
+                if (!behanceTriggers.length) return;
+                openBehanceAt((currentBehanceIdx + 1) % behanceTriggers.length);
+            });
+
+            behanceModal?.addEventListener('click', (e) => {
+                if (e.target === behanceModal) closeBehanceModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!behanceModal?.classList.contains('is-open')) return;
+                if (e.key === 'Escape') closeBehanceModal();
+                if (e.key === 'ArrowLeft') document.getElementById('behance-prev')?.click();
+                if (e.key === 'ArrowRight') document.getElementById('behance-next')?.click();
+            });
+        })();
+    </script>
+</body>
+
+</html>

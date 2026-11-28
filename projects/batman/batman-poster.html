@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Batman (2022) Poster Redesign — Rehan Jose</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/png" href="../../Homepage Assets/logo.png">
+
+    <!-- Theme initialization before render to avoid FOUC -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CRRKNVG7VK');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles.css?v=49">
+
+    <style>
+        :root {
+            --bg-page: #050505;
+            --text-main: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.72);
+            --text-muted: rgba(255, 255, 255, 0.45);
+            --border-subtle: rgba(255, 255, 255, 0.10);
+            --surface-card: rgba(255, 255, 255, 0.03);
+            --accent-crimson: #dc2626;
+        }
+
+        [data-theme="light"] {
+            --bg-page: #fcfcfb;
+            --text-main: #141414;
+            --text-secondary: #525252;
+            --text-muted: #78716c;
+            --border-subtle: rgba(0, 0, 0, 0.09);
+            --surface-card: #ffffff;
+            --accent-crimson: #b91c1c;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #navbar-container, #navbar-container *,
+        .nav-resume-btn, .nav-resume-btn * {
+            font-family: 'Space Mono', monospace !important;
+        }
+
+        .poster-page {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 132px 24px 96px;
+        }
+
+        .poster-header {
+            max-width: 780px;
+            margin: 0 auto 38px;
+        }
+
+        .poster-kicker {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-crimson);
+            margin-bottom: 12px;
+        }
+
+        .poster-title {
+            font-size: clamp(2rem, 4.4vw, 3.1rem);
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            line-height: 1.12;
+            color: var(--text-main);
+            margin-bottom: 14px;
+        }
+
+        .poster-subtitle {
+            font-size: 1.08rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+
+        .poster-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .poster-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .poster-meta-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .poster-meta-val {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Presentation Stack (Behance-style Seamless Showcase) */
+        .poster-showcase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+            width: 100%;
+        }
+
+        .poster-frame {
+            width: 100%;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 28px 70px -20px rgba(0, 0, 0, 0.55);
+            background: #0a0a0a;
+        }
+
+        [data-theme="light"] .poster-frame {
+            box-shadow: 0 20px 52px -18px rgba(0, 0, 0, 0.14);
+        }
+
+        .poster-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .poster-frame--portrait {
+            max-width: 780px;
+        }
+
+        .poster-caption-row {
+            width: 100%;
+            max-width: 780px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: -12px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .reveal-up {
+            opacity: 0;
+            filter: blur(8px);
+            transform: translateY(32px);
+            transition: opacity 0.85s ease, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1), filter 0.85s ease;
+        }
+
+        .reveal-up.is-visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .poster-page {
+                padding: 112px 16px 76px;
+            }
+            .poster-meta-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .poster-frame {
+                border-radius: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Left Corner: Project Name (Desktop) / Back (Mobile) -->
+    <div class="fixed top-6 left-6 md:left-12 z-50 flex items-center h-14">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <span>THE BATMAN</span>
+        </a>
+        <a href="../../playground.html" onclick="if (window.history.length > 1 && document.referrer) { window.history.back(); return false; }"
+            class="nav-resume-btn mobile-back-btn inline-flex md:hidden items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-5 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300"
+            aria-label="Go back">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
+        </a>
+    </div>
+
+    <!-- Center: Homepage Navbar (Full Floating Glass Pill) -->
+    <div id="navbar-container" class="fixed top-6 left-0 w-full flex justify-center z-40 px-4 pointer-events-none navbar-visible hidden md:flex">
+        <nav
+            class="bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 w-full max-w-xl lg:max-w-2xl transition-all duration-300 pointer-events-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="../../index.html" aria-label="Rehan Jose Home" class="flex items-center">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--light">
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../../index.html#home"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Home</a>
+                    <a href="../../about.html"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">About</a>
+                    <a href="../../playground.html"
+                        class="nav-link active text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Playground</a>
+                    <a href="../../index.html#contact"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="../../ResumeRehanJose.pdf" target="_blank"
+                        class="hidden sm:flex items-center gap-2 text-xs font-bold uppercase text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">
+                        <span>Resume</span>
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Top Right Corner: Back to Playground & Mobile Toggle -->
+    <div class="fixed top-6 right-6 md:right-12 z-50 flex items-center gap-3 h-14">
+        <a href="../../playground.html"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back to Playground</span>
+        </a>
+        <button id="mobile-menu-toggle"
+            class="md:hidden flex items-center justify-center w-14 h-14 rounded-full bg-zinc-900/30 backdrop-blur-xl border border-white/10 text-white hover:border-white/30 transition-all duration-300"
+            aria-label="Toggle mobile menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <nav class="mobile-nav">
+                <a href="../../index.html#home" class="mobile-nav-link">Home</a>
+                <a href="../../about.html" class="mobile-nav-link">About</a>
+                <a href="../../playground.html" class="mobile-nav-link">Playground</a>
+                <a href="../../index.html#contact" class="mobile-nav-link">Contact</a>
+                <a href="../../ResumeRehanJose.pdf" target="_blank" class="mobile-nav-link mobile-nav-resume">
+                    <span>Resume</span>
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Poster Presentation -->
+    <main class="poster-page">
+        <header class="poster-header reveal-up">
+            <p class="poster-kicker">Poster Design · Graphic Exploration</p>
+            <h1 class="poster-title">The Batman (2022) — Poster Redesign</h1>
+            <p class="poster-subtitle">
+                A noir graphic reinterpretation of Matt Reeves&rsquo; <em>The Batman</em>—layering gritty comic-panel framing, deep crimson shadows, distressed typography, and Riddler&rsquo;s &ldquo;Unmask the Truth!&rdquo; motif into a theatrical print poster.
+            </p>
+            <div class="poster-meta-grid">
+                <div class="poster-meta-item">
+                    <span class="poster-meta-label">Discipline</span>
+                    <span class="poster-meta-val">Poster Design</span>
+                </div>
+                <div class="poster-meta-item">
+                    <span class="poster-meta-label">Subject</span>
+                    <span class="poster-meta-val">The Batman (2022)</span>
+                </div>
+                <div class="poster-meta-item">
+                    <span class="poster-meta-label">Tools</span>
+                    <span class="poster-meta-val">Adobe Photoshop</span>
+                </div>
+                <div class="poster-meta-item">
+                    <span class="poster-meta-label">Format</span>
+                    <span class="poster-meta-val">Print &amp; Outdoor</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="poster-showcase">
+            <!-- 01: Crimson Key Visual Cover -->
+            <div class="poster-frame reveal-up" style="transition-delay: 0.08s;">
+                <img src="web/cover.jpg" alt="The Batman (2022) Poster Redesign — Crimson Cover Presentation" loading="eager">
+            </div>
+
+            <!-- 02: Final Poster Artwork -->
+            <div class="poster-frame poster-frame--portrait reveal-up" style="transition-delay: 0.14s;">
+                <img src="web/poster-final.jpg" alt="The Batman (2022) Final Redesign Poster" loading="eager">
+            </div>
+            <div class="poster-caption-row reveal-up">
+                <span>01 / Final Theatrical Poster</span>
+                <span>2480 × 3508 px · Print Ready</span>
+            </div>
+
+            <!-- 03: Outdoor Street Poster Mockup -->
+            <div class="poster-frame reveal-up" style="transition-delay: 0.2s;">
+                <img src="web/mockup-street.jpg" alt="The Batman (2022) Outdoor Brick-Wall Street Poster Mockup" loading="lazy">
+            </div>
+            <div class="poster-caption-row reveal-up" style="max-width: 100%;">
+                <span>02 / Outdoor Street Frame Mockup</span>
+                <span>Environmental Print Context</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Sitemap Footer -->
+    <footer class="portfolio-sitemap-footer">
+        <div class="sitemap-container">
+            <div class="sitemap-grid">
+                <div class="sitemap-brand">
+                    <a href="../../index.html" class="sitemap-brand-link" aria-label="Rehan Jose Home">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--light">
+                        <span class="sitemap-logo-text">REHAN JOSE</span>
+                    </a>
+                    <div class="sitemap-status-pill">
+                        <span class="sitemap-status-dot"></span>
+                        <span>Available for Opportunities</span>
+                    </div>
+                </div>
+
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Navigation</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="../../index.html#home" class="sitemap-link">Home</a></li>
+                        <li><a href="../../about.html" class="sitemap-link">About</a></li>
+                        <li><a href="../../playground.html" class="sitemap-link">Playground</a></li>
+                        <li><a href="../../about.html#experience" class="sitemap-link">Experience</a></li>
+                        <li><a href="../../index.html#contact" class="sitemap-link">Contact</a></li>
+                        <li><a href="../../ResumeRehanJose.pdf" target="_blank" class="sitemap-link">Resume <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Connect</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="mailto:rehanjose11@gmail.com" class="sitemap-link">Email <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.linkedin.com/in/rehan-jose/" target="_blank" rel="noopener noreferrer" class="sitemap-link">LinkedIn <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.behance.net/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">Behance <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://github.com/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">GitHub <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://joserehan.wordpress.com/" target="_blank" rel="noopener noreferrer" class="sitemap-link">WordPress <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.instagram.com/rehan_j0se/?hl=en" target="_blank" rel="noopener noreferrer" class="sitemap-link">Instagram <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sitemap-bottom">
+                <p class="sitemap-copyright">Designed and Built from scratch &middot; &copy; REHAN JOSE 2026 &middot; ALL RIGHTS RESERVED</p>
+                <button type="button" class="sitemap-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top ↑</button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../script.js?v=48"></script>
+    <script>
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        setTimeout(() => document.querySelectorAll('.reveal-up').forEach(el => el.classList.add('is-visible')), 150);
+    </script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio &amp; Editorial Photography — Rehan Jose</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/png" href="../../Homepage Assets/logo.png">
+
+    <!-- Theme initialization before render to avoid FOUC -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CRRKNVG7VK');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles.css?v=49">
+
+    <style>
+        :root {
+            --bg-page: #050505;
+            --text-main: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.72);
+            --text-muted: rgba(255, 255, 255, 0.48);
+            --border-subtle: rgba(255, 255, 255, 0.10);
+            --surface-card: rgba(255, 255, 255, 0.03);
+            --accent-silver: #a1a1aa;
+        }
+
+        [data-theme="light"] {
+            --bg-page: #fcfcfb;
+            --text-main: #141414;
+            --text-secondary: #525252;
+            --text-muted: #78716c;
+            --border-subtle: rgba(0, 0, 0, 0.09);
+            --surface-card: #ffffff;
+            --accent-silver: #52525b;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #navbar-container, #navbar-container *,
+        .nav-resume-btn, .nav-resume-btn * {
+            font-family: 'Space Mono', monospace !important;
+        }
+
+        .photo-page {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 132px 24px 96px;
+        }
+
+        .photo-header {
+            max-width: 780px;
+            margin: 0 auto 42px;
+        }
+
+        .photo-kicker {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-silver);
+            margin-bottom: 12px;
+        }
+
+        .photo-title {
+            font-size: clamp(2rem, 4.4vw, 3.1rem);
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            line-height: 1.12;
+            color: var(--text-main);
+            margin-bottom: 14px;
+        }
+
+        .photo-subtitle {
+            font-size: 1.06rem;
+            line-height: 1.68;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+
+        .photo-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .photo-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .photo-meta-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .photo-meta-val {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .photo-deck {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 24px 64px -18px rgba(0, 0, 0, 0.5);
+            background: var(--surface-card);
+        }
+
+        [data-theme="light"] .photo-deck {
+            box-shadow: 0 18px 48px -16px rgba(0, 0, 0, 0.12);
+        }
+
+        .photo-deck img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .photo-deck img:last-child {
+            border-bottom: none;
+        }
+
+        .reveal-up {
+            opacity: 0;
+            filter: blur(8px);
+            transform: translateY(32px);
+            transition: opacity 0.85s ease, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1), filter 0.85s ease;
+        }
+
+        .reveal-up.is-visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .photo-page {
+                padding: 112px 14px 76px;
+            }
+            .photo-meta-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .photo-deck {
+                border-radius: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Left Corner: Project Name (Desktop) / Back (Mobile) -->
+    <div class="fixed top-6 left-6 md:left-12 z-50 flex items-center h-14">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <span>STUDIO PHOTOGRAPHY</span>
+        </a>
+        <a href="../../playground.html" onclick="if (window.history.length > 1 && document.referrer) { window.history.back(); return false; }"
+            class="nav-resume-btn mobile-back-btn inline-flex md:hidden items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-5 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300"
+            aria-label="Go back">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
+        </a>
+    </div>
+
+    <!-- Center: Homepage Navbar -->
+    <div id="navbar-container" class="fixed top-6 left-0 w-full flex justify-center z-40 px-4 pointer-events-none navbar-visible hidden md:flex">
+        <nav
+            class="bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 w-full max-w-xl lg:max-w-2xl transition-all duration-300 pointer-events-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="../../index.html" aria-label="Rehan Jose Home" class="flex items-center">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--light">
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../../index.html#home"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Home</a>
+                    <a href="../../about.html"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">About</a>
+                    <a href="../../playground.html"
+                        class="nav-link active text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Playground</a>
+                    <a href="../../index.html#contact"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="../../ResumeRehanJose.pdf" target="_blank"
+                        class="hidden sm:flex items-center gap-2 text-xs font-bold uppercase text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">
+                        <span>Resume</span>
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Top Right Corner: Back to Playground & Mobile Toggle -->
+    <div class="fixed top-6 right-6 md:right-12 z-50 flex items-center gap-3 h-14">
+        <a href="../../playground.html"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back to Playground</span>
+        </a>
+        <button id="mobile-menu-toggle"
+            class="md:hidden flex items-center justify-center w-14 h-14 rounded-full bg-zinc-900/30 backdrop-blur-xl border border-white/10 text-white hover:border-white/30 transition-all duration-300"
+            aria-label="Toggle mobile menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <nav class="mobile-nav">
+                <a href="../../index.html#home" class="mobile-nav-link">Home</a>
+                <a href="../../about.html" class="mobile-nav-link">About</a>
+                <a href="../../playground.html" class="mobile-nav-link">Playground</a>
+                <a href="../../index.html#contact" class="mobile-nav-link">Contact</a>
+                <a href="../../ResumeRehanJose.pdf" target="_blank" class="mobile-nav-link mobile-nav-resume">
+                    <span>Resume</span>
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Presentation -->
+    <main class="photo-page">
+        <header class="photo-header reveal-up">
+            <p class="photo-kicker">Studio &amp; Editorial Photography · Semester Collection</p>
+            <h1 class="photo-title">Studio &amp; Editorial Photography</h1>
+            <p class="photo-subtitle">
+                A semester-long collaborative photography collection created as a team for our <strong>Studio &amp; Editorial Photography</strong> course—exploring controlled studio lighting, product &amp; portrait setups, composition, and editorial art direction.
+            </p>
+            <div class="photo-meta-grid">
+                <div class="photo-meta-item">
+                    <span class="photo-meta-label">Team</span>
+                    <span class="photo-meta-val">Almira Anwar, Samruddhi Jagtap Vaibhav, Malavika P Pillai &amp; Rehan Jose</span>
+                </div>
+                <div class="photo-meta-item">
+                    <span class="photo-meta-label">Course</span>
+                    <span class="photo-meta-val">Studio &amp; Editorial Photography</span>
+                </div>
+                <div class="photo-meta-item">
+                    <span class="photo-meta-label">Format</span>
+                    <span class="photo-meta-val">Semester Photography Collection</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="photo-deck reveal-up" id="photo-deck" style="transition-delay: 0.1s;" aria-label="Studio & Editorial Photography Collection"></section>
+    </main>
+
+    <!-- Global Sitemap Footer -->
+    <footer class="portfolio-sitemap-footer">
+        <div class="sitemap-container">
+            <div class="sitemap-grid">
+                <div class="sitemap-brand">
+                    <a href="../../index.html" class="sitemap-brand-link" aria-label="Rehan Jose Home">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--light">
+                        <span class="sitemap-logo-text">REHAN JOSE</span>
+                    </a>
+                    <div class="sitemap-status-pill">
+                        <span class="sitemap-status-dot"></span>
+                        <span>Available for Opportunities</span>
+                    </div>
+                </div>
+
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Navigation</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="../../index.html#home" class="sitemap-link">Home</a></li>
+                        <li><a href="../../about.html" class="sitemap-link">About</a></li>
+                        <li><a href="../../playground.html" class="sitemap-link">Playground</a></li>
+                        <li><a href="../../about.html#experience" class="sitemap-link">Experience</a></li>
+                        <li><a href="../../index.html#contact" class="sitemap-link">Contact</a></li>
+                        <li><a href="../../ResumeRehanJose.pdf" target="_blank" class="sitemap-link">Resume <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Connect</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="mailto:rehanjose11@gmail.com" class="sitemap-link">Email <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.linkedin.com/in/rehan-jose/" target="_blank" rel="noopener noreferrer" class="sitemap-link">LinkedIn <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.behance.net/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">Behance <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://github.com/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">GitHub <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://joserehan.wordpress.com/" target="_blank" rel="noopener noreferrer" class="sitemap-link">WordPress <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.instagram.com/rehan_j0se/?hl=en" target="_blank" rel="noopener noreferrer" class="sitemap-link">Instagram <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sitemap-bottom">
+                <p class="sitemap-copyright">Designed and Built from scratch &middot; &copy; REHAN JOSE 2026 &middot; ALL RIGHTS RESERVED</p>
+                <button type="button" class="sitemap-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top ↑</button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../script.js?v=48"></script>
+    <script>
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        setTimeout(() => document.querySelectorAll('.reveal-up').forEach(el => el.classList.add('is-visible')), 150);
+
+        const deck = document.getElementById('photo-deck');
+        for (let i = 1; i <= 50; i++) {
+            const img = document.createElement('img');
+            img.src = `slides/slide-${String(i).padStart(2, '0')}.jpg`;
+            img.alt = `Studio & Editorial Photography — Slide ${i}`;
+            img.loading = i <= 3 ? 'eager' : 'lazy';
+            deck.appendChild(img);
+        }
+    </script>
+</body>
+</html>

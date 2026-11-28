@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Jerseys — Rehan Jose's Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/png" href="../../Homepage Assets/logo.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CRRKNVG7VK');
+    </script>
+
+    <!-- External Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../../styles.css?v=49">
+    <script src="https://unpkg.com/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <style>
+        /* Smooth, flush layout */
+        .project-details-page {
+            width: 100%;
+            background-color: transparent;
+        }
+        .project-full-image {
+            width: 100%;
+            display: block;
+            height: auto;
+        }
+        /* Make sure the reveal-up classes apply immediately */
+        .reveal-up {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(100px);
+            transition: opacity 1s ease-out, transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 1s ease-out;
+            will-change: opacity, transform, filter;
+        }
+        .reveal-up.is-visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+        @media (max-width: 768px) {
+            .flipbook-viewport {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                overflow: hidden;
+            }
+
+            #flipbook {
+                transform: none;
+                transform-origin: center center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #flipbook {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Left Corner: Project Name (Desktop) / Back (Mobile) -->
+    <div class="fixed top-6 left-6 md:left-12 z-50 flex items-center h-14">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <span>Beyond Jerseys</span>
+        </a>
+        <a href="../../playground.html" onclick="if (window.history.length > 1 && document.referrer) { window.history.back(); return false; }"
+            class="nav-resume-btn mobile-back-btn inline-flex md:hidden items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-5 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300"
+            aria-label="Go back">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
+        </a>
+    </div>
+
+    <!-- Center: Homepage Navbar (Full Floating Glass Pill) -->
+    <div id="navbar-container" class="fixed top-6 left-0 w-full flex justify-center z-40 px-4 pointer-events-none navbar-visible hidden md:flex">
+        <nav
+            class="bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 w-full max-w-xl lg:max-w-2xl transition-all duration-300 pointer-events-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="../../index.html" aria-label="Rehan Jose Home" class="flex items-center">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--light">
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../../index.html#home"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Home</a>
+                    <a href="../../about.html"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">About</a>
+                    <a href="../../projects.html"
+                        class="nav-link active text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Projects</a>
+                    <a href="../../index.html#contact"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="../../ResumeRehanJose.pdf" target="_blank"
+                        class="hidden sm:flex items-center gap-2 text-xs font-bold uppercase text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">
+                        <span>Resume</span>
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Top Right Corner: Back to Playground & Mobile Toggle -->
+    <div class="fixed top-6 right-6 md:right-12 z-50 flex items-center gap-3 h-14">
+        <a href="../../playground.html"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back to Playground</span>
+        </a>
+        <button id="mobile-menu-toggle"
+            class="md:hidden flex items-center justify-center w-14 h-14 rounded-full bg-zinc-900/30 backdrop-blur-xl border border-white/10 text-white hover:border-white/30 transition-all duration-300"
+            aria-label="Toggle mobile menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <nav class="mobile-nav">
+                <a href="../../index.html#home" class="mobile-nav-link">Home</a>
+                <a href="../../about.html" class="mobile-nav-link">About</a>
+                <a href="../../playground.html" class="mobile-nav-link">Playground</a>
+                <a href="../../index.html#contact" class="mobile-nav-link">Contact</a>
+                <a href="../../ResumeRehanJose.pdf" target="_blank" class="mobile-nav-link mobile-nav-resume">
+                    <span>Resume</span>
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="visible project-details-page">
+        <!-- Render the long PNG containing the entire case study stretching from the very top -->
+        <div class="reveal-up" style="transition-delay: 0.1s;">
+            <img src="long.png" alt="Beyond Jerseys Full Case Study" class="project-full-image">
+        </div>
+
+        <!-- Render the newly added animated book mockup beneath the main case study -->
+        <div class="reveal-up" style="transition-delay: 0.2s;">
+            <img src="book.gif" alt="Beyond Jerseys Book Animation" class="project-full-image">
+        </div>
+
+        <div class="reveal-up" style="transition-delay: 0.3s;">
+            <img src="best-pages.png" alt="Beyond Jerseys Best Pages" class="project-full-image">
+        </div>
+
+        <div class="reveal-up" style="transition-delay: 0.4s;">
+            <img src="rehan_sports2.jpg" alt="Beyond Jerseys Sports Theme" class="project-full-image">
+        </div>
+
+        <!-- Flipbook Section -->
+        <section class="book-section pt-16 pb-0 bg-zinc-950 border-t border-zinc-900 reveal-up" style="transition-delay: 0.5s;">
+            <div class="text-center mb-16 px-4">
+                <h2 class="font-mono text-3xl md:text-5xl font-bold text-white uppercase tracking-widest mb-6">The Full Publication</h2>
+                <p class="font-mono text-zinc-400 text-xs md:text-sm tracking-widest uppercase flex items-center justify-center gap-2">
+                    <i data-lucide="mouse-pointer-click" class="w-4 h-4"></i>
+                    Click and drag corners to flip the pages
+                </p>
+            </div>
+            
+            <div class="flipbook-viewport mx-auto w-full max-w-[1400px] aspect-square md:aspect-[2/1] max-h-[85vh] flex justify-center items-center px-4 sm:px-12">
+                <div id="flipbook" class="flipbook transition-all">
+                    <!-- Pages dynamically injected by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Mobile-only single-page navigation controls -->
+            <div id="bj-mobile-controls" class="md:hidden flex items-center justify-center gap-4 mt-5 pb-10 px-4">
+                <button type="button" id="bj-prev" class="font-mono text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-white/10 border border-white/15 text-white disabled:opacity-35">← Prev</button>
+                <span id="bj-counter" class="font-mono text-xs text-zinc-400 min-w-[72px] text-center">1 / 64</span>
+                <button type="button" id="bj-next" class="font-mono text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full bg-white/10 border border-white/15 text-white disabled:opacity-35">Next →</button>
+            </div>
+        </section>
+
+        <!-- Global Sitemap Footer -->
+        <footer class="portfolio-sitemap-footer">
+            <div class="sitemap-container">
+                <div class="sitemap-grid">
+                    <!-- Brand / Bio -->
+                <div class="sitemap-brand">
+                    <a href="../../index.html" class="sitemap-brand-link" aria-label="Rehan Jose Home">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--light">
+                        <span class="sitemap-logo-text">REHAN JOSE</span>
+                    </a>
+                    <div class="sitemap-status-pill">
+                        <span class="sitemap-status-dot"></span>
+                        <span>Available for Opportunities</span>
+                    </div>
+                </div>
+
+                    <!-- Column 1: Navigation -->
+                    <div class="sitemap-col">
+                        <h4 class="sitemap-col-title">Navigation</h4>
+                        <ul class="sitemap-list">
+                            <li><a href="../../index.html#home" class="sitemap-link">Home</a></li>
+                            <li><a href="../../about.html" class="sitemap-link">About</a></li>
+                            <li><a href="../../projects.html" class="sitemap-link">Projects Archive</a></li>
+                            <li><a href="../../about.html#experience" class="sitemap-link">Experience</a></li>
+                            <li><a href="../../index.html#contact" class="sitemap-link">Contact</a></li>
+                            <li><a href="../../ResumeRehanJose.pdf" target="_blank" class="sitemap-link">Resume <span class="sitemap-link-external">↗</span></a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3: Connect & Socials -->
+                    <div class="sitemap-col">
+                        <h4 class="sitemap-col-title">Connect</h4>
+                        <ul class="sitemap-list">
+                            <li><a href="mailto:rehanjose11@gmail.com" class="sitemap-link">Email <span class="sitemap-link-external">↗</span></a></li>
+                            <li><a href="https://www.linkedin.com/in/rehan-jose/" target="_blank" rel="noopener noreferrer" class="sitemap-link">LinkedIn <span class="sitemap-link-external">↗</span></a></li>
+                            <li><a href="https://www.behance.net/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">Behance <span class="sitemap-link-external">↗</span></a></li>
+                            <li><a href="https://github.com/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">GitHub <span class="sitemap-link-external">↗</span></a></li>
+                            <li><a href="https://joserehan.wordpress.com/" target="_blank" rel="noopener noreferrer" class="sitemap-link">WordPress <span class="sitemap-link-external">↗</span></a></li>
+                            <li><a href="https://www.instagram.com/rehan_j0se/?hl=en" target="_blank" rel="noopener noreferrer" class="sitemap-link">Instagram <span class="sitemap-link-external">↗</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Bottom Row: Copyright & Back to Top -->
+                <div class="sitemap-bottom">
+                    <p class="sitemap-copyright">Designed and Built from scratch &middot; &copy; REHAN JOSE 2026 &middot; ALL RIGHTS RESERVED</p>
+                    <button type="button" class="sitemap-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top ↑</button>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="../../script.js"></script>
+    <script>
+        // Trigger reveal logic on load for subpages since there's no preloader
+        setTimeout(() => {
+            document.querySelectorAll('.reveal-up').forEach(el => el.classList.add('is-visible'));
+        }, 100);
+
+        // --- FLIPBOOK INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const flipbookElement = document.getElementById('flipbook');
+            const totalPages = 64; // Based on files rehan_sports.jpg to rehan_sports64.jpg
+            const pageUrl = (i) => `book pages/${i === 1 ? 'rehan_sports.jpg' : `rehan_sports${i}.jpg`}`;
+            const isMobile = window.innerWidth < 768;
+
+            if (isMobile && flipbookElement) {
+                let currentPage = 1;
+                const prevBtn = document.getElementById('bj-prev');
+                const nextBtn = document.getElementById('bj-next');
+                const counterEl = document.getElementById('bj-counter');
+
+                flipbookElement.style.width = '100%';
+                flipbookElement.style.maxWidth = '380px';
+                flipbookElement.innerHTML = `<div class="bg-black rounded-lg overflow-hidden shadow-2xl w-full aspect-square cursor-pointer"><img id="bj-mobile-img" src="${pageUrl(1)}" alt="Beyond Jerseys Page 1" class="w-full h-full object-contain pointer-events-none"></div>`;
+                const imgEl = document.getElementById('bj-mobile-img');
+                const sheetEl = flipbookElement.firstElementChild;
+
+                const renderMobilePage = (p) => {
+                    currentPage = Math.max(1, Math.min(totalPages, p));
+                    imgEl.src = pageUrl(currentPage);
+                    imgEl.alt = `Beyond Jerseys Page ${currentPage}`;
+                    if (counterEl) counterEl.textContent = `${currentPage} / ${totalPages}`;
+                    if (prevBtn) prevBtn.disabled = currentPage <= 1;
+                    if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+                    if (currentPage < totalPages) new Image().src = pageUrl(currentPage + 1);
+                };
+
+                prevBtn?.addEventListener('click', () => renderMobilePage(currentPage - 1));
+                nextBtn?.addEventListener('click', () => renderMobilePage(currentPage + 1));
+
+                let touchStartX = 0;
+                sheetEl.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+                sheetEl.addEventListener('touchend', (e) => {
+                    const dx = e.changedTouches[0].clientX - touchStartX;
+                    if (Math.abs(dx) > 36) renderMobilePage(currentPage + (dx < 0 ? 1 : -1));
+                }, { passive: true });
+                sheetEl.addEventListener('click', (e) => {
+                    const rect = sheetEl.getBoundingClientRect();
+                    renderMobilePage(currentPage + (e.clientX - rect.left >= rect.width / 2 ? 1 : -1));
+                });
+
+                renderMobilePage(1);
+                return;
+            }
+
+            // Desktop: Initialize StPageFlip with 2-page spread view
+            for (let i = 1; i <= totalPages; i++) {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'bg-black overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]';
+                const img = document.createElement('img');
+                img.src = pageUrl(i);
+                if (i > 6) img.loading = 'lazy';
+                img.className = 'w-full h-full object-contain pointer-events-none';
+                pageDiv.appendChild(img);
+                flipbookElement.appendChild(pageDiv);
+            }
+
+            const pageFlip = new St.PageFlip(flipbookElement, {
+                width: 800,
+                height: 800,
+                size: "stretch",
+                minWidth: 315,
+                maxWidth: 1500,
+                minHeight: 315,
+                maxHeight: 1500,
+                maxShadowOpacity: 0.5,
+                showCover: true,
+                drawShadow: true,
+                usePortrait: false,
+                mobileScrollSupport: true
+            });
+
+            pageFlip.loadFromHTML(flipbookElement.querySelectorAll('div'));
+        });
+    </script>
+</body>
+</html>

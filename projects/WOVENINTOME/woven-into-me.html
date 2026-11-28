@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woven Into Me — Styling &amp; Fashion Film — Rehan Jose</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/png" href="../../Homepage Assets/logo.png">
+
+    <!-- Theme initialization before render to avoid FOUC -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('portfolio-theme');
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRKNVG7VK"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CRRKNVG7VK');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles.css?v=49">
+
+    <style>
+        :root {
+            --bg-page: #000000;
+            --text-main: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.72);
+            --text-muted: rgba(255, 255, 255, 0.48);
+            --border-subtle: rgba(255, 255, 255, 0.10);
+            --surface-card: rgba(255, 255, 255, 0.03);
+        }
+
+        [data-theme="light"] {
+            --bg-page: #fcfcfb;
+            --text-main: #141414;
+            --text-secondary: #525252;
+            --text-muted: #78716c;
+            --border-subtle: rgba(0, 0, 0, 0.09);
+            --surface-card: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #navbar-container, #navbar-container *,
+        .nav-resume-btn, .nav-resume-btn * {
+            font-family: 'Space Mono', monospace !important;
+        }
+
+        .woven-page {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 132px 24px 96px;
+        }
+
+        .woven-slides-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 24px 64px -18px rgba(0, 0, 0, 0.5);
+            background: var(--surface-card);
+        }
+
+        [data-theme="light"] .woven-slides-stack {
+            box-shadow: 0 18px 48px -16px rgba(0, 0, 0, 0.12);
+        }
+
+        .woven-slides-stack img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .woven-slides-stack img:last-child {
+            border-bottom: none;
+        }
+
+        /* Finale Fashion Film Section (At the Bottom) */
+        .woven-film-section {
+            margin-top: 64px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .woven-film-kicker {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .woven-film-title {
+            font-size: clamp(1.6rem, 3.2vw, 2.35rem);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: var(--text-main);
+            margin-bottom: 24px;
+        }
+
+        .woven-video-frame {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 28px 70px -20px rgba(0, 0, 0, 0.6);
+            background: #000000;
+        }
+
+        [data-theme="light"] .woven-video-frame {
+            box-shadow: 0 20px 52px -18px rgba(0, 0, 0, 0.16);
+        }
+
+        .woven-video-frame video {
+            width: 100%;
+            max-height: 78vh;
+            display: block;
+            background: #000000;
+            outline: none;
+        }
+
+        .reveal-up {
+            opacity: 0;
+            filter: blur(8px);
+            transform: translateY(32px);
+            transition: opacity 0.85s ease, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1), filter 0.85s ease;
+        }
+
+        .reveal-up.is-visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .woven-page {
+                padding: 112px 14px 76px;
+            }
+            .woven-slides-stack,
+            .woven-video-frame {
+                border-radius: 16px;
+            }
+            .woven-film-section {
+                margin-top: 48px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Left Corner: Project Name (Desktop) / Back (Mobile) -->
+    <div class="fixed top-6 left-6 md:left-12 z-50 flex items-center h-14">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <span>WOVEN INTO ME</span>
+        </a>
+        <a href="../../playground.html" onclick="if (window.history.length > 1 && document.referrer) { window.history.back(); return false; }"
+            class="nav-resume-btn mobile-back-btn inline-flex md:hidden items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-5 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300"
+            aria-label="Go back">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back</span>
+        </a>
+    </div>
+
+    <!-- Center: Homepage Navbar (Full Floating Glass Pill) -->
+    <div id="navbar-container" class="fixed top-6 left-0 w-full flex justify-center z-40 px-4 pointer-events-none navbar-visible hidden md:flex">
+        <nav
+            class="bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 w-full max-w-xl lg:max-w-2xl transition-all duration-300 pointer-events-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="../../index.html" aria-label="Rehan Jose Home" class="flex items-center">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo"
+                            class="h-8 w-auto object-contain nav-logo nav-logo--light">
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../../index.html#home"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Home</a>
+                    <a href="../../about.html"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">About</a>
+                    <a href="../../playground.html"
+                        class="nav-link active text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Playground</a>
+                    <a href="../../index.html#contact"
+                        class="nav-link text-xs font-bold uppercase tracking-widest text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="../../ResumeRehanJose.pdf" target="_blank"
+                        class="hidden sm:flex items-center gap-2 text-xs font-bold uppercase text-white hover:drop-shadow-[0_0_10px_rgba(255,255,255,1)] transition-all duration-300">
+                        <span>Resume</span>
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Top Right Corner: Back to Playground & Mobile Toggle -->
+    <div class="fixed top-6 right-6 md:right-12 z-50 flex items-center gap-3 h-14">
+        <a href="../../playground.html"
+            class="nav-resume-btn hidden md:inline-flex items-center gap-2 bg-zinc-900/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full px-6 py-3 h-14 text-xs font-bold uppercase tracking-widest text-white hover:border-white/30 hover:bg-white hover:text-black hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all duration-300">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back to Playground</span>
+        </a>
+        <button id="mobile-menu-toggle"
+            class="md:hidden flex items-center justify-center w-14 h-14 rounded-full bg-zinc-900/30 backdrop-blur-xl border border-white/10 text-white hover:border-white/30 transition-all duration-300"
+            aria-label="Toggle mobile menu">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="mobile-menu-content">
+            <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <nav class="mobile-nav">
+                <a href="../../index.html#home" class="mobile-nav-link">Home</a>
+                <a href="../../about.html" class="mobile-nav-link">About</a>
+                <a href="../../playground.html" class="mobile-nav-link">Playground</a>
+                <a href="../../index.html#contact" class="mobile-nav-link">Contact</a>
+                <a href="../../ResumeRehanJose.pdf" target="_blank" class="mobile-nav-link mobile-nav-resume">
+                    <span>Resume</span>
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Presentation: Process Deck First, Fashion Film Last -->
+    <main class="woven-page">
+        <!-- 01: Full 33-Slide Styling & Process Deck (Dinely-style stack) -->
+        <section class="woven-slides-stack reveal-up" aria-label="Woven Into Me Styling Process Deck">
+            <img src="slides/slide-01.jpg" alt="Woven Into Me — Slide 01" loading="eager">
+            <img src="slides/slide-02.jpg" alt="Woven Into Me — Slide 02" loading="eager">
+            <img src="slides/slide-03.jpg" alt="Woven Into Me — Slide 03" loading="lazy">
+            <img src="slides/slide-04.jpg" alt="Woven Into Me — Slide 04" loading="lazy">
+            <img src="slides/slide-05.jpg" alt="Woven Into Me — Slide 05" loading="lazy">
+            <img src="slides/slide-06.jpg" alt="Woven Into Me — Slide 06" loading="lazy">
+            <img src="slides/slide-07.jpg" alt="Woven Into Me — Slide 07" loading="lazy">
+            <img src="slides/slide-08.jpg" alt="Woven Into Me — Slide 08" loading="lazy">
+            <img src="slides/slide-09.jpg" alt="Woven Into Me — Slide 09" loading="lazy">
+            <img src="slides/slide-10.jpg" alt="Woven Into Me — Slide 10" loading="lazy">
+            <img src="slides/slide-11.jpg" alt="Woven Into Me — Slide 11" loading="lazy">
+            <img src="slides/slide-12.jpg" alt="Woven Into Me — Slide 12" loading="lazy">
+            <img src="slides/slide-13.jpg" alt="Woven Into Me — Slide 13" loading="lazy">
+            <img src="slides/slide-14.jpg" alt="Woven Into Me — Slide 14" loading="lazy">
+            <img src="slides/slide-15.jpg" alt="Woven Into Me — Slide 15" loading="lazy">
+            <img src="slides/slide-16.jpg" alt="Woven Into Me — Slide 16" loading="lazy">
+            <img src="slides/slide-17.jpg" alt="Woven Into Me — Slide 17" loading="lazy">
+            <img src="slides/slide-18.jpg" alt="Woven Into Me — Slide 18" loading="lazy">
+            <img src="slides/slide-19.jpg" alt="Woven Into Me — Slide 19" loading="lazy">
+            <img src="slides/slide-20.jpg" alt="Woven Into Me — Slide 20" loading="lazy">
+            <img src="slides/slide-21.jpg" alt="Woven Into Me — Slide 21" loading="lazy">
+            <img src="slides/slide-22.jpg" alt="Woven Into Me — Slide 22" loading="lazy">
+            <img src="slides/slide-23.jpg" alt="Woven Into Me — Slide 23" loading="lazy">
+            <img src="slides/slide-24.jpg" alt="Woven Into Me — Slide 24" loading="lazy">
+            <img src="slides/slide-25.jpg" alt="Woven Into Me — Slide 25" loading="lazy">
+            <img src="slides/slide-26.jpg" alt="Woven Into Me — Slide 26" loading="lazy">
+            <img src="slides/slide-27.jpg" alt="Woven Into Me — Slide 27" loading="lazy">
+            <img src="slides/slide-28.jpg" alt="Woven Into Me — Slide 28" loading="lazy">
+            <img src="slides/slide-29.jpg" alt="Woven Into Me — Slide 29" loading="lazy">
+            <img src="slides/slide-30.jpg" alt="Woven Into Me — Slide 30" loading="lazy">
+            <img src="slides/slide-31.jpg" alt="Woven Into Me — Slide 31" loading="lazy">
+            <img src="slides/slide-32.jpg" alt="Woven Into Me — Slide 32" loading="lazy">
+            <img src="slides/slide-33.jpg" alt="Woven Into Me — Slide 33" loading="lazy">
+        </section>
+
+        <!-- 02: Final Fashion Film (Last!) -->
+        <section class="woven-film-section reveal-up" style="transition-delay: 0.15s;" aria-label="Woven Into Me Fashion Film">
+            <span class="woven-film-kicker">Final Output · Fashion Film</span>
+            <h2 class="woven-film-title">Woven Into Me — The Film</h2>
+            <div class="woven-video-frame">
+                <video controls playsinline preload="metadata" poster="slides/slide-01.jpg">
+                    <source src="woven-film.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video playback.
+                </video>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Sitemap Footer -->
+    <footer class="portfolio-sitemap-footer">
+        <div class="sitemap-container">
+            <div class="sitemap-grid">
+                <div class="sitemap-brand">
+                    <a href="../../index.html" class="sitemap-brand-link" aria-label="Rehan Jose Home">
+                        <img src="../../Homepage%20Assets/logo.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--dark">
+                        <img src="../../Homepage%20Assets/rehanlogoblack.png" alt="RJ Logo" class="sitemap-logo-img sitemap-logo-img--light">
+                        <span class="sitemap-logo-text">REHAN JOSE</span>
+                    </a>
+                    <div class="sitemap-status-pill">
+                        <span class="sitemap-status-dot"></span>
+                        <span>Available for Opportunities</span>
+                    </div>
+                </div>
+
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Navigation</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="../../index.html#home" class="sitemap-link">Home</a></li>
+                        <li><a href="../../about.html" class="sitemap-link">About</a></li>
+                        <li><a href="../../playground.html" class="sitemap-link">Playground</a></li>
+                        <li><a href="../../about.html#experience" class="sitemap-link">Experience</a></li>
+                        <li><a href="../../index.html#contact" class="sitemap-link">Contact</a></li>
+                        <li><a href="../../ResumeRehanJose.pdf" target="_blank" class="sitemap-link">Resume <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="sitemap-col">
+                    <h4 class="sitemap-col-title">Connect</h4>
+                    <ul class="sitemap-list">
+                        <li><a href="mailto:rehanjose11@gmail.com" class="sitemap-link">Email <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.linkedin.com/in/rehan-jose/" target="_blank" rel="noopener noreferrer" class="sitemap-link">LinkedIn <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.behance.net/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">Behance <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://github.com/rehanjose" target="_blank" rel="noopener noreferrer" class="sitemap-link">GitHub <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://joserehan.wordpress.com/" target="_blank" rel="noopener noreferrer" class="sitemap-link">WordPress <span class="sitemap-link-external">↗</span></a></li>
+                        <li><a href="https://www.instagram.com/rehan_j0se/?hl=en" target="_blank" rel="noopener noreferrer" class="sitemap-link">Instagram <span class="sitemap-link-external">↗</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sitemap-bottom">
+                <p class="sitemap-copyright">Designed and Built from scratch &middot; &copy; REHAN JOSE 2026 &middot; ALL RIGHTS RESERVED</p>
+                <button type="button" class="sitemap-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top ↑</button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../script.js?v=48"></script>
+    <script>
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        setTimeout(() => document.querySelectorAll('.reveal-up').forEach(el => el.classList.add('is-visible')), 150);
+    </script>
+</body>
+</html>
